@@ -1,0 +1,8 @@
+.badge-container ion-badge {
+    margin-right: 8px; /* Adjust the value as needed */
+}
+
+/* Optional: Remove the margin from the last badge */
+.badge-container ion-badge:last-child {
+    margin-right: 0;
+}

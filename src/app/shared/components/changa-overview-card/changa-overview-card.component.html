@@ -1,0 +1,32 @@
+<ion-card>
+  <img alt="placeholder" [src]="changa.photoUrl" />
+  <ion-card-header>
+    <ion-item class="ion-no-padding">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" [src]="changa.provider.photoUrl" />
+      </ion-avatar>
+      <ion-label>Por {{ changa.provider.name }}</ion-label>
+    </ion-item>
+    <ion-card-title>{{ changa.title }}</ion-card-title>
+    <ion-card-subtitle>{{ changa.overview }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div>
+      {{ changa.description | slice : 0 : 100
+      }}{{ changa.description.length > 100 ? "..." : "" }}
+    </div>
+  </ion-card-content>
+
+  <ion-card-content>
+    <div class="badge-container">
+      <ion-chip
+        *ngFor="let topic of changa.topics"
+        color="primary"
+        [outline]="true"
+      >
+        {{ topic }}
+      </ion-chip>
+    </div>
+  </ion-card-content>
+</ion-card>

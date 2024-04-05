@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChangaOverviewCardComponent } from 'src/app/shared/components/changa-overview-card/changa-overview-card.component';
 import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
 import { ChangasAPIService } from 'src/app/core/services/changas-api.service';
@@ -15,6 +15,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -33,15 +34,23 @@ import { CommonModule } from '@angular/common';
     IonMenu,
     IonSearchbar,
     ChangaOverviewCardComponent,
-    CommonModule
+    CommonModule,
   ],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
+  private subscription!: Subscription;
   changas: ChangaOverview[] = [];
 
   constructor(private changasAPISerivce: ChangasAPIService) {}
 
   ngOnInit() {
-    this.changas = this.changasAPISerivce.getChangasOverviews();
+    this.subscription = this.changasAPISerivce.getAllChangas().subscribe({
+      next: (data) => (this.changas = data),
+      error: () => console.error('Error requesting data'),
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

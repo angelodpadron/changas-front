@@ -31,10 +31,8 @@ import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
     CommonModule,
   ],
 })
-export class ChangaOverviewCardComponent implements OnInit {
+export class ChangaOverviewCardComponent {
   @Input() changa!: ChangaOverview;
 
   constructor() {}
-
-  ngOnInit() {}
 }

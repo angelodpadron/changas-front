@@ -10,5 +10,10 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
   },
+  {
+    path: 'changa-details/:id',
+    loadComponent: () => import('./pages/changa-details/changa-details.page').then( m => m.ChangaDetailsPage)
+  },
+
 
 ];

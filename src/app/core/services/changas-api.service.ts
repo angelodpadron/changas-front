@@ -14,4 +14,9 @@ export class ChangasAPIService {
   getAllChangas(): Observable<ChangaOverview[]> {
     return this.http.get<ChangaOverview[]>(`${this.baseUrl}`);
   }
+
+  getChangaById(id: string): Observable<ChangaOverview> {
+    return this.http.get<ChangaOverview>(`${this.baseUrl}/${id}`);
+  }
+
 }

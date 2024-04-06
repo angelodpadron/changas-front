@@ -26,5 +26,9 @@ export const routes: Routes = [
     path: 'hiring-success',
     loadComponent: () => import('./pages/hiring-success/hiring-success.page').then( m => m.HiringSuccessPage)
   },
+  {
+    path: 'hirings',
+    loadComponent: () => import('./pages/hirings/hirings.page').then( m => m.HiringsPage)
+  },
 
 ];

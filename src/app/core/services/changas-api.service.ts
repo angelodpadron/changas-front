@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChangaOverview } from '../models/changa-overview.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,5 +13,20 @@ export class ChangasAPIService {
 
   getAllChangas(): Observable<ChangaOverview[]> {
     return this.http.get<ChangaOverview[]>(`${this.baseUrl}`);
+  }
+
+  getChangaById(id: string): Observable<ChangaOverview> {
+    return this.http.get<ChangaOverview>(`${this.baseUrl}/${id}`);
+  }
+
+  hireChanga(customerId: string, changaId: string) {
+    const payload = {
+      changaId: changaId,
+      customerId: customerId,
+    };
+
+    return this.http.post(`${this.baseUrl}/hire`, payload, {
+      responseType: 'text',
+    });
   }
 }

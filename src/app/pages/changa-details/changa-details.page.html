@@ -1,0 +1,54 @@
+<ion-header [translucent]="true" *ngIf="changa">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ changa.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="changa">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ changa.title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Content container -->
+  <div class="ion-padding">
+    <!-- Changa Image -->
+    <ion-img [src]="changa.photoUrl"></ion-img>
+
+    <hr />
+
+    <!-- Changa Description -->
+    <h5>Acerca de esta Changa</h5>
+    <p>{{ changa.description }}</p>
+
+    <hr />
+
+    <p>Mas sobre {{changa.providerSummary.name}}</p>
+    <!-- Provider Information -->
+    <ion-item>
+      <ion-avatar slot="start">
+        <img [src]="changa.providerSummary.photoUrl" alt="Provider's photo" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ changa.providerSummary.name }}</h3>
+        <p>{{ changa.providerSummary.email }}</p>
+      </ion-label>
+    </ion-item>
+
+    <hr />
+
+    <!-- Topics -->
+    <ion-chip *ngFor="let topic of changa.topics" color="primary">
+      {{ topic }}
+    </ion-chip>
+
+    <hr />
+
+    <!-- Hire Button -->
+    <ion-button expand="block" color="primary" (click)="hireProvider(changa.id)"> Contratar </ion-button>
+  </div>
+</ion-content>

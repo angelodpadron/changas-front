@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>No tan rapido!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <ion-item>
+      <ion-input label="User ID" [(ngModel)]="userId" name="userId"></ion-input>
+    </ion-item>
+
+    <hr />
+    <ion-button expand="block" (click)="login()">Identificarse</ion-button>
+  </div>
+</ion-content>

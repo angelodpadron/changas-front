@@ -16,7 +16,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
 import { ChangasAPIService } from 'src/app/core/services/changas-api.service';
 import { LoadingController } from '@ionic/angular';
@@ -50,6 +50,7 @@ export class ChangaDetailsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private changaService: ChangasAPIService,
     private loadingController: LoadingController
   ) {}
@@ -78,6 +79,20 @@ export class ChangaDetailsPage implements OnInit {
 
   hireProvider(changaId: string) {
     console.log(`Hiring provider for Changa with ID: ${changaId}`);
-    // Navigate to a hiring form or something, send a hiring request, etc.
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.changaService.hireChanga(userId, changaId).subscribe({
+      next: () => {
+        this.router.navigate(['/hiring-success']);
+      },
+      error: (error) => {
+        console.error('Error hiring changa:', error);
+      },
+    });
   }
 }

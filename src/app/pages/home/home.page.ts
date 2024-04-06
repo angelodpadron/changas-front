@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +42,10 @@ export class HomePage implements OnInit, OnDestroy {
   private subscription!: Subscription;
   changas: ChangaOverview[] = [];
 
-  constructor(private changasAPISerivce: ChangasAPIService) {}
+  constructor(
+    private changasAPISerivce: ChangasAPIService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.subscription = this.changasAPISerivce.getAllChangas().subscribe({
@@ -52,5 +56,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  redirectToHirings() {
+    this.router.navigate(['/hirings']);
+    return;
   }
 }

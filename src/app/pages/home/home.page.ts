@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChangaOverviewCardComponent } from 'src/app/shared/components/changa-overview-card/changa-overview-card.component';
 import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
-import { ChangasAPIService } from 'src/app/core/services/changas-api.service';
+import { ChangasService } from 'src/app/core/services/changas.service';
 import {
   IonButton,
   IonButtons,
@@ -17,6 +17,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     IonHeader,
     IonContent,
     IonToolbar,
@@ -35,7 +37,7 @@ import { Router } from '@angular/router';
     IonMenu,
     IonSearchbar,
     ChangaOverviewCardComponent,
-    CommonModule,
+    MenuComponent,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
@@ -43,7 +45,7 @@ export class HomePage implements OnInit, OnDestroy {
   changas: ChangaOverview[] = [];
 
   constructor(
-    private changasAPISerivce: ChangasAPIService,
+    private changasAPISerivce: ChangasService,
     private router: Router
   ) {}
 
@@ -61,5 +63,9 @@ export class HomePage implements OnInit, OnDestroy {
   redirectToHirings() {
     this.router.navigate(['/hirings']);
     return;
+  }
+
+  signout() {
+    localStorage.removeItem('accessToken');
   }
 }

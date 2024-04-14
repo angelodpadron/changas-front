@@ -1,16 +1,55 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>No tan rapido!</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesion</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="ion-padding">
-    <ion-item>
-      <ion-input label="User ID" [(ngModel)]="userId" name="userId"></ion-input>
-    </ion-item>
-
-    <hr />
-    <ion-button expand="block" (click)="login()">Identificarse</ion-button>
-  </div>
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="login()">
+        <ion-list>
+          <ion-item>
+            <ion-input
+              formControlName="email"
+              type="email"
+              placeholder="pepita@email.com"
+              label="Email"
+              labelPlacement="floating"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              formControlName="password"
+              type="password"
+              placeholder="******"
+              label="Contraseña"
+              labelPlacement="floating"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button
+          type="submit"
+          expand="block"
+          shape="round"
+          color="warning"
+          [disabled]="!form.valid"
+        >
+          Iniciar sesión
+        </ion-button>
+        <p class="ion-text-center ion-padding">¿No tienes una cuenta?</p>
+        <ion-button
+          type="button"
+          expand="block"
+          (click)="redirectToSignup()"
+          shape="round"
+        >
+          Registrarse
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

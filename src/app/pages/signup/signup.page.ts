@@ -27,7 +27,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SignupRequest } from 'src/app/core/models/auth-request-response-body';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -37,6 +37,7 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -99,9 +100,5 @@ export class SignupPage implements OnInit {
       },
       error: (err) => console.error('Error signing up', err),
     });
-  }
-
-  redirectToLogin() {
-    this.router.navigate(['/login']);
   }
 }

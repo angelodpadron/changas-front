@@ -20,7 +20,8 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let hiringDetail of hiringsDetails">
+        @for (hiringDetail of hiringsDetails; track hiringDetail.hiringId) {
+        <ion-item>
           <ion-thumbnail slot="start">
             <img
               [alt]="hiringDetail.changaTitle"
@@ -40,6 +41,11 @@
             </ion-row>
           </ion-grid>
         </ion-item>
+        } @empty {
+        <ion-item>
+          <ion-label>No tienes changas contratadas</ion-label>
+        </ion-item>
+        }
       </ion-list>
     </ion-card-content>
   </ion-card>

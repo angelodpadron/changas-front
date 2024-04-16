@@ -7,6 +7,7 @@ export const loginRequiredGuard: CanActivateFn = (_route, _state) => {
   const router = inject(Router);
 
   if (!authService.isAuthenticated()) {
+    console.error('User is not authenticated');
     router.navigate(['/login']);
     return false;
   }

@@ -21,12 +21,13 @@ import {
   IonCardContent,
   IonCard,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   LoginRequest,
   LoginResponse,
 } from 'src/app/core/models/auth-request-response-body';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { ApiResponse } from 'src/app/core/models/api-response-body';
 
 @Component({
   selector: 'app-login',
@@ -36,6 +37,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -77,18 +79,15 @@ export class LoginPage implements OnInit {
     this.loginRequest = this.form.value;
 
     this.authService.login(this.loginRequest).subscribe({
-      next: (response: LoginResponse) => {
-        console.log(
-          'Login success. Saving access token and redirecting to home page.'
-        );
-        localStorage.setItem('accessToken', response.token);
+      next: (response: ApiResponse<LoginResponse>) => {
+        if (!response.success) {
+          console.error('Error attemping login', response.error?.message);
+          return;
+        }
+        console.log('Login successful', response);
         this.router.navigate(['/home']);
       },
       error: (err) => console.error('Error attemping login', err),
     });
-  }
-
-  redirectToSignup() {
-    this.router.navigate(['/signup']);
   }
 }

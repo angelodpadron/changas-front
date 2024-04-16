@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HiringDetails } from '../models/hiring-details.model';
 import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
+import { ApiResponse } from '../models/api-response-body';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +12,11 @@ import { User } from '../models/user.model';
 export class CustomersService {
   private baseUrl = 'http://localhost:8080/api/v1/customers';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
 
-  getHirings(): Observable<HiringDetails[]> {
-    const accessToken = localStorage.getItem('accessToken');
-
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     Authorization: `Bearer ${accessToken}`,
-    //   }),
-    // };
-
-    const user: User = this.authService.getUserAuthenticated();
-    return this.http.get<HiringDetails[]>(
-      `${this.baseUrl}/${user.id}/hirings`
+  getHirings(): Observable<ApiResponse<HiringDetails[]>> {
+    return this.http.get<ApiResponse<HiringDetails[]>>(
+      `${this.baseUrl}/hirings`
     );
   }
 }

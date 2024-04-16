@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from 'src/app/core/models/user.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import {
@@ -15,8 +15,9 @@ import {
   IonRow,
   IonGrid,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -25,6 +26,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IonMenu,
     IonAvatar,
     IonItem,
@@ -39,26 +41,24 @@ import { CommonModule } from '@angular/common';
     IonGrid,
   ],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   userAuthenticated: User | null = null;
+  private userAuthenticatedSubscription: Subscription = new Subscription();
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    try {
-      this.userAuthenticated = this.authService.getUserAuthenticated();
-      console.log(this.userAuthenticated);
-    } catch (e) {
-      console.log('No user authenticated');
-    }
+    this.userAuthenticatedSubscription = this.authService
+      .getUserAuthenticated()
+      .subscribe({
+        next: (user) => {
+          this.userAuthenticated = user;
+        },
+      });
   }
 
-  toHirings() {
-    this.router.navigate(['/hirings']);
-  }
-
-  login() {
-    this.router.navigate(['/login']);
+  ngOnDestroy() {
+    this.userAuthenticatedSubscription.unsubscribe();
   }
 
   signout() {

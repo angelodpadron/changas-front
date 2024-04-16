@@ -24,6 +24,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CustomersService } from 'src/app/core/services/customers.service';
 import { HiringDetails } from 'src/app/core/models/hiring-details.model';
+import { ApiResponse } from 'src/app/core/models/api-response-body';
 
 @Component({
   selector: 'app-hirings',
@@ -61,7 +62,13 @@ export class HiringsPage implements OnInit {
 
   ngOnInit() {
     this.customersService.getHirings().subscribe({
-      next: (data) => (this.hiringsDetails = data),
+      next: (response: ApiResponse<HiringDetails[]>) => {
+        if (response.success) {
+          this.hiringsDetails = response.data;
+        } else {
+          console.error(response.error?.message);
+        }
+      },
       error: (error) =>
         console.error('Error retrieving hiring details:', error),
     });

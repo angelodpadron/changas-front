@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   IonAvatar,
   IonCard,
@@ -20,6 +20,8 @@ import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
   styleUrls: ['./changa-overview-card.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    RouterModule,
     IonCard,
     IonCardHeader,
     IonCardContent,
@@ -29,15 +31,10 @@ import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
     IonAvatar,
     IonLabel,
     IonChip,
-    CommonModule,
   ],
 })
 export class ChangaOverviewCardComponent {
   @Input() changa!: ChangaOverview;
 
-  constructor(private router: Router) {}
-
-  redirectToDetails(id: string) {
-    this.router.navigate(["/changa-details", id])
-  }
+  constructor() {}
 }

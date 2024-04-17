@@ -24,7 +24,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CustomersService } from 'src/app/core/services/customers.service';
 import { HiringDetails } from 'src/app/core/models/hiring-details.model';
-import { Router } from '@angular/router';
+import { ApiResponse } from 'src/app/core/models/api-response-body';
 
 @Component({
   selector: 'app-hirings',
@@ -58,21 +58,17 @@ import { Router } from '@angular/router';
 export class HiringsPage implements OnInit {
   hiringsDetails: HiringDetails[] = [];
 
-  constructor(
-    private customersService: CustomersService,
-    private router: Router
-  ) {}
+  constructor(private customersService: CustomersService) {}
 
   ngOnInit() {
-    const userId = localStorage.getItem('userId');
-
-    if (!userId) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    this.customersService.getHirings(userId).subscribe({
-      next: (data) => (this.hiringsDetails = data),
+    this.customersService.getHirings().subscribe({
+      next: (response: ApiResponse<HiringDetails[]>) => {
+        if (response.success) {
+          this.hiringsDetails = response.data;
+        } else {
+          console.error(response.error?.message);
+        }
+      },
       error: (error) =>
         console.error('Error retrieving hiring details:', error),
     });

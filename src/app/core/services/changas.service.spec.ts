@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChangasAPIService } from './changas-api.service';
+import { ChangasService } from './changas.service';
 
-describe('ChangasAPIService', () => {
-  let service: ChangasAPIService;
+describe('ChangasService', () => {
+  let service: ChangasService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ChangasAPIService);
+    service = TestBed.inject(ChangasService);
   });
 
   it('should be created', () => {

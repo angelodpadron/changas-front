@@ -18,8 +18,10 @@ import {
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
-import { ChangasAPIService } from 'src/app/core/services/changas-api.service';
+import { ChangasService } from 'src/app/core/services/changas.service';
 import { LoadingController } from '@ionic/angular';
+import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-changa-details',
@@ -51,7 +53,8 @@ export class ChangaDetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private changaService: ChangasAPIService,
+    private changaService: ChangasService,
+    private authService: AuthService,
     private loadingController: LoadingController
   ) {}
 
@@ -66,8 +69,13 @@ export class ChangaDetailsPage implements OnInit {
     await loading.present();
 
     this.changaService.getChangaById(this.id).subscribe({
-      next: async (changa: ChangaOverview) => {
-        this.changa = changa;
+      next: async (response: ApiResponse<ChangaOverview>) => {
+        if (response.success) {
+          this.changa = response.data;
+        } else {
+          console.error(response.error?.message);
+        }
+
         await loading.dismiss(); // Dismiss the loading indicator on success
       },
       error: async (error: any) => {
@@ -78,15 +86,12 @@ export class ChangaDetailsPage implements OnInit {
   }
 
   hireProvider(changaId: string) {
-    console.log(`Hiring provider for Changa with ID: ${changaId}`);
-    const userId = localStorage.getItem('userId');
-
-    if (!userId) {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.changaService.hireChanga(userId, changaId).subscribe({
+    this.changaService.hireChanga(changaId).subscribe({
       next: () => {
         this.router.navigate(['/hiring-success']);
       },

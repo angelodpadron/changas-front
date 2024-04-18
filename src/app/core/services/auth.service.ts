@@ -21,7 +21,13 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private jwtHelperService: JwtHelperService
-  ) {}
+  ) {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const user = this.decodeToken(token);
+      this.userAuthenticationSubject.next(user);
+    }
+  }
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('accessToken');

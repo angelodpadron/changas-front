@@ -15,7 +15,7 @@ import {
   IonRow,
   IonGrid,
 } from '@ionic/angular/standalone';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -53,6 +53,9 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (user) => {
           this.userAuthenticated = user;
+        },
+        error: (error) => {
+          console.error(error);
         },
       });
   }

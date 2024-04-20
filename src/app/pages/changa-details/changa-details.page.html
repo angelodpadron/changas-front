@@ -32,7 +32,11 @@
     <!-- Provider Information -->
     <ion-item>
       <ion-avatar slot="start">
-        <img [src]="changa.providerSummary.photoUrl" alt="Provider's photo" />
+        <img
+          [src]="changa.providerSummary.photoUrl ||
+        'https://ionicframework.com/docs/img/demos/avatar.svg'"
+          alt="Provider's photo"
+        />
       </ion-avatar>
       <ion-label>
         <h3>{{ changa.providerSummary.name }}</h3>
@@ -51,9 +55,11 @@
 
     <!-- Hire Button -->
     <ion-button
+      shape="round"
       expand="block"
-      color="primary"
+      color="warning"
       (click)="hireProvider(changa.id)"
+      [disabled]="blocked"
     >
       Contratar
     </ion-button>

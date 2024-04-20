@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
 import { ApiResponse } from '../models/api-response-body';
 import { Router } from '@angular/router';
+import { CreateChangaRequest } from '../models/create-changa-request';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,15 @@ export class ChangasService {
 
   getChangaById(id: string): Observable<ApiResponse<ChangaOverview>> {
     return this.http.get<ApiResponse<ChangaOverview>>(`${this.baseUrl}/${id}`);
+  }
+
+  createChanga(
+    createChangaRequest: CreateChangaRequest
+  ): Observable<ApiResponse<ChangaOverview>> {
+    return this.http.post<ApiResponse<ChangaOverview>>(
+      `${this.baseUrl}/create`,
+      createChangaRequest
+    );
   }
 
   hireChanga(changaId: string) {

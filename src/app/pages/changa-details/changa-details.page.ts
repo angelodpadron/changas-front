@@ -22,6 +22,7 @@ import { ChangasService } from 'src/app/core/services/changas.service';
 import { LoadingController } from '@ionic/angular';
 import { ApiResponse } from 'src/app/core/models/api-response-body';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { switchMap, of, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-changa-details',
@@ -49,6 +50,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class ChangaDetailsPage implements OnInit {
   id!: string;
   changa!: ChangaOverview;
+  blocked = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,21 +70,40 @@ export class ChangaDetailsPage implements OnInit {
 
     await loading.present();
 
-    this.changaService.getChangaById(this.id).subscribe({
-      next: async (response: ApiResponse<ChangaOverview>) => {
-        if (response.success) {
-          this.changa = response.data;
-        } else {
-          console.error(response.error?.message);
-        }
-
-        await loading.dismiss(); // Dismiss the loading indicator on success
-      },
-      error: async (error: any) => {
-        console.error('Error retrieving changa details:', error);
-        await loading.dismiss(); // Dismiss the loading indicator on error
-      },
-    });
+    this.changaService
+      .getChangaById(this.id)
+      .pipe(
+        switchMap((response: ApiResponse<ChangaOverview>) => {
+          if (response.success) {
+            this.changa = response.data;
+            // Return another observable here
+            return this.authService.getUserAuthenticated().pipe(
+              switchMap((user) => {
+                if (user?.id === this.changa.providerSummary.id) {
+                  this.blocked = true;
+                }
+                return of({}); // Completes the observable chain successfully
+              })
+            );
+          } else {
+            console.error(response.error?.message);
+            return of({}); // Return an empty observable to complete the chain
+          }
+        }),
+        catchError((error) => {
+          console.error('Error retrieving changa details:', error);
+          return of({}); // Handle errors and complete the chain
+        })
+      )
+      .subscribe({
+        next: async () => {
+          await loading.dismiss(); // Dismiss the loading indicator once everything is complete
+        },
+        error: async (error) => {
+          console.error('Error in the full observable chain:', error);
+          await loading.dismiss(); // Dismiss the loading indicator on error
+        },
+      });
   }
 
   hireProvider(changaId: string) {

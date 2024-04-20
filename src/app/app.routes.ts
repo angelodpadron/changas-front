@@ -46,4 +46,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/hirings/hirings.page').then((m) => m.HiringsPage),
   },
+  {
+    path: 'create-changa',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () => import('./pages/create-changa/create-changa.page').then( m => m.CreateChangaPage)
+  },
+
 ];

@@ -3,7 +3,13 @@
   <ion-card-header>
     <ion-item class="ion-no-padding">
       <ion-avatar aria-hidden="true" slot="start">
-        <img alt="Profile photo" [src]="changa.providerSummary.photoUrl" />
+        <img
+          alt="Profile photo"
+          [src]="
+            changa.providerSummary.photoUrl ||
+            'https://ionicframework.com/docs/img/demos/avatar.svg'
+          "
+        />
       </ion-avatar>
       <ion-label>Por {{ changa.providerSummary.name }}</ion-label>
     </ion-item>

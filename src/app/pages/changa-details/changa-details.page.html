@@ -55,9 +55,11 @@
 
     <!-- Hire Button -->
     <ion-button
+      shape="round"
       expand="block"
-      color="primary"
+      color="warning"
       (click)="hireProvider(changa.id)"
+      [disabled]="blocked"
     >
       Contratar
     </ion-button>

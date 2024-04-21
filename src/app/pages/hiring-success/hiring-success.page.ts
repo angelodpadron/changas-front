@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-hiring-success',
@@ -33,12 +33,9 @@ import { Router } from '@angular/router';
     IonCardTitle,
     IonCardHeader,
     IonText,
+    RouterModule,
   ],
 })
 export class HiringSuccessPage {
-  constructor(private router: Router) {}
-
-  redirect() {
-    this.router.navigate(['/home']);
-  }
+  constructor() {}
 }

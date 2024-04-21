@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -16,7 +16,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
 import { ChangasService } from 'src/app/core/services/changas.service';
 import { LoadingController } from '@ionic/angular';
@@ -48,12 +48,12 @@ import { switchMap, of, catchError } from 'rxjs';
   ],
 })
 export class ChangaDetailsPage implements OnInit {
-  id!: string;
-  changa!: ChangaOverview;
+  @Input('id')
+  changaId: string = '';
+  changaOverview!: ChangaOverview;
   blocked = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private changaService: ChangasService,
     private authService: AuthService,
@@ -61,9 +61,6 @@ export class ChangaDetailsPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const routeParams = this.route.snapshot.paramMap;
-    this.id = routeParams.get('id')!; // Mmm...
-
     const loading = await this.loadingController.create({
       message: 'Obteniendo informacion...',
     });
@@ -71,15 +68,15 @@ export class ChangaDetailsPage implements OnInit {
     await loading.present();
 
     this.changaService
-      .getChangaById(this.id)
+      .getChangaById(this.changaId)
       .pipe(
         switchMap((response: ApiResponse<ChangaOverview>) => {
           if (response.success) {
-            this.changa = response.data;
+            this.changaOverview = response.data;
             // Return another observable here
             return this.authService.getUserAuthenticated().pipe(
               switchMap((user) => {
-                if (user?.id === this.changa.providerSummary.id) {
+                if (user?.id === this.changaOverview.providerSummary.id) {
                   this.blocked = true;
                 }
                 return of({}); // Completes the observable chain successfully
@@ -112,13 +109,6 @@ export class ChangaDetailsPage implements OnInit {
       return;
     }
 
-    this.changaService.hireChanga(changaId).subscribe({
-      next: () => {
-        this.router.navigate(['/hiring-success']);
-      },
-      error: (error) => {
-        console.error('Error hiring changa:', error);
-      },
-    });
+    this.router.navigate(['/checkout', changaId]);
   }
 }

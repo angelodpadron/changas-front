@@ -1,8 +1,8 @@
 export interface HiringDetails {
   hiringId: string;
   changaId: string;
-  changaTitle: string;
-  changaDescription: string;
-  changaPhotoUrl: string;
-  creationDate: Date;
+  changa_title: string;
+  changa_description: string;
+  changa_photo_url: string;
+  creation_date: Date;
 }

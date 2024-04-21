@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { ApiResponse } from '../models/api-response-body';
 import { Router } from '@angular/router';
 import { CreateChangaRequest } from '../models/create-changa-request';
+import { HireChangaRequest } from '../models/hire-changa-request';
 
 @Injectable({
   providedIn: 'root',
@@ -37,19 +38,14 @@ export class ChangasService {
     );
   }
 
-  hireChanga(changaId: string) {
+  hireChanga(hireChangaRequest: HireChangaRequest) {
     return this.authService.getUserAuthenticated().pipe(
       switchMap((customer: User | null) => {
         if (!customer) {
           throw new Error('No user authenticated');
         }
 
-        const payload = {
-          changa_id: changaId,
-          customer_id: customer.id,
-        };
-
-        return this.http.post(`${this.baseUrl}/hire`, payload, {
+        return this.http.post(`${this.baseUrl}/hire`, hireChangaRequest, {
           responseType: 'text',
         });
       })

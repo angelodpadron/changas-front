@@ -49,7 +49,15 @@ export const routes: Routes = [
   {
     path: 'create-changa',
     canActivate: [loginRequiredGuard],
-    loadComponent: () => import('./pages/create-changa/create-changa.page').then( m => m.CreateChangaPage)
+    loadComponent: () =>
+      import('./pages/create-changa/create-changa.page').then(
+        (m) => m.CreateChangaPage
+      ),
   },
-
+  {
+    path: 'checkout/:id',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () =>
+      import('./pages/checkout/checkout.page').then((m) => m.CheckoutPage),
+  },
 ];

@@ -14,19 +14,28 @@ import { HireChangaRequest } from '../models/hire-changa-request';
 })
 export class ChangasService {
   private baseUrl = 'http://localhost:8080/api/v1/changas';
-
+  
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private router: Router
   ) {}
-
+  
   getAllChangas(): Observable<ApiResponse<ChangaOverview[]>> {
     return this.http.get<ApiResponse<ChangaOverview[]>>(`${this.baseUrl}`);
   }
-
+  
   getChangaById(id: string): Observable<ApiResponse<ChangaOverview>> {
     return this.http.get<ApiResponse<ChangaOverview>>(`${this.baseUrl}/${id}`);
+  }
+  
+  searchChangasByTopic(topic: string) {
+    const requestParams = { topics: [topic] };
+    return this.http.get<ApiResponse<ChangaOverview[]>>(
+      `${this.baseUrl}/findBy`,
+      { params: requestParams }
+    );
+
   }
 
   createChanga(

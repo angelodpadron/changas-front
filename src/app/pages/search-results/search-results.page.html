@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-searchbar placeholder="{{ searchTerm }}"></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Resultados para {{ searchTerm }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Resultados de {{ searchTerm }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  @for(changa of changas; track changa.id) {
+  <app-changa-overview-card [changa]="changa"></app-changa-overview-card>
+  } @empty {
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Ops! Sin resultados para {{ searchTerm }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  }
+</ion-content>

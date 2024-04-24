@@ -16,7 +16,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
 import { ChangasService } from 'src/app/core/services/changas.service';
 import { LoadingController } from '@ionic/angular';
@@ -30,6 +30,7 @@ import { switchMap, of, catchError } from 'rxjs';
   styleUrls: ['./changa-details.page.scss'],
   standalone: true,
   imports: [
+    RouterModule,
     IonContent,
     IonHeader,
     IonTitle,

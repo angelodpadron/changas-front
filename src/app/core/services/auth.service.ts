@@ -15,6 +15,7 @@ import { ApiResponse } from '../models/api-response-body';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8080/api/v1/auth';
+  private readonly TOKEN_KEY = 'accessToken';
 
   private userAuthenticationSubject = new BehaviorSubject<User | null>(null);
 
@@ -22,18 +23,24 @@ export class AuthService {
     private http: HttpClient,
     private jwtHelperService: JwtHelperService
   ) {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
+    this.initializeUserAuthentication();
+  }
+
+  private async initializeUserAuthentication() {
+    const token = await this.jwtHelperService.tokenGetter();
+
+    if (typeof token === 'string' && this.tokenIsValid(token)) {
       const user = this.decodeToken(token);
       this.userAuthenticationSubject.next(user);
+      return;
     }
+
+    localStorage.removeItem('accessToken');
+    this.userAuthenticationSubject.next(null);
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('accessToken');
-
-    const isAuthenticated = !!token;
-    return isAuthenticated;
+    return this.userAuthenticationSubject.value !== null;
   }
 
   signup(signupRequest: SignupRequest): Observable<any> {
@@ -45,22 +52,31 @@ export class AuthService {
       .post<ApiResponse<LoginResponse>>(`${this.baseUrl}/login`, loginRequest)
       .pipe(
         tap((response: ApiResponse<LoginResponse>) => {
-          localStorage.setItem('accessToken', response.data.token);
+          this.setToken(response.data.token);
           this.setAuthenticatedUserWithToken(response.data.token);
         })
       );
+  }
+
+  signout() {
+    localStorage.removeItem(this.TOKEN_KEY);
+    this.userAuthenticationSubject.next(null);
+  }
+
+  tokenIsValid(token: string): boolean {
+    return !this.jwtHelperService.isTokenExpired(token);
   }
 
   getUserAuthenticated(): Observable<User | null> {
     return this.userAuthenticationSubject.asObservable();
   }
 
-  setAuthenticatedUserWithToken(token: string) {
+  private setAuthenticatedUserWithToken(token: string) {
     const user = this.decodeToken(token);
     this.userAuthenticationSubject.next(user);
   }
 
-  decodeToken(token: string): User {
+  private decodeToken(token: string): User {
     const decodedJwt = this.jwtHelperService.decodeToken(token);
     return {
       id: +decodedJwt['id'],
@@ -70,8 +86,7 @@ export class AuthService {
     };
   }
 
-  signout() {
-    localStorage.removeItem('accessToken');
-    this.userAuthenticationSubject.next(null);
+  private setToken(token: string) {
+    localStorage.setItem(this.TOKEN_KEY, token);
   }
 }

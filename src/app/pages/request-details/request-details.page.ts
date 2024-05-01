@@ -15,6 +15,7 @@ import {
   IonButton,
   IonBackButton,
   IonButtons,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { HiringDetails } from 'src/app/core/models/hiring-details.model';
 import { CustomersService } from 'src/app/core/services/customers.service';
@@ -46,6 +47,7 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
     IonButton,
     IonBackButton,
     IonButtons,
+    IonSpinner,
     CustomerOverviewComponent,
     TransactionStatusComponent,
   ],

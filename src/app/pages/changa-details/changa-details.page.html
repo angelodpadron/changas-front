@@ -1,4 +1,4 @@
-@if (changaOverview) {
+@if(loaded){
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -15,20 +15,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- Content container -->
-  <div class="ion-padding">
-    <!-- Changa Image -->
-    <ion-img [src]="changaOverview.photoUrl"></ion-img>
-
-    <hr />
-
-    <!-- Changa Description -->
-    <h5>Acerca de esta Changa</h5>
+  <ion-img [src]="changaOverview.photoUrl" class="image-container"></ion-img>
+  <div class="ion-padding">        
+    <h3>Acerca de esta Changa</h3>
     <p>{{ changaOverview.description }}</p>
 
     <hr />
 
-    <p>Mas sobre {{changaOverview.providerSummary.name}}</p>
+    <p>Más sobre {{changaOverview.providerSummary.name}}</p>
     <!-- Provider Information -->
     <app-customer-overview
       [customerName]="changaOverview.providerSummary.name"
@@ -38,19 +32,14 @@
 
     <hr />
 
-    <!-- Topics -->
     @for (topic of changaOverview.topics; track changaOverview.id) {
-    <ion-chip
-      color="warning"
-      [routerLink]="['/search-results', 'topic: ' + topic]"
-    >
+    <ion-chip color="warning" [routerLink]="['/search-results', 'topic: ' + topic]">
       {{ topic }}
     </ion-chip>
     }
 
     <hr />
 
-    <!-- Hire Button -->
     @if(!blocked) {
     <ion-button
       shape="round"
@@ -64,5 +53,7 @@
   </div>
 </ion-content>
 } @else {
-<p>Nothing to show here.</p>
+<div class="spinner-container">
+  <ion-spinner></ion-spinner>
+</div>
 }

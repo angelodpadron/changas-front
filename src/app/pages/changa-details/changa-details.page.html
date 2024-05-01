@@ -30,39 +30,37 @@
 
     <p>Mas sobre {{changaOverview.providerSummary.name}}</p>
     <!-- Provider Information -->
-    <ion-item>
-      <ion-avatar slot="start">
-        <img
-          [src]="changaOverview.providerSummary.photoUrl ||
-        'https://ionicframework.com/docs/img/demos/avatar.svg'"
-          alt="Provider's photo"
-        />
-      </ion-avatar>
-      <ion-label>
-        <h3>{{ changaOverview.providerSummary.name }}</h3>
-        <p>{{ changaOverview.providerSummary.email }}</p>
-      </ion-label>
-    </ion-item>
+    <app-customer-overview
+      [customerName]="changaOverview.providerSummary.name"
+      [customerEmail]="changaOverview.providerSummary.email"
+      [customerPhotoUrl]="changaOverview.providerSummary.photoUrl!"
+    ></app-customer-overview>
 
     <hr />
 
     <!-- Topics -->
     @for (topic of changaOverview.topics; track changaOverview.id) {
-    <ion-chip color="primary" [routerLink]="['/search-results', 'topic: ' + topic]"> {{ topic }} </ion-chip>
+    <ion-chip
+      color="warning"
+      [routerLink]="['/search-results', 'topic: ' + topic]"
+    >
+      {{ topic }}
+    </ion-chip>
     }
 
     <hr />
 
     <!-- Hire Button -->
+    @if(!blocked) {
     <ion-button
       shape="round"
       expand="block"
       color="warning"
       (click)="hireProvider(changaOverview.id)"
-      [disabled]="blocked"
     >
       Solicitar
     </ion-button>
+    }
   </div>
 </ion-content>
 } @else {

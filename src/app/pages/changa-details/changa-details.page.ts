@@ -23,6 +23,7 @@ import { LoadingController } from '@ionic/angular';
 import { ApiResponse } from 'src/app/core/models/api-response-body';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { switchMap, of, catchError } from 'rxjs';
+import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 
 @Component({
   selector: 'app-changa-details',
@@ -46,6 +47,7 @@ import { switchMap, of, catchError } from 'rxjs';
     IonItem,
     IonImg,
     IonIcon,
+    CustomerOverviewComponent,
   ],
 })
 export class ChangaDetailsPage implements OnInit {

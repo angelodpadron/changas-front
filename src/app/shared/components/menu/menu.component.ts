@@ -18,6 +18,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { CustomerOverviewComponent } from '../customer-overview/customer-overview.component';
 
 @Component({
   selector: 'app-menu',
@@ -39,6 +40,7 @@ import { Subscription } from 'rxjs';
     IonCol,
     IonRow,
     IonGrid,
+    CustomerOverviewComponent,
   ],
 })
 export class MenuComponent implements OnInit, OnDestroy {

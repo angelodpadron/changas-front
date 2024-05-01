@@ -1,0 +1,12 @@
+<ion-item>
+  <ion-avatar slot="start">
+    <img
+      [src]="customerPhotoUrl || photoUrlDefault"
+      alt="Imagen de perfil"
+    />
+  </ion-avatar>
+  <ion-label>
+    <h3>{{ customerName }}</h3>
+    <p>{{ customerEmail }}</p>
+  </ion-label>
+</ion-item>

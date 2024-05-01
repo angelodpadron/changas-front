@@ -20,8 +20,8 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        @for (hiringDetail of hiringsDetails; track hiringDetail.hiringId) {
-        <ion-item>
+        @for (hiringDetail of hiringsDetails; track hiringDetail.hiring_id) {
+        <ion-item [routerLink]="['/request-details', hiringDetail.hiring_id]">
           <ion-thumbnail slot="start">
             <img
               [alt]="hiringDetail.changa_title"
@@ -37,6 +37,13 @@
             <ion-row>
               <ion-col>
                 <p>{{ hiringDetail.creation_date | date }}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <app-transaction-status
+                  [status]="hiringDetail.status"
+                ></app-transaction-status>
               </ion-col>
             </ion-row>
           </ion-grid>

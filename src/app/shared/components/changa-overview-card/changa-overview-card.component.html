@@ -25,7 +25,7 @@
   <ion-card-content>
     <div class="badge-container">
       @for (topic of changa.topics; track changa.id){
-      <ion-chip color="primary" [outline]="true" [routerLink]="['/search-results', 'topic: ' + topic]" (click)="$event.stopPropagation()">
+      <ion-chip color="warning" [outline]="true" [routerLink]="['/search-results', 'topic: ' + topic]" (click)="$event.stopPropagation()">
         {{ topic }}
       </ion-chip>
       }

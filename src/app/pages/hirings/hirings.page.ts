@@ -23,8 +23,8 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { CustomersService } from 'src/app/core/services/customers.service';
-import { HiringDetails } from 'src/app/core/models/hiring-details.model';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { HiringDetails } from 'src/app/core/models/hiring-details';
+import { ApiResponse } from 'src/app/core/models/api-response';
 import { RouterModule } from '@angular/router';
 import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';
 

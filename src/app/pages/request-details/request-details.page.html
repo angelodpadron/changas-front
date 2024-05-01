@@ -3,56 +3,53 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title class="page-title">Detalles de Solicitud</ion-title>
+    <ion-title>Detalles de Solicitud</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large" class="page-title">Detalles de Solicitud</ion-title>
+      <ion-title size="large">Detalles de Solicitud</ion-title>
     </ion-toolbar>
   </ion-header>
 
   @if(loaded){
-
-    <ion-card>
-      <ion-img [src]="hiringDetails.changa_photo_url"></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{ hiringDetails.changa_title }}</ion-card-title>
-        <ion-card-subtitle class="card-subtitle">{{ hiringDetails.creation_date | date }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p>{{ hiringDetails.changa_description }}</p>
-        <hr />
-        <app-transaction-status [status]="hiringDetails.status"></app-transaction-status>
-      </ion-card-content>
-
-      <ion-card-header>
-        <ion-card-title>
-          {{ isProvider ? 'Solicitante de esta changa' : 'Proveedor de esta changa' }}
-        </ion-card-title>
-      </ion-card-header>
+    <ion-img [src]="hiringDetails.changa_photo_url"></ion-img>
+    <div class="ion-padding">
+      <h3>{{ hiringDetails.changa_title }}</h3>
+      <p>{{ hiringDetails.changa_description }}</p>
+      <hr/>
+      <small>{{ isProvider ? 'Persona interesada' : 'Ofrecido por' }}</small>
+      <hr/>
       <app-customer-overview
         [customerName]="customerDetails.name"
         [customerEmail]="customerDetails.email"
-        [customerPhotoUrl]="customerDetails.photoUrl!"
+        [customerPhotoUrl]="customerDetails.photo_url!"
       ></app-customer-overview>
+      <br>
+      <small>Fecha de solicitud: {{ hiringDetails.creation_date | date: 'd/M/yyyy HH:mm' }}</small>
+      <br>
+      <small>ID de solicitud: {{ hiringDetails.hiring_id }}</small>
+      <br>
+      <small>Estado de solicitud</small>
+      <hr/>
+      <app-transaction-status [status]="hiringDetails.status"></app-transaction-status>
+    </div>
 
-      <ion-card-header>
-        <ion-card-title>Detalles del Área a Trabajar</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-img [src]="hiringDetails.work_area_photo_url"></ion-img>
-        <hr />
-        <p>{{ hiringDetails.work_details }}</p>
-        <hr />
-        <div *ngIf="canRespondToRequest()" class="button-container">
-          <ion-button shape="round" expand="block" color="success" (click)="acceptRequest()">Aceptar Solicitud</ion-button>
-          <ion-button shape="round" expand="block" color="danger" (click)="declineRequest()">Rechazar Solicitud</ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card>
+    <div class="ion-padding">
+      <h5>Trabajo a realizar</h5>
+      <p>{{ hiringDetails.work_details }}</p>      
+      <ion-img [src]="hiringDetails.work_area_photo_url"></ion-img>
+    </div>
+
+    @if(canRespondToRequest()){
+    <div class="ion-padding">
+      <ion-button shape="round" expand="block" color="success" (click)="acceptRequest()">Aceptar Solicitud</ion-button>
+      <ion-button shape="round" expand="block" color="danger" (click)="declineRequest()">Rechazar Solicitud</ion-button>
+    </div>
+    }
+    
   } @else {
     <div class="spinner-container">
       <ion-spinner></ion-spinner>

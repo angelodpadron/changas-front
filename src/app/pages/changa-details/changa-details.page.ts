@@ -18,9 +18,9 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
-import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
+import { ChangaOverview } from 'src/app/core/models/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas.service';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { switchMap, of, catchError } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
@@ -74,7 +74,7 @@ export class ChangaDetailsPage implements OnInit {
             // Return another observable here
             return this.authService.getUserAuthenticated().pipe(
               switchMap((user) => {
-                if (user?.id === this.changaOverview.providerSummary.id) {
+                if (user?.id === this.changaOverview.provider_summary.id) {
                   this.blocked = true;
                 }
                 return of({}); // Completes the observable chain successfully

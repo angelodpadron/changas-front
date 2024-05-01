@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChangaOverviewCardComponent } from 'src/app/shared/components/changa-overview-card/changa-overview-card.component';
-import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
+import { ChangaOverview } from 'src/app/core/models/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas.service';
 import {
   IonButton,
@@ -22,7 +22,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { ApiResponse } from 'src/app/core/models/api-response';
 
 @Component({
   selector: 'app-home',

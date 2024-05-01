@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HiringDetails } from '../models/hiring-details.model';
-import { ApiResponse } from '../models/api-response-body';
-import { User } from '../models/user.model';
+import { HiringDetails } from '../models/hiring-details';
+import { ApiResponse } from '../models/api-response';
+import { Customer } from '../models/customer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class CustomersService {
   }
 
   getCustomerDetails(hiringTransactionId: string) {
-    return this.http.get<ApiResponse<User>>(
+    return this.http.get<ApiResponse<Customer>>(
       `${this.baseUrl}/${hiringTransactionId}`
     );
   }

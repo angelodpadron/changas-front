@@ -25,7 +25,7 @@ import {
   IonCard,
   IonInput,
 } from '@ionic/angular/standalone';
-import { SignupRequest } from 'src/app/core/models/auth-request-response-body';
+import { SignupRequest } from 'src/app/core/models/auth-request-response';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 

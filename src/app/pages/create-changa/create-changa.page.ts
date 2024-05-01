@@ -29,8 +29,8 @@ import {
 } from '@ionic/angular/standalone';
 import { CreateChangaRequest } from 'src/app/core/models/create-changa-request';
 import { ChangasService } from 'src/app/core/services/changas.service';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
-import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
+import { ApiResponse } from 'src/app/core/models/api-response';
+import { ChangaOverview } from 'src/app/core/models/changa-overview';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({

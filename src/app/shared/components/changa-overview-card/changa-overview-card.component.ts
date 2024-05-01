@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import {
   IonAvatar,
   IonCard,
@@ -12,7 +12,7 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
+import { ChangaOverview } from 'src/app/core/models/changa-overview';
 
 @Component({
   selector: 'app-changa-overview-card',

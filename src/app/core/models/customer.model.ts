@@ -1,6 +1,6 @@
-export interface User {
+export interface Customer {
   id: number;
   name: string;
   email: string;
-  photoUrl?: string;
+  photo_url: string;
 }

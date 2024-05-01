@@ -15,19 +15,19 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-img [src]="changaOverview.photoUrl" class="image-container"></ion-img>
+  <ion-img [src]="changaOverview.photo_url" class="image-container"></ion-img>
   <div class="ion-padding">        
     <h3>Acerca de esta Changa</h3>
     <p>{{ changaOverview.description }}</p>
 
     <hr />
 
-    <p>Más sobre {{changaOverview.providerSummary.name}}</p>
+    <p>Más sobre {{changaOverview.provider_summary.name}}</p>
     <!-- Provider Information -->
     <app-customer-overview
-      [customerName]="changaOverview.providerSummary.name"
-      [customerEmail]="changaOverview.providerSummary.email"
-      [customerPhotoUrl]="changaOverview.providerSummary.photoUrl!"
+      [customerName]="changaOverview.provider_summary.name"
+      [customerEmail]="changaOverview.provider_summary.email"
+      [customerPhotoUrl]="changaOverview.provider_summary.photo_url"
     ></app-customer-overview>
 
     <hr />

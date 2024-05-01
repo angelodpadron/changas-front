@@ -39,15 +39,13 @@
                 <p>{{ hiringDetail.creation_date | date }}</p>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col>
-                <app-transaction-status
-                  [status]="hiringDetail.status"
-                ></app-transaction-status>
-              </ion-col>
-            </ion-row>
           </ion-grid>
         </ion-item>
+        <div class="ion-padding">
+          <app-transaction-status
+            [status]="hiringDetail.status"
+          ></app-transaction-status>
+        </div>
         } @empty {
         <ion-item>
           <ion-label>No tienes changas contratadas</ion-label>

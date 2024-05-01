@@ -1,10 +1,10 @@
-import { User } from "./user.model";
+import { Customer } from "./customer.model";
 
 export interface ChangaOverview {
   id: string;
   title: string;
   description: string;
-  photoUrl: string;
+  photo_url: string;
   topics: string[];
-  providerSummary: User;
+  provider_summary: Customer;
 }

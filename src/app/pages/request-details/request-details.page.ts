@@ -1,25 +1,19 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonCard,
   IonImg,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
   IonButton,
   IonBackButton,
   IonButtons,
   IonSpinner,
 } from '@ionic/angular/standalone';
-import { HiringDetails } from 'src/app/core/models/hiring-details.model';
+import { HiringDetails } from 'src/app/core/models/hiring-details';
 import { CustomersService } from 'src/app/core/services/customers.service';
-import { User } from 'src/app/core/models/user.model';
+import { Customer } from 'src/app/core/models/customer.model';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -37,13 +31,7 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
     IonTitle,
     IonToolbar,
     CommonModule,
-    FormsModule,
-    IonCard,
     IonImg,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardContent,
     IonButton,
     IonBackButton,
     IonButtons,
@@ -57,7 +45,7 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
   hiringTransactionId: string = '';
 
   hiringDetails!: HiringDetails;
-  customerDetails!: User;
+  customerDetails!: Customer;
 
   isProvider: boolean = false;
   loaded: boolean = false;

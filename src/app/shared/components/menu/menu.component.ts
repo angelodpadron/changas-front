@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from 'src/app/core/models/user.model';
+import { Customer } from 'src/app/core/models/customer.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import {
   IonMenu,
@@ -44,7 +44,7 @@ import { CustomerOverviewComponent } from '../customer-overview/customer-overvie
   ],
 })
 export class MenuComponent implements OnInit, OnDestroy {
-  userAuthenticated: User | null = null;
+  userAuthenticated: Customer | null = null;
   private userAuthenticatedSubscription: Subscription = new Subscription();
 
   constructor(private authService: AuthService) {}

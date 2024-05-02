@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {
   LoginRequest,
   LoginResponse,
   SignupRequest,
-} from '../models/auth-request-response-body';
+} from '../models/auth-request-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from '../models/user.model';
-import { ApiResponse } from '../models/api-response-body';
+import { Customer } from '../models/customer.model';
+import { ApiResponse } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class AuthService {
   private baseUrl = 'http://localhost:8080/api/v1/auth';
   private readonly TOKEN_KEY = 'accessToken';
 
-  private userAuthenticationSubject = new BehaviorSubject<User | null>(null);
+  private userAuthenticationSubject = new BehaviorSubject<Customer | null>(null);
 
   constructor(
     private http: HttpClient,
@@ -67,7 +67,7 @@ export class AuthService {
     return !this.jwtHelperService.isTokenExpired(token);
   }
 
-  getUserAuthenticated(): Observable<User | null> {
+  getUserAuthenticated(): Observable<Customer | null> {
     return this.userAuthenticationSubject.asObservable();
   }
 
@@ -76,13 +76,13 @@ export class AuthService {
     this.userAuthenticationSubject.next(user);
   }
 
-  private decodeToken(token: string): User {
+  private decodeToken(token: string): Customer {
     const decodedJwt = this.jwtHelperService.decodeToken(token);
     return {
       id: +decodedJwt['id'],
       name: decodedJwt['name'],
       email: decodedJwt['email'],
-      photoUrl: decodedJwt['photo'],
+      photo_url: decodedJwt['photo'],
     };
   }
 

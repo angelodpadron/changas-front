@@ -18,7 +18,7 @@
 
   <ion-card>
     <img
-      [src]="changaOverview()?.photoUrl || 'https://ionicframework.com/docs/img/demos/card-media.png'"
+      [src]="changaOverview()?.photo_url || 'https://ionicframework.com/docs/img/demos/card-media.png'"
       alt="Area a trabajar"
     />
 
@@ -29,7 +29,7 @@
           >{{ changaOverview()?.description }}</ion-card-subtitle
         >
         <ion-card-subtitle
-          >Ofrecido por {{ changaOverview()?.providerSummary?.name
+          >Ofrecido por {{ changaOverview()?.provider_summary?.name
           }}</ion-card-subtitle
         >
       </ion-card-header>

@@ -20,9 +20,9 @@ import {
   IonBackButton,
   IonThumbnail,
 } from '@ionic/angular/standalone';
-import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
+import { ChangaOverview } from 'src/app/core/models/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas.service';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { ApiResponse } from 'src/app/core/models/api-response';
 import { HireChangaRequest } from 'src/app/core/models/hire-changa-request';
 import { Router, RouterModule } from '@angular/router';
 

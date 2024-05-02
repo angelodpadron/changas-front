@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from 'src/app/core/models/user.model';
+import { Customer } from 'src/app/core/models/customer.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import {
   IonMenu,
@@ -18,6 +18,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { CustomerOverviewComponent } from '../customer-overview/customer-overview.component';
 
 @Component({
   selector: 'app-menu',
@@ -39,10 +40,11 @@ import { Subscription } from 'rxjs';
     IonCol,
     IonRow,
     IonGrid,
+    CustomerOverviewComponent,
   ],
 })
 export class MenuComponent implements OnInit, OnDestroy {
-  userAuthenticated: User | null = null;
+  userAuthenticated: Customer | null = null;
   private userAuthenticatedSubscription: Subscription = new Subscription();
 
   constructor(private authService: AuthService) {}

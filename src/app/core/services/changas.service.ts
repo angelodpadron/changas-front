@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ChangaOverview } from '../models/changa-overview.model';
+import { ChangaOverview } from '../models/changa-overview';
 import { HttpClient } from '@angular/common/http';
 import { Observable, switchMap } from 'rxjs';
 import { AuthService } from './auth.service';
-import { User } from '../models/user.model';
-import { ApiResponse } from '../models/api-response-body';
-import { Router } from '@angular/router';
+import { Customer } from '../models/customer.model';
+import { ApiResponse } from '../models/api-response';
 import { CreateChangaRequest } from '../models/create-changa-request';
 import { HireChangaRequest } from '../models/hire-changa-request';
 
@@ -17,9 +16,7 @@ export class ChangasService {
   
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+    private authService: AuthService  ) {}
   
   getAllChangas(): Observable<ApiResponse<ChangaOverview[]>> {
     return this.http.get<ApiResponse<ChangaOverview[]>>(`${this.baseUrl}`);
@@ -49,7 +46,7 @@ export class ChangasService {
 
   hireChanga(hireChangaRequest: HireChangaRequest) {
     return this.authService.getUserAuthenticated().pipe(
-      switchMap((customer: User | null) => {
+      switchMap((customer: Customer | null) => {
         if (!customer) {
           throw new Error('No user authenticated');
         }

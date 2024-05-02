@@ -23,8 +23,10 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { CustomersService } from 'src/app/core/services/customers.service';
-import { HiringDetails } from 'src/app/core/models/hiring-details.model';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { HiringDetails } from 'src/app/core/models/hiring-details';
+import { ApiResponse } from 'src/app/core/models/api-response';
+import { RouterModule } from '@angular/router';
+import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';
 
 @Component({
   selector: 'app-hirings',
@@ -32,6 +34,7 @@ import { ApiResponse } from 'src/app/core/models/api-response-body';
   styleUrls: ['./hirings.page.scss'],
   standalone: true,
   imports: [
+    RouterModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -53,6 +56,7 @@ import { ApiResponse } from 'src/app/core/models/api-response-body';
     IonGrid,
     IonBackButton,
     IonButtons,
+    TransactionStatusComponent,
   ],
 })
 export class HiringsPage implements OnInit {
@@ -64,6 +68,7 @@ export class HiringsPage implements OnInit {
     this.customersService.getHirings().subscribe({
       next: (response: ApiResponse<HiringDetails[]>) => {
         if (response.success) {
+          console.log('Hiring details:', response.data);
           this.hiringsDetails = response.data;
         } else {
           console.error(response.error?.message);

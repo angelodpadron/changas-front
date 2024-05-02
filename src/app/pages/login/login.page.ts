@@ -25,9 +25,9 @@ import { Router, RouterModule } from '@angular/router';
 import {
   LoginRequest,
   LoginResponse,
-} from 'src/app/core/models/auth-request-response-body';
+} from 'src/app/core/models/auth-request-response';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { ApiResponse } from 'src/app/core/models/api-response';
 
 @Component({
   selector: 'app-login',

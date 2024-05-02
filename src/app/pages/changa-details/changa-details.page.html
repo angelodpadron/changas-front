@@ -1,4 +1,4 @@
-@if (changaOverview) {
+@if(loaded){
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -15,56 +15,45 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- Content container -->
-  <div class="ion-padding">
-    <!-- Changa Image -->
-    <ion-img [src]="changaOverview.photoUrl"></ion-img>
-
-    <hr />
-
-    <!-- Changa Description -->
-    <h5>Acerca de esta Changa</h5>
+  <ion-img [src]="changaOverview.photo_url" class="image-container"></ion-img>
+  <div class="ion-padding">        
+    <h3>Acerca de esta Changa</h3>
     <p>{{ changaOverview.description }}</p>
 
     <hr />
 
-    <p>Mas sobre {{changaOverview.providerSummary.name}}</p>
+    <p>Más sobre {{changaOverview.provider_summary.name}}</p>
     <!-- Provider Information -->
-    <ion-item>
-      <ion-avatar slot="start">
-        <img
-          [src]="changaOverview.providerSummary.photoUrl ||
-        'https://ionicframework.com/docs/img/demos/avatar.svg'"
-          alt="Provider's photo"
-        />
-      </ion-avatar>
-      <ion-label>
-        <h3>{{ changaOverview.providerSummary.name }}</h3>
-        <p>{{ changaOverview.providerSummary.email }}</p>
-      </ion-label>
-    </ion-item>
+    <app-customer-overview
+      [customerName]="changaOverview.provider_summary.name"
+      [customerEmail]="changaOverview.provider_summary.email"
+      [customerPhotoUrl]="changaOverview.provider_summary.photo_url"
+    ></app-customer-overview>
 
     <hr />
 
-    <!-- Topics -->
     @for (topic of changaOverview.topics; track changaOverview.id) {
-    <ion-chip color="primary" [routerLink]="['/search-results', 'topic: ' + topic]"> {{ topic }} </ion-chip>
+    <ion-chip color="warning" [routerLink]="['/search-results', 'topic: ' + topic]">
+      {{ topic }}
+    </ion-chip>
     }
 
     <hr />
 
-    <!-- Hire Button -->
+    @if(!blocked) {
     <ion-button
       shape="round"
       expand="block"
       color="warning"
       (click)="hireProvider(changaOverview.id)"
-      [disabled]="blocked"
     >
       Solicitar
     </ion-button>
+    }
   </div>
 </ion-content>
 } @else {
-<p>Nothing to show here.</p>
+<div class="spinner-container">
+  <ion-spinner></ion-spinner>
+</div>
 }

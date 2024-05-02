@@ -64,5 +64,11 @@ export const routes: Routes = [
     path: 'search-results/:searchTerm',
     loadComponent: () => import('./pages/search-results/search-results.page').then( m => m.SearchResultsPage)
   },
+  {
+    path: 'request-details/:id',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () => import('./pages/request-details/request-details.page').then( m => m.RequestDetailsPage)
+  },
+
 
 ];

@@ -15,14 +15,15 @@ import {
   IonLabel,
   IonTitle,
   IonToolbar,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
-import { ChangaOverview } from 'src/app/core/models/changa-overview.model';
+import { ChangaOverview } from 'src/app/core/models/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas.service';
-import { LoadingController } from '@ionic/angular';
-import { ApiResponse } from 'src/app/core/models/api-response-body';
+import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { switchMap, of, catchError } from 'rxjs';
+import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 
 @Component({
   selector: 'app-changa-details',
@@ -46,6 +47,8 @@ import { switchMap, of, catchError } from 'rxjs';
     IonItem,
     IonImg,
     IonIcon,
+    IonSpinner,
+    CustomerOverviewComponent,
   ],
 })
 export class ChangaDetailsPage implements OnInit {
@@ -53,21 +56,15 @@ export class ChangaDetailsPage implements OnInit {
   changaId: string = '';
   changaOverview!: ChangaOverview;
   blocked = false;
+  loaded = false;
 
   constructor(
     private router: Router,
     private changaService: ChangasService,
     private authService: AuthService,
-    private loadingController: LoadingController
   ) {}
 
   async ngOnInit() {
-    const loading = await this.loadingController.create({
-      message: 'Obteniendo informacion...',
-    });
-
-    await loading.present();
-
     this.changaService
       .getChangaById(this.changaId)
       .pipe(
@@ -77,7 +74,7 @@ export class ChangaDetailsPage implements OnInit {
             // Return another observable here
             return this.authService.getUserAuthenticated().pipe(
               switchMap((user) => {
-                if (user?.id === this.changaOverview.providerSummary.id) {
+                if (user?.id === this.changaOverview.provider_summary.id) {
                   this.blocked = true;
                 }
                 return of({}); // Completes the observable chain successfully
@@ -95,11 +92,10 @@ export class ChangaDetailsPage implements OnInit {
       )
       .subscribe({
         next: async () => {
-          await loading.dismiss(); // Dismiss the loading indicator once everything is complete
+          this.loaded = true;
         },
         error: async (error) => {
           console.error('Error in the full observable chain:', error);
-          await loading.dismiss(); // Dismiss the loading indicator on error
         },
       });
   }

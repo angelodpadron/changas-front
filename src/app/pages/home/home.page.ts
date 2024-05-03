@@ -23,6 +23,9 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { ApiResponse } from 'src/app/core/models/api-response';
+import { Router, RouterModule } from '@angular/router';
+import { search } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +34,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IonCard,
     IonLabel,
     IonItem,
@@ -54,7 +58,9 @@ export class HomePage implements OnInit, OnDestroy {
   private subscription!: Subscription;
   changas: ChangaOverview[] = [];
 
-  constructor(private changasSerivce: ChangasService) {}
+  constructor(private changasSerivce: ChangasService, private router: Router) {
+    addIcons({ search });
+  }
 
   ngOnInit() {
     this.subscription = this.changasSerivce.getAllChangas().subscribe({

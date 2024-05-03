@@ -61,7 +61,7 @@ export const routes: Routes = [
       import('./pages/checkout/checkout.page').then((m) => m.CheckoutPage),
   },
   {
-    path: 'search-results/:searchTerm',
+    path: 'search-results',
     loadComponent: () => import('./pages/search-results/search-results.page').then( m => m.SearchResultsPage)
   },
   {

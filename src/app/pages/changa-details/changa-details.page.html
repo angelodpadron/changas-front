@@ -33,7 +33,7 @@
     <hr />
 
     @for (topic of changaOverview.topics; track changaOverview.id) {
-    <ion-chip color="warning" [routerLink]="['/search-results', 'topic: ' + topic]">
+    <ion-chip color="warning" [routerLink]="['/search-results']" [queryParams]="{topics:[topic]}">
       {{ topic }}
     </ion-chip>
     }

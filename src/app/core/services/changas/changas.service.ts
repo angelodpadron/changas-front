@@ -12,23 +12,40 @@ import { HireChangaRequest } from '../../models/transactions/hire-changa-request
 })
 export class ChangasService {
   private baseUrl = 'http://localhost:8080/api/v1/changas';
-
+  
   constructor(private http: HttpClient, private authService: AuthService) {}
-
+  
   getAllChangas(): Observable<ApiResponse<ChangaOverview[]>> {
     return this.http.get<ApiResponse<ChangaOverview[]>>(`${this.baseUrl}`);
   }
-
+  
   getChangaById(id: string): Observable<ApiResponse<ChangaOverview>> {
     return this.http.get<ApiResponse<ChangaOverview>>(`${this.baseUrl}/${id}`);
   }
-
-  searchChangasByTopic(topic: string) {
-    const requestParams = { topics: [topic] };
+  
+  searchChangasByTitle(title: string) {
+    const requestParams = { title };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
       `${this.baseUrl}/findBy`,
       { params: requestParams }
     );
+  }
+  
+  searchChangasByTopic(topics: [string]) {
+    const requestParams = { topics };
+    return this.http.get<ApiResponse<ChangaOverview[]>>(
+      `${this.baseUrl}/findBy`,
+      { params: requestParams }
+    );
+  }
+
+  searchChangasByTitleAndTopics(title: string, topics: [string]) {
+    const requestParams = { title, topics };
+    return this.http.get<ApiResponse<ChangaOverview[]>>(
+      `${this.baseUrl}/findBy`,
+      { params: requestParams }
+    );    
+
   }
 
   createChanga(

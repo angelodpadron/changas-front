@@ -22,8 +22,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { CustomersService } from 'src/app/core/services/customers.service';
-import { HiringDetails } from 'src/app/core/models/hiring-details';
+import { CustomersService } from 'src/app/core/services/customers/customers.service';
+import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { RouterModule } from '@angular/router';
 import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';

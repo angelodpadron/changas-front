@@ -5,10 +5,10 @@ import {
   LoginRequest,
   LoginResponse,
   SignupRequest,
-} from '../models/auth-request-response';
+} from '../../models/customer/auth-request-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Customer } from '../models/customer.model';
-import { ApiResponse } from '../models/api-response';
+import { Customer } from '../../models/customer/customer.model';
+import { ApiResponse } from '../../models/api-response';
 
 @Injectable({
   providedIn: 'root',

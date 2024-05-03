@@ -20,10 +20,10 @@ import {
   IonBackButton,
   IonThumbnail,
 } from '@ionic/angular/standalone';
-import { ChangaOverview } from 'src/app/core/models/changa-overview';
-import { ChangasService } from 'src/app/core/services/changas.service';
+import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
+import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
-import { HireChangaRequest } from 'src/app/core/models/hire-changa-request';
+import { HireChangaRequest } from 'src/app/core/models/transactions/hire-changa-request';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({

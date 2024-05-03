@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Customer } from 'src/app/core/models/customer.model';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Customer } from 'src/app/core/models/customer/customer.model';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import {
   IonMenu,
   IonAvatar,

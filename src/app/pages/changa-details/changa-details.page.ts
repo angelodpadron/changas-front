@@ -18,10 +18,10 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
-import { ChangaOverview } from 'src/app/core/models/changa-overview';
-import { ChangasService } from 'src/app/core/services/changas.service';
+import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
+import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { switchMap, of, catchError } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 
@@ -59,7 +59,6 @@ export class ChangaDetailsPage implements OnInit {
   loaded = false;
 
   constructor(
-    private router: Router,
     private changaService: ChangasService,
     private authService: AuthService,
   ) {}
@@ -98,14 +97,5 @@ export class ChangaDetailsPage implements OnInit {
           console.error('Error in the full observable chain:', error);
         },
       });
-  }
-
-  hireProvider(changaId: string) {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    this.router.navigate(['/checkout', changaId]);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChangaOverviewCardComponent } from 'src/app/shared/components/changa-overview-card/changa-overview-card.component';
-import { ChangaOverview } from 'src/app/core/models/changa-overview';
-import { ChangasService } from 'src/app/core/services/changas.service';
+import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
+import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import {
   IonButton,
   IonButtons,

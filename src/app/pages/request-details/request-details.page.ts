@@ -11,14 +11,14 @@ import {
   IonButtons,
   IonSpinner,
 } from '@ionic/angular/standalone';
-import { HiringDetails } from 'src/app/core/models/hiring-details';
-import { CustomersService } from 'src/app/core/services/customers.service';
-import { Customer } from 'src/app/core/models/customer.model';
+import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
+import { CustomersService } from 'src/app/core/services/customers/customers.service';
+import { Customer } from 'src/app/core/models/customer/customer.model';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Subject, of, switchMap, takeUntil } from 'rxjs';
-import { TransactionsService } from 'src/app/core/services/transactions.service';
+import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 
 @Component({
   selector: 'app-request-details',

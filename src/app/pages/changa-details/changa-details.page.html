@@ -45,7 +45,7 @@
       shape="round"
       expand="block"
       color="warning"
-      (click)="hireProvider(changaOverview.id)"
+      [routerLink]="['/checkout', changaOverview.id]"
     >
       Solicitar
     </ion-button>

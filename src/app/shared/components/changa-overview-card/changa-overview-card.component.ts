@@ -12,7 +12,7 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { ChangaOverview } from 'src/app/core/models/changa-overview';
+import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 
 @Component({
   selector: 'app-changa-overview-card',

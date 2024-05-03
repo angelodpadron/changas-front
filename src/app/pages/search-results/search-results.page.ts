@@ -16,9 +16,9 @@ import {
   IonProgressBar,
   IonSearchbar,
 } from '@ionic/angular/standalone';
-import { ChangasService } from 'src/app/core/services/changas.service';
+import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
-import { ChangaOverview } from 'src/app/core/models/changa-overview';
+import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { ChangaOverviewCardComponent } from 'src/app/shared/components/changa-overview-card/changa-overview-card.component';
 
 @Component({

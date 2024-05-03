@@ -1,4 +1,4 @@
-import { Customer } from "./customer.model";
+import { Customer } from "../customer/customer.model";
 
 export interface ChangaOverview {
   id: string;

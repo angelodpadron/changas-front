@@ -24,7 +24,7 @@ if (environment.production) {
 }
 
 export function tokenGetter() {
-  return localStorage.getItem('accessToken');
+  return localStorage.getItem(environment.tokenKey);
 }
 
 export function jwtProviderConfig() {

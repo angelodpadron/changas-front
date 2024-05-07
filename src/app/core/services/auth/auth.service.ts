@@ -10,14 +10,18 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Customer } from '../../models/customer/customer.model';
 import { ApiResponse } from '../../models/api-response';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/v1/auth';
-  private readonly TOKEN_KEY = 'accessToken';
+  private baseUrl = environment.fullApiUrl + '/auth';
+  private readonly TOKEN_KEY = environment.tokenKey;
 
-  private userAuthenticationSubject = new BehaviorSubject<Customer | null>(null);
+  private userAuthenticationSubject = new BehaviorSubject<Customer | null>(
+    null
+  );
 
   constructor(
     private http: HttpClient,
@@ -27,20 +31,31 @@ export class AuthService {
   }
 
   private async initializeUserAuthentication() {
-    const token = await this.jwtHelperService.tokenGetter();
+    const token = this.getToken();
 
-    if (typeof token === 'string' && this.tokenIsValid(token)) {
+    if (token && this.tokenIsValid(token)) {
       const user = this.decodeToken(token);
       this.userAuthenticationSubject.next(user);
       return;
     }
 
-    localStorage.removeItem('accessToken');
-    this.userAuthenticationSubject.next(null);
+    this.signout();
+  }
+  
+  private getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  private setToken(token: string) {
+    localStorage.setItem(this.TOKEN_KEY, token);
   }
 
   isAuthenticated(): boolean {
-    return this.userAuthenticationSubject.value !== null;
+    const token = this.getToken();
+    const tokenIsValid = token ? this.tokenIsValid(token) : false;
+    const userIsAuthenticated = this.userAuthenticationSubject.getValue();
+    
+    return tokenIsValid && userIsAuthenticated !== null;
   }
 
   signup(signupRequest: SignupRequest): Observable<any> {
@@ -86,7 +101,5 @@ export class AuthService {
     };
   }
 
-  private setToken(token: string) {
-    localStorage.setItem(this.TOKEN_KEY, token);
-  }
+  
 }

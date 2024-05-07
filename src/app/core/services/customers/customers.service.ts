@@ -5,11 +5,13 @@ import { HiringDetails } from '../../models/transactions/hiring-details';
 import { ApiResponse } from '../../models/api-response';
 import { Customer } from '../../models/customer/customer.model';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class CustomersService {
-  private baseUrl = 'http://localhost:8080/api/v1/customers';
+  private baseUrl = environment.fullApiUrl + '/customers';
 
   constructor(private http: HttpClient) {}
 
@@ -30,6 +32,4 @@ export class CustomersService {
       `${this.baseUrl}/${hiringTransactionId}`
     );
   }
-
-  
 }

@@ -7,13 +7,15 @@ import { ApiResponse } from '../../models/api-response';
 import { CreateChangaRequest } from '../../models/changa/create-changa-request';
 import { HireChangaRequest } from '../../models/transactions/hire-changa-request';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ChangasService {
-  private baseUrl = 'http://localhost:8080/api/v1/changas';
+  private baseUrl =  environment.fullApiUrl +'/changas';
   
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
   
   getAllChangas(): Observable<ApiResponse<ChangaOverview[]>> {
     return this.http.get<ApiResponse<ChangaOverview[]>>(`${this.baseUrl}`);

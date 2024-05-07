@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 import { ApiResponse } from '../../models/api-response';
 import { HiringDetails } from '../../models/transactions/hiring-details';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionsService {
-  private baseUrl = 'http://localhost:8080/api/v1/transactions';
+  private baseUrl = environment.fullApiUrl + '/transactions';
 
   constructor(private http: HttpClient) {}
 

@@ -1,6 +1,10 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter, withComponentInputBinding } from '@angular/router';
+import {
+  RouteReuseStrategy,
+  provideRouter,
+  withComponentInputBinding,
+} from '@angular/router';
 import {
   IonicRouteStrategy,
   provideIonicAngular,
@@ -25,16 +29,18 @@ export function tokenGetter() {
 
 export function jwtProviderConfig() {
   const baseApiUrl = 'localhost:8080';
+  const fullApiUrl = `http://${baseApiUrl}/api/v1`;
 
   return JwtModule.forRoot({
     config: {
       tokenGetter: tokenGetter,
-      allowedDomains: [`${baseApiUrl}`],
+      allowedDomains: [baseApiUrl],
       disallowedRoutes: [
-        `${baseApiUrl}/api/v1/auth/login`,
-        `${baseApiUrl}/api/v1/auth/signup`,
-        `${baseApiUrl}/api/v1/changas`,
-        new RegExp(`${baseApiUrl}/api/v1/changas/\\d+$`), // la idea aca es no mandar el token para changas/{id}, ya que es un endpoint publico
+        `${fullApiUrl}/changas`,
+        new RegExp(`${fullApiUrl}/changas/\\d+$`),
+        new RegExp(`${fullApiUrl}/changas/findBy.*`),
+        new RegExp(`${fullApiUrl}/auth/.*`),
+        new RegExp(`${fullApiUrl}/customers/\\d+$`),
       ],
     },
   });

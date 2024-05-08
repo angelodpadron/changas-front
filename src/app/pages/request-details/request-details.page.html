@@ -45,8 +45,8 @@
 
     @if(canRespondToRequest()){
     <div class="ion-padding">
-      <ion-button shape="round" expand="block" color="success" (click)="acceptRequest()">Aceptar Solicitud</ion-button>
-      <ion-button shape="round" expand="block" color="danger" (click)="declineRequest()">Rechazar Solicitud</ion-button>
+      <ion-button shape="round" expand="block" color="success" (click)="acceptRequest()">{{ isProvider ? 'Aceptar solicitud' : 'Aceptar condiciones' }}</ion-button>
+      <ion-button shape="round" expand="block" color="danger" (click)="declineRequest()">{{ isProvider ? 'Rechazar solicitud' : 'Rechazar condiciones' }}</ion-button>
     </div>
     }
     

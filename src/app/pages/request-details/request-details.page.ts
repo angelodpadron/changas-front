@@ -119,10 +119,14 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
   }
 
   canRespondToRequest() {
-    return (
-      this.hiringDetails.status === 'AWAITING_PROVIDER_CONFIRMATION' &&
-      this.isProvider
-    );
+    switch (this.hiringDetails.status) {
+      case 'AWAITING_PROVIDER_CONFIRMATION':
+        return this.isProvider;
+      case 'AWAITING_REQUESTER_CONFIRMATION':
+        return !this.isProvider;
+      default:
+        return false;
+    }
   }
 
   acceptRequest() {
@@ -131,7 +135,6 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            console.log('Request accepted');
             this.hiringDetails = response.data;
           } else {
             console.error('Error accepting request', response.error?.message);
@@ -149,7 +152,6 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            console.log('Request declined');
             this.hiringDetails = response.data;
           } else {
             console.error('Error declining request', response.error?.message);

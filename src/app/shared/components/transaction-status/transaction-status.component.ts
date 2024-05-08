@@ -22,12 +22,16 @@ export class TransactionStatusComponent implements OnInit {
         this.parsedStatus = 'Esperando confirmación del proveedor';
         this.statusColor = 'warning';
         break;
-      case 'ACCEPTED_BY_PROVIDER':
-        this.parsedStatus = 'Aceptado por el proveedor';
+      case 'AWAITING_REQUESTER_CONFIRMATION':
+        this.parsedStatus = 'Esperando confirmacion de solicitante';
+        this.statusColor = 'warning';
+        break;
+      case 'ACCEPTED_BY_REQUESTER':
+        this.parsedStatus = 'Aceptado por el solicitante';
         this.statusColor = 'success';
         break;
-      case 'DECLINED_BY_PROVIDER':
-        this.parsedStatus = 'Rechazado por el proveedor';
+      case 'DECLINED_BY_REQUESTER':
+        this.parsedStatus = 'Rechazado por el solicitante';
         this.statusColor = 'danger';
         break;
       default:

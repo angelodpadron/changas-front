@@ -15,44 +15,106 @@
   </ion-header>
 
   @if(loaded){
-    <ion-img [src]="hiringDetails.changa_photo_url"></ion-img>
-    <div class="ion-padding">
-      <h3>{{ hiringDetails.changa_title }}</h3>
-      <p>{{ hiringDetails.changa_description }}</p>
-      <hr/>
-      <small>{{ isProvider ? 'Persona interesada' : 'Ofrecido por' }}</small>
-      <hr/>
-      <app-customer-overview
-        [customerName]="customerDetails.name"
-        [customerEmail]="customerDetails.email"
-        [customerPhotoUrl]="customerDetails.photo_url!"
-      ></app-customer-overview>
-      <br>
-      <small>Fecha de solicitud: {{ hiringDetails.creation_date | date: 'd/M/yyyy HH:mm' }}</small>
-      <br>
-      <small>ID de solicitud: {{ hiringDetails.hiring_id }}</small>
-      <br>
-      <small>Estado de solicitud</small>
-      <hr/>
-      <app-transaction-status [status]="hiringDetails.status"></app-transaction-status>
-    </div>
+  <ion-img [src]="hiringDetails.changa_photo_url"></ion-img>
+  <div class="ion-padding">
+    <h3>{{ hiringDetails.changa_title }}</h3>
+    <p>{{ hiringDetails.changa_description }}</p>
+    <hr />
+    <small>{{ isProvider ? 'Persona interesada' : 'Ofrecido por' }}</small>
+    <hr />
+    <app-customer-overview
+      [customerName]="customerDetails.name"
+      [customerEmail]="customerDetails.email"
+      [customerPhotoUrl]="customerDetails.photo_url!"
+    ></app-customer-overview>
+    <br />
+    <small
+      >Fecha de solicitud: {{ hiringDetails.creation_date | date: 'd/M/yyyy
+      HH:mm' }}</small
+    >
+    <br />
+    <small>ID de solicitud: {{ hiringDetails.hiring_id }}</small>
+    <br />
+    <small>Estado de solicitud</small>
+    <hr />
+    <app-transaction-status
+      [status]="hiringDetails.status"
+    ></app-transaction-status>
+  </div>
 
-    <div class="ion-padding">
-      <h5>Trabajo a realizar</h5>
-      <p>{{ hiringDetails.work_details }}</p>      
-      <ion-img [src]="hiringDetails.work_area_photo_url"></ion-img>
-    </div>
+  <div class="ion-padding">
+    <h5>Trabajo a realizar</h5>
+    <p>{{ hiringDetails.work_area_details.description }}</p>
+    <ion-img [src]="hiringDetails.work_area_details.photo_url"></ion-img>
+  </div>
 
-    @if(canRespondToRequest()){
-    <div class="ion-padding">
-      <ion-button shape="round" expand="block" color="success" (click)="acceptRequest()">{{ isProvider ? 'Aceptar solicitud' : 'Aceptar condiciones' }}</ion-button>
-      <ion-button shape="round" expand="block" color="danger" (click)="declineRequest()">{{ isProvider ? 'Rechazar solicitud' : 'Rechazar condiciones' }}</ion-button>
-    </div>
-    }
-    
-  } @else {
-    <div class="spinner-container">
-      <ion-spinner></ion-spinner>
-    </div>
+  @if (hiringDetails.provider_proposal) {
+  <div class="ion-padding">
+    <h5>
+      {{ isProvider ? 'Respuesta enviada a interesado' : 'Respuesta del
+      proveedor' }}
+    </h5>
+    <p>{{ hiringDetails.provider_proposal.message }}</p>
+    <p>Monto del trabajo: ${{ hiringDetails.provider_proposal.price }}</p>
+  </div>
+  } @if (isProviderResponding()) {
+  <div class="ion-padding">
+    <h5>Responder a solicitud</h5>
+    <ion-item>
+      <ion-textarea
+        label="Respuesta al interesado"
+        labelPlacement="floating"
+        placeholder="Escribe tu respuesta"
+        [(ngModel)]="responseMessage"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        label="Monto del trabajo"
+        labelPlacement="floating"
+        type="number"
+        [(ngModel)]="responsePrice"
+      ></ion-input>
+    </ion-item>
+
+    <hr />
+
+    <ion-button
+      shape="round"
+      expand="block"
+      (click)="sendConditionsToRequester()"
+      disabled="{{ !responseMessage || !responsePrice }}"
+      >Enviar condiciones</ion-button
+    >
+    <ion-button
+      shape="round"
+      expand="block"
+      color="danger"
+      (click)="declineRequest()"
+      >Rechazar solicitud</ion-button
+    >
+  </div>
+  } @if (isRequesterResponding()) {
+  <div class="ion-padding">
+    <ion-button
+      shape="round"
+      expand="block"
+      color="success"
+      (click)="acceptRequest()"
+      >Aceptar condiciones</ion-button
+    >
+    <ion-button
+      shape="round"
+      expand="block"
+      color="danger"
+      (click)="declineRequest()"
+      >Rechazar condiciones</ion-button
+    >
+  </div>
+  } } @else {
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
   }
 </ion-content>

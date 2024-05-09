@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -10,6 +10,12 @@ import {
   IonBackButton,
   IonButtons,
   IonSpinner,
+  IonInput,
+  IonLabel,
+  IonItem,
+  IonTextarea,
+  IonList,
+  IonModal,
 } from '@ionic/angular/standalone';
 import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 import { CustomersService } from 'src/app/core/services/customers/customers.service';
@@ -19,6 +25,7 @@ import { TransactionStatusComponent } from 'src/app/shared/components/transactio
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Subject, of, switchMap, takeUntil } from 'rxjs';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-request-details',
@@ -26,27 +33,33 @@ import { TransactionsService } from 'src/app/core/services/transactions/transact
   styleUrls: ['./request-details.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    FormsModule,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
     IonImg,
     IonButton,
     IonBackButton,
     IonButtons,
     IonSpinner,
+    IonInput,
+    IonLabel,
+    IonItem,
+    IonTextarea,
+    IonList,
+    IonModal,
     CustomerOverviewComponent,
     TransactionStatusComponent,
   ],
 })
 export class RequestDetailsPage implements OnInit, OnDestroy {
-  @Input('id')
-  hiringTransactionId: string = '';
-
+  @Input('id') hiringTransactionId: string = '';
   hiringDetails!: HiringDetails;
   customerDetails!: Customer;
-
+  responseMessage: string = '';
+  responsePrice: number = 0;
   isProvider: boolean = false;
   loaded: boolean = false;
 
@@ -88,6 +101,7 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
           if (!user) {
             throw new Error('User not authenticated');
           }
+
           this.isProvider = user.id === +this.hiringDetails.provider_id;
 
           if (this.isProvider) {
@@ -118,15 +132,30 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
       });
   }
 
-  canRespondToRequest() {
-    switch (this.hiringDetails.status) {
-      case 'AWAITING_PROVIDER_CONFIRMATION':
-        return this.isProvider;
-      case 'AWAITING_REQUESTER_CONFIRMATION':
-        return !this.isProvider;
-      default:
-        return false;
-    }
+  isProviderResponding() {
+    return this.hiringDetails.status === 'AWAITING_PROVIDER_CONFIRMATION' && this.isProvider;
+  }
+
+
+  isRequesterResponding() {
+    return this.hiringDetails.status === 'AWAITING_REQUESTER_CONFIRMATION' && !this.isProvider;
+  }
+
+  sendConditionsToRequester() {
+    this.transactionsService
+      .sendConditionsToRequester(this.hiringTransactionId, this.responseMessage, this.responsePrice)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.hiringDetails = response.data;
+          } else {
+            console.error('Error accepting request', response.error?.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error accepting request', error);
+        },
+      });
   }
 
   acceptRequest() {
@@ -162,4 +191,6 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
         },
       });
   }
+  
+
 }

@@ -8,113 +8,187 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Detalles de Solicitud</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  @if(loaded) {
 
-  @if(loaded){
-  <ion-img [src]="hiringDetails.changa_photo_url"></ion-img>
-  <div class="ion-padding">
-    <h3>{{ hiringDetails.changa_title }}</h3>
-    <p>{{ hiringDetails.changa_description }}</p>
-    <hr />
-    <small>{{ isProvider ? 'Persona interesada' : 'Ofrecido por' }}</small>
-    <hr />
-    <app-customer-overview
-      [customerName]="customerDetails.name"
-      [customerEmail]="customerDetails.email"
-      [customerPhotoUrl]="customerDetails.photo_url!"
-    ></app-customer-overview>
-    <br />
-    <small
-      >Fecha de solicitud: {{ hiringDetails.creation_date | date: 'd/M/yyyy
-      HH:mm' }}</small
-    >
-    <br />
-    <small>ID de solicitud: {{ hiringDetails.hiring_id }}</small>
-    <br />
-    <small>Estado de solicitud</small>
-    <hr />
-    <app-transaction-status
-      [status]="hiringDetails.status"
-    ></app-transaction-status>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalles de changa</ion-card-title>
+    </ion-card-header>
 
-  <div class="ion-padding">
-    <h5>Trabajo a realizar</h5>
-    <p>{{ hiringDetails.work_area_details.description }}</p>
-    <ion-img [src]="hiringDetails.work_area_details.photo_url"></ion-img>
-  </div>
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="ion-no-padding">          
+          <ion-thumbnail slot="start">
+            <img [src]="hiringDetails.changa_photo_url" />
+          </ion-thumbnail>
+          <ion-label> {{ hiringDetails.changa_title }} </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalles de solicitud</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="ion-no-padding">
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <h2>{{ isProvider ? 'Interesado' : 'Proveedor' }}</h2>              
+            </ion-row>
+            <ion-row>
+              <app-customer-overview
+                [customerName]="customerDetails.name"
+                [customerEmail]="customerDetails.email"
+                [customerPhotoUrl]="customerDetails.photo_url!"
+              ></app-customer-overview>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label>
+            <h2>Fecha de solicitud</h2>
+            <p>{{ hiringDetails.creation_date | date: 'd/M/yyyy HH:mm' }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label>
+            <h2>ID de solicitud</h2>
+            <p>{{ hiringDetails.hiring_id }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label>
+            <h2>Estado de solicitud</h2>
+            <app-transaction-status
+              [status]="hiringDetails.status"
+            ></app-transaction-status>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalles del area a trabajar</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="ion-no-padding">
+          <ion-thumbnail slot="start">
+            <img [src]="hiringDetails.work_area_details.photo_url" />
+          </ion-thumbnail>
+          <ion-label>
+            {{ hiringDetails.work_area_details.description }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
   @if (hiringDetails.provider_proposal) {
-  <div class="ion-padding">
-    <h5>
-      {{ isProvider ? 'Respuesta enviada a interesado' : 'Respuesta del
-      proveedor' }}
-    </h5>
-    <p>{{ hiringDetails.provider_proposal.message }}</p>
-    <p>Monto del trabajo: ${{ hiringDetails.provider_proposal.price }}</p>
-  </div>
-  } @if (isProviderResponding()) {
-  <div class="ion-padding">
-    <h5>Responder a solicitud</h5>
-    <ion-item>
-      <ion-textarea
-        label="Respuesta al interesado"
-        labelPlacement="floating"
-        placeholder="Escribe tu respuesta"
-        [(ngModel)]="responseMessage"
-        [autoGrow]="true"
-      ></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-input
-        label="Monto del trabajo"
-        labelPlacement="floating"
-        type="number"
-        [(ngModel)]="responsePrice"
-      ></ion-input>
-    </ion-item>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ isProvider ? 'Respuesta enviada a interesado' : 'Respuesta del
+        proveedor' }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="ion-no-padding">
+          <ion-label>
+            <h2>Respuesta</h2>
+            <p>{{ hiringDetails.provider_proposal.message }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label>
+            <h2>Monto del trabajo</h2>
+            <p>$ {{ hiringDetails.provider_proposal.price }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  }
 
-    <hr />
+  @if (isProviderResponding()) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Responder a solicitud (temporal)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="ion-no-padding">
+          <ion-textarea
+            label="Respuesta al interesado"
+            labelPlacement="floating"
+            placeholder="Escribe tu respuesta"
+            [(ngModel)]="responseMessage"
+            [autoGrow]="true"
+          ></ion-textarea>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-input
+            label="Monto del trabajo"
+            labelPlacement="floating"
+            type="number"
+            [(ngModel)]="responsePrice"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button
+            shape="round"
+            expand="block"
+            (click)="sendConditionsToRequester()"
+            disabled="{{ !responseMessage || !responsePrice }}"
+            >Enviar condiciones</ion-button
+          >
+          <ion-button
+            shape="round"
+            expand="block"
+            color="danger"
+            (click)="declineRequest()"
+            >Rechazar solicitud</ion-button
+          >
+    </ion-card-content>
+  </ion-card>
+  }
 
-    <ion-button
-      shape="round"
-      expand="block"
-      (click)="sendConditionsToRequester()"
-      disabled="{{ !responseMessage || !responsePrice }}"
-      >Enviar condiciones</ion-button
-    >
-    <ion-button
-      shape="round"
-      expand="block"
-      color="danger"
-      (click)="declineRequest()"
-      >Rechazar solicitud</ion-button
-    >
-  </div>
-  } @if (isRequesterResponding()) {
-  <div class="ion-padding">
-    <ion-button
-      shape="round"
-      expand="block"
-      color="success"
-      (click)="acceptRequest()"
-      >Aceptar condiciones</ion-button
-    >
-    <ion-button
-      shape="round"
-      expand="block"
-      color="danger"
-      (click)="declineRequest()"
-      >Rechazar condiciones</ion-button
-    >
-  </div>
-  } } @else {
+  @if (isRequesterResponding()) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Responder a solicitud (temporal)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>      
+      <ion-button
+            shape="round"
+            expand="block"
+            (click)="acceptRequest()"
+            >Aceptar condiciones</ion-button
+          >
+          <ion-button
+            shape="round"
+            expand="block"
+            color="danger"
+            (click)="declineRequest()"
+            >Rechazar condiciones</ion-button
+          >
+    </ion-card-content>
+  </ion-card>
+  }
+}
+
+  
+@else {
   <div class="spinner-container">
     <ion-spinner></ion-spinner>
   </div>
-  }
+}
+
 </ion-content>

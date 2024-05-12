@@ -15,7 +15,16 @@ import {
   IonItem,
   IonTextarea,
   IonList,
-  IonModal,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonThumbnail,
+  IonGrid,
+  IonRow,
+
+  
 } from '@ionic/angular/standalone';
 import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 import { CustomersService } from 'src/app/core/services/customers/customers.service';
@@ -49,7 +58,14 @@ import { FormsModule } from '@angular/forms';
     IonItem,
     IonTextarea,
     IonList,
-    IonModal,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonThumbnail,
+    IonGrid,
+    IonRow,
     CustomerOverviewComponent,
     TransactionStatusComponent,
   ],

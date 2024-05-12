@@ -23,6 +23,8 @@ import {
   IonThumbnail,
   IonGrid,
   IonRow,
+  IonModal,
+  IonRippleEffect,
 
   
 } from '@ionic/angular/standalone';
@@ -35,6 +37,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Subject, of, switchMap, takeUntil } from 'rxjs';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-request-details',
@@ -43,6 +46,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     IonContent,
     IonHeader,
@@ -66,6 +70,8 @@ import { FormsModule } from '@angular/forms';
     IonThumbnail,
     IonGrid,
     IonRow,
+    IonModal,
+    IonRippleEffect,
     CustomerOverviewComponent,
     TransactionStatusComponent,
   ],

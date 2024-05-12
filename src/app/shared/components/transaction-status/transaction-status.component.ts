@@ -19,7 +19,7 @@ export class TransactionStatusComponent implements OnInit {
   ngOnInit() {
     switch (this.status) {
       case 'AWAITING_PROVIDER_CONFIRMATION':
-        this.parsedStatus = 'Esperando confirmación del proveedor';
+        this.parsedStatus = 'Esperando respuesta del proveedor';
         this.statusColor = 'warning';
         break;
       case 'AWAITING_REQUESTER_CONFIRMATION':
@@ -32,6 +32,10 @@ export class TransactionStatusComponent implements OnInit {
         break;
       case 'DECLINED_BY_REQUESTER':
         this.parsedStatus = 'Rechazado por el solicitante';
+        this.statusColor = 'danger';
+        break;
+      case 'DECLINED_BY_PROVIDER':
+        this.parsedStatus = 'Rechazado por el proveedor';
         this.statusColor = 'danger';
         break;
       default:

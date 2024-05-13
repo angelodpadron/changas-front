@@ -85,8 +85,10 @@ export class CheckoutPage {
 
     const hireRequest: HireChangaRequest = {
       changa_id: this.changaOverview()!.id,
-      work_details: this.hireForm.value.work_details!,
-      work_area_photo_url: this.hireForm.value.work_area_photo_url!,
+      work_area_details: {
+        "description": this.hireForm.value.work_details!,
+        "photo_url": this.hireForm.value.work_area_photo_url!
+      } 
     };
 
     this.hireForm.disable();

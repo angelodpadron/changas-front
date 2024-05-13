@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -10,6 +10,23 @@ import {
   IonBackButton,
   IonButtons,
   IonSpinner,
+  IonInput,
+  IonLabel,
+  IonItem,
+  IonTextarea,
+  IonList,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonThumbnail,
+  IonGrid,
+  IonRow,
+  IonModal,
+  IonRippleEffect,
+
+  
 } from '@ionic/angular/standalone';
 import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 import { CustomersService } from 'src/app/core/services/customers/customers.service';
@@ -19,6 +36,8 @@ import { TransactionStatusComponent } from 'src/app/shared/components/transactio
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Subject, of, switchMap, takeUntil } from 'rxjs';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-request-details',
@@ -26,27 +45,43 @@ import { TransactionsService } from 'src/app/core/services/transactions/transact
   styleUrls: ['./request-details.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
     IonImg,
     IonButton,
     IonBackButton,
     IonButtons,
     IonSpinner,
+    IonInput,
+    IonLabel,
+    IonItem,
+    IonTextarea,
+    IonList,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonThumbnail,
+    IonGrid,
+    IonRow,
+    IonModal,
+    IonRippleEffect,
     CustomerOverviewComponent,
     TransactionStatusComponent,
   ],
 })
 export class RequestDetailsPage implements OnInit, OnDestroy {
-  @Input('id')
-  hiringTransactionId: string = '';
-
+  @Input('id') hiringTransactionId: string = '';
   hiringDetails!: HiringDetails;
   customerDetails!: Customer;
-
+  responseMessage: string = '';
+  responsePrice: number = 0;
   isProvider: boolean = false;
   loaded: boolean = false;
 
@@ -88,6 +123,7 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
           if (!user) {
             throw new Error('User not authenticated');
           }
+
           this.isProvider = user.id === +this.hiringDetails.provider_id;
 
           if (this.isProvider) {
@@ -118,11 +154,30 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
       });
   }
 
-  canRespondToRequest() {
-    return (
-      this.hiringDetails.status === 'AWAITING_PROVIDER_CONFIRMATION' &&
-      this.isProvider
-    );
+  isProviderResponding() {
+    return this.hiringDetails.status === 'AWAITING_PROVIDER_CONFIRMATION' && this.isProvider;
+  }
+
+
+  isRequesterResponding() {
+    return this.hiringDetails.status === 'AWAITING_REQUESTER_CONFIRMATION' && !this.isProvider;
+  }
+
+  sendConditionsToRequester() {
+    this.transactionsService
+      .sendConditionsToRequester(this.hiringTransactionId, this.responseMessage, this.responsePrice)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.hiringDetails = response.data;
+          } else {
+            console.error('Error accepting request', response.error?.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error accepting request', error);
+        },
+      });
   }
 
   acceptRequest() {
@@ -131,7 +186,6 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            console.log('Request accepted');
             this.hiringDetails = response.data;
           } else {
             console.error('Error accepting request', response.error?.message);
@@ -149,7 +203,6 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            console.log('Request declined');
             this.hiringDetails = response.data;
           } else {
             console.error('Error declining request', response.error?.message);
@@ -160,4 +213,6 @@ export class RequestDetailsPage implements OnInit, OnDestroy {
         },
       });
   }
+  
+
 }

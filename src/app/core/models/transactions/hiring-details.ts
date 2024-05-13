@@ -1,3 +1,6 @@
+import { ProviderProposal } from "./provider-proposal";
+import { WorkAreaDetails } from "./work-area-details";
+
 export interface HiringDetails {
   hiring_id: string;
   changa_id: string;
@@ -7,7 +10,7 @@ export interface HiringDetails {
   changa_description: string;
   changa_photo_url: string;
   creation_date: Date;
-  work_details: string;
-  work_area_photo_url: string;
+  work_area_details: WorkAreaDetails;
+  provider_proposal: ProviderProposal
   status: string;
 }

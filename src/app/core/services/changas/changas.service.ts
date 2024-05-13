@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ChangasService {
+  
   private baseUrl =  environment.fullApiUrl +'/changas';
   
   constructor(private http: HttpClient) {}
@@ -56,6 +57,13 @@ export class ChangasService {
     return this.http.post<ApiResponse<ChangaOverview>>(
       `${this.baseUrl}/create`,
       createChangaRequest
+    );
+  }
+
+  editChanga(changaId: string, form: CreateChangaRequest): Observable<ApiResponse<ChangaOverview>> {
+    return this.http.put<ApiResponse<ChangaOverview>>(
+      `${this.baseUrl}/${changaId}/edit`,
+      form
     );
   }
 

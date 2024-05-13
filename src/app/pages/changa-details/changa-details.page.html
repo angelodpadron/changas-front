@@ -49,6 +49,15 @@
     >
       Solicitar
     </ion-button>
+    } @else {
+    <ion-button
+      shape="round"
+      expand="block"
+      color="warning"
+      [routerLink]="['/edit-changa', changaOverview.id]"
+    >
+      Editar
+    </ion-button>
     }
   </div>
 </ion-content>

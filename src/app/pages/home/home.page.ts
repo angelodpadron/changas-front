@@ -18,6 +18,8 @@ import {
   IonList,
   IonCardContent,
   IonCard,
+  IonRefresher,
+  IonRefresherContent
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -49,7 +51,8 @@ import { addIcons } from 'ionicons';
     IonButton,
     IonMenuButton,
     IonMenu,
-    IonSearchbar,
+    IonRefresher,
+    IonRefresherContent,
     ChangaOverviewCardComponent,
     MenuComponent,
   ],
@@ -58,11 +61,15 @@ export class HomePage implements OnInit, OnDestroy {
   private subscription!: Subscription;
   changas: ChangaOverview[] = [];
 
-  constructor(private changasSerivce: ChangasService, private router: Router) {
+  constructor(private changasSerivce: ChangasService) {
     addIcons({ search });
   }
 
   ngOnInit() {
+    this.loadChangas();
+  }
+
+  private loadChangas() {
     this.subscription = this.changasSerivce.getAllChangas().subscribe({
       next: (response: ApiResponse<ChangaOverview[]>) => {
         if (response.success) {
@@ -78,4 +85,11 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  doRefresh(event: any) {
+    this.loadChangas();
+    event.target.complete();
+
+  }
+
 }

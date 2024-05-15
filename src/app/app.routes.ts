@@ -69,6 +69,12 @@ export const routes: Routes = [
     canActivate: [loginRequiredGuard],
     loadComponent: () => import('./pages/request-details/request-details.page').then( m => m.RequestDetailsPage)
   },
+  {
+    path: 'edit-changa/:id',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () => import('./pages/edit-changa/edit-changa.page').then( m => m.EditChangaPage)
+  },
+
 
 
 ];

@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar changa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if (loaded) {
+  <ion-card>
+    <img
+      [src]="editForm.get('photo_url')?.value ||
+      'https://www.gravatar.com/avatar/'
+      "
+      alt="Changa Image"
+    />
+    <ion-card-content>
+      <form [formGroup]="editForm" (ngSubmit)="editChanga()">
+        <ion-list>
+          <ion-item>
+            <ion-input
+              formControlName="title"
+              type="text"
+              label="Titulo de la changa"
+              placeholder="Corte de pasto"
+              labelPlacement="floating"
+              [counter]="true"
+              maxlength="50"
+              helpText="Escribe un titulo para la changa. Maximo 50 caracteres."
+              errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input
+              formControlName="photo_url"
+              type="url"
+              label="URL que contenga la imagen de la changa"
+              placeholder="https://www.example.com/image.jpg"
+              labelPlacement="floating"
+              helpText="URL de la imagen de la changa. Puede ser una URL de una imagen en internet."
+              errorText="URL invalida. Asegurate de que sea una URL valida."
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-textarea
+              formControlName="description"
+              label="Descripcion de la changa"
+              labelPlacement="floating"
+              placeholder="Servicio de corte de pasto zona norte"
+              [autoGrow]="true"
+              [counter]="true"
+              maxlength="200"
+              helpText="Escribe una descripcion de la changa. Maximo 200 caracteres."
+            ></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              formControlName="topics"
+              type="text"
+              label="Temas de la changa"
+              placeholder="Jardineria, Corte de pasto, etc."
+              labelPlacement="floating"
+              [counter]="true"
+              maxlength="50"
+              helpText="Escribe los temas de la changa. Maximo 50 caracteres."
+              errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button
+          type="submit"
+          expand="block"
+          shape="round"
+          color="warning"
+          [disabled]="!editForm.valid"
+        >
+          Guardar
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  }
+</ion-content>

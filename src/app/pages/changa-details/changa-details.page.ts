@@ -55,7 +55,7 @@ export class ChangaDetailsPage implements OnInit {
   @Input('id')
   changaId: string = '';
   changaOverview!: ChangaOverview;
-  blocked = false;
+  isProvider = false;
   loaded = false;
 
   constructor(
@@ -74,7 +74,7 @@ export class ChangaDetailsPage implements OnInit {
             return this.authService.getUserAuthenticated().pipe(
               switchMap((user) => {
                 if (user?.id === this.changaOverview.provider_summary.id) {
-                  this.blocked = true;
+                  this.isProvider = true;
                 }
                 return of({}); // Completes the observable chain successfully
               })
@@ -98,4 +98,16 @@ export class ChangaDetailsPage implements OnInit {
         },
       });
   }
+
+  deleteChanga(changaId: string) {
+    this.changaService.deleteChanga(changaId).subscribe({
+      next: async (response) => {
+        console.log('Changa deleted:', response);
+      },
+      error: async (error) => {
+        console.error('Error deleting changa:', error);
+      },
+    });
+  }
+
 }

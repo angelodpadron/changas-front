@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ChangasService {
   
+  
   private baseUrl =  environment.fullApiUrl +'/changas';
   
   constructor(private http: HttpClient) {}
@@ -65,6 +66,10 @@ export class ChangasService {
       `${this.baseUrl}/${changaId}/edit`,
       form
     );
+  }
+
+  deleteChanga(changaId: string): Observable<ApiResponse<ChangaOverview>> {
+    return this.http.delete<ApiResponse<ChangaOverview>>(`${this.baseUrl}/${changaId}/delete`);
   }
 
   hireChanga(hireChangaRequest: HireChangaRequest) {

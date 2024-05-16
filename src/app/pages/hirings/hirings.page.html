@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/" ></ion-back-button>
     </ion-buttons>
     <ion-title>Changas Solicitadas</ion-title>
   </ion-toolbar>
@@ -17,6 +17,11 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <ion-card>
     <ion-card-content>
       <ion-list>

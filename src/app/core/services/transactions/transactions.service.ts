@@ -10,19 +10,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class TransactionsService {
-  
   private baseUrl = environment.fullApiUrl + '/transactions';
 
   constructor(private http: HttpClient) {}
 
-  sendConditionsToRequester(hiringTransactionId: string, responseMessage: string, responsePrice: number) {
-    let payload = {
+  sendConditionsToRequester(
+    hiringTransactionId: string,
+    responseMessage: string,
+    responsePrice: number
+  ): Observable<ApiResponse<HiringDetails>> {
+    const payload = {
       transaction_id: hiringTransactionId,
       response: 'ACCEPT',
       provider_proposal: {
         message: responseMessage,
-        price: responsePrice
-      }
+        price: responsePrice,
+      },
     };
 
     return this.http.post<ApiResponse<HiringDetails>>(
@@ -34,7 +37,7 @@ export class TransactionsService {
   acceptHiringRequest(
     hiringTransactionId: string
   ): Observable<ApiResponse<HiringDetails>> {
-    let payload = {
+    const payload = {
       transaction_id: hiringTransactionId,
       response: 'ACCEPT',
     };
@@ -48,7 +51,7 @@ export class TransactionsService {
   declineHiringRequest(
     hiringTransactionId: string
   ): Observable<ApiResponse<HiringDetails>> {
-    let payload = {
+    const payload = {
       transaction_id: hiringTransactionId,
       response: 'DECLINE',
     };

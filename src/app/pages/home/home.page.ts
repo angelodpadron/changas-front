@@ -87,6 +87,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   doRefresh(event: any) {
+    this.subscription.unsubscribe();
     this.loadChangas();
     event.target.complete();
 

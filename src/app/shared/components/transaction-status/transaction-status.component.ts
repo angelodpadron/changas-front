@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { IonBadge } from '@ionic/angular/standalone';
 
 @Component({
@@ -8,7 +8,7 @@ import { IonBadge } from '@ionic/angular/standalone';
   standalone: true,
   imports: [IonBadge],
 })
-export class TransactionStatusComponent implements OnInit {
+export class TransactionStatusComponent implements OnInit, OnChanges {
   @Input() status: string = '';
 
   parsedStatus: string = '';
@@ -17,6 +17,16 @@ export class TransactionStatusComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.updateStatus();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['status']) {
+      this.updateStatus();
+    }
+  }
+
+  private updateStatus() {
     switch (this.status) {
       case 'AWAITING_PROVIDER_CONFIRMATION':
         this.parsedStatus = 'Esperando respuesta del proveedor';

@@ -84,7 +84,6 @@ export class LoginPage implements OnInit {
           console.error('Error attemping login', response.error?.message);
           return;
         }
-        console.log('Login successful', response);
         this.router.navigate(['/home']);
       },
       error: (err) => console.error('Error attemping login', err),

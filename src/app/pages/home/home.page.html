@@ -22,6 +22,10 @@
       </ion-toolbar>
     </ion-header>
 
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     @for (changa of changas; track changa.id) {
     <app-changa-overview-card [changa]="changa" />
     } @empty {

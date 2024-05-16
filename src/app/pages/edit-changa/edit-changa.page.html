@@ -11,9 +11,7 @@
   @if (loaded) {
   <ion-card>
     <img
-      [src]="editForm.get('photo_url')?.value ||
-      'https://www.gravatar.com/avatar/'
-      "
+      [src]="editForm.get('photo_url')?.value || changaOverview.photo_url"
       alt="Changa Image"
     />
     <ion-card-content>

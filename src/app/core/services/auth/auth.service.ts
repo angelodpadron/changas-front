@@ -50,6 +50,25 @@ export class AuthService {
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 
+  private tokenIsValid(token: string): boolean {
+    return !this.jwtHelperService.isTokenExpired(token);
+  }
+
+  private setAuthenticatedUserWithToken(token: string) {
+    const user = this.decodeToken(token);
+    this.userAuthenticationSubject.next(user);
+  }
+
+  private decodeToken(token: string): Customer {
+    const decodedJwt = this.jwtHelperService.decodeToken(token);
+    return {
+      id: +decodedJwt['id'],
+      name: decodedJwt['name'],
+      email: decodedJwt['email'],
+      photo_url: decodedJwt['photo'],
+    };
+  }
+  
   isAuthenticated(): boolean {
     const token = this.getToken();
     const tokenIsValid = token ? this.tokenIsValid(token) : false;
@@ -78,28 +97,8 @@ export class AuthService {
     this.userAuthenticationSubject.next(null);
   }
 
-  tokenIsValid(token: string): boolean {
-    return !this.jwtHelperService.isTokenExpired(token);
-  }
-
   getUserAuthenticated(): Observable<Customer | null> {
     return this.userAuthenticationSubject.asObservable();
   }
-
-  private setAuthenticatedUserWithToken(token: string) {
-    const user = this.decodeToken(token);
-    this.userAuthenticationSubject.next(user);
-  }
-
-  private decodeToken(token: string): Customer {
-    const decodedJwt = this.jwtHelperService.decodeToken(token);
-    return {
-      id: +decodedJwt['id'],
-      name: decodedJwt['name'],
-      email: decodedJwt['email'],
-      photo_url: decodedJwt['photo'],
-    };
-  }
-
   
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ChangaOverview } from '../../models/changa/changa-overview';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
 import { ApiResponse } from '../../models/api-response';
 import { CreateChangaRequest } from '../../models/changa/create-changa-request';
 import { HireChangaRequest } from '../../models/transactions/hire-changa-request';
@@ -14,28 +13,31 @@ import { environment } from 'src/environments/environment';
 })
 export class ChangasService {
   
-  
-  private baseUrl =  environment.fullApiUrl +'/changas';
-  
+  private baseUrl = environment.fullApiUrl + '/changas';
+
   constructor(private http: HttpClient) {}
-  
+
   getAllChangas(): Observable<ApiResponse<ChangaOverview[]>> {
     return this.http.get<ApiResponse<ChangaOverview[]>>(`${this.baseUrl}`);
   }
-  
+
   getChangaById(id: string): Observable<ApiResponse<ChangaOverview>> {
     return this.http.get<ApiResponse<ChangaOverview>>(`${this.baseUrl}/${id}`);
   }
-  
-  searchChangasByTitle(title: string) {
+
+  searchChangasByTitle(
+    title: string
+  ): Observable<ApiResponse<ChangaOverview[]>> {
     const requestParams = { title };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
       `${this.baseUrl}/findBy`,
       { params: requestParams }
     );
   }
-  
-  searchChangasByTopic(topics: [string]) {
+
+  searchChangasByTopic(
+    topics: [string]
+  ): Observable<ApiResponse<ChangaOverview[]>> {
     const requestParams = { topics };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
       `${this.baseUrl}/findBy`,
@@ -43,13 +45,15 @@ export class ChangasService {
     );
   }
 
-  searchChangasByTitleAndTopics(title: string, topics: [string]) {
+  searchChangasByTitleAndTopics(
+    title: string,
+    topics: [string]
+  ): Observable<ApiResponse<ChangaOverview[]>> {
     const requestParams = { title, topics };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
       `${this.baseUrl}/findBy`,
       { params: requestParams }
-    );    
-
+    );
   }
 
   createChanga(
@@ -61,7 +65,10 @@ export class ChangasService {
     );
   }
 
-  editChanga(changaId: string, form: CreateChangaRequest): Observable<ApiResponse<ChangaOverview>> {
+  editChanga(
+    changaId: string,
+    form: CreateChangaRequest
+  ): Observable<ApiResponse<ChangaOverview>> {
     return this.http.put<ApiResponse<ChangaOverview>>(
       `${this.baseUrl}/${changaId}/edit`,
       form
@@ -69,7 +76,9 @@ export class ChangasService {
   }
 
   deleteChanga(changaId: string): Observable<ApiResponse<ChangaOverview>> {
-    return this.http.delete<ApiResponse<ChangaOverview>>(`${this.baseUrl}/${changaId}/delete`);
+    return this.http.delete<ApiResponse<ChangaOverview>>(
+      `${this.baseUrl}/${changaId}/delete`
+    );
   }
 
   hireChanga(hireChangaRequest: HireChangaRequest) {

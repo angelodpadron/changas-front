@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -22,7 +22,7 @@ import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { switchMap, of, catchError } from 'rxjs';
+import { switchMap, of, catchError, Subscription } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 
 @Component({
@@ -51,20 +51,34 @@ import { CustomerOverviewComponent } from 'src/app/shared/components/customer-ov
     CustomerOverviewComponent,
   ],
 })
-export class ChangaDetailsPage implements OnInit {
-  @Input('id')
-  changaId: string = '';
+export class ChangaDetailsPage implements OnDestroy {
+  @Input('id') changaId!: string;
   changaOverview!: ChangaOverview;
   isProvider = false;
   loaded = false;
+
+  subscription!: Subscription;
 
   constructor(
     private changaService: ChangasService,
     private authService: AuthService,
   ) {}
 
-  async ngOnInit() {
-    this.changaService
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  ionViewWillEnter() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.loaded = false;
+    this.loadChangaDetails();
+  }
+
+  private loadChangaDetails() {
+    this.subscription = this.changaService
       .getChangaById(this.changaId)
       .pipe(
         switchMap((response: ApiResponse<ChangaOverview>) => {
@@ -101,10 +115,14 @@ export class ChangaDetailsPage implements OnInit {
 
   deleteChanga(changaId: string) {
     this.changaService.deleteChanga(changaId).subscribe({
-      next: async (response) => {
-        console.log('Changa deleted:', response);
+      next: (response) => {
+        if (response.success) {
+          this.changaOverview = response.data;
+          return;
+        }
+        console.error('Error deleting changa:', response.error?.message);
       },
-      error: async (error) => {
+      error: (error) => {
         console.error('Error deleting changa:', error);
       },
     });

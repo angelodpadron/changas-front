@@ -57,11 +57,16 @@
       shape="round"
       expand="block"
       color="danger"
-      (click)="deleteChanga(changaOverview.id)"
+      id="present-delete-alert"
     >
       Eliminar
     </ion-button>
-
+    <ion-alert
+    trigger="present-delete-alert"
+    header="Confirmar acción"
+    message="¿Estás seguro que deseas eliminar esta changa?"
+    [buttons]="alertButtons"
+  ></ion-alert>
     } @else {
     <ion-button
       shape="round"

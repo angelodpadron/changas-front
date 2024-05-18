@@ -14,7 +14,8 @@ import { CustomerOverviewComponent } from 'src/app/shared/components/customer-ov
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Customer } from 'src/app/core/models/customer/customer.model';
 import { addIcons } from 'ionicons';
-import { logOut } from 'ionicons/icons';
+import { logOut, create ,chevronForwardSharp } from 'ionicons/icons';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +28,7 @@ import { logOut } from 'ionicons/icons';
     IonTitle,
     IonToolbar,
     CommonModule,
+    RouterModule,
     CustomerOverviewComponent,
     IonList,
     IonItem,
@@ -38,8 +40,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   customer!: Customer;
   subscription: any;
 
-  constructor(private authService: AuthService) {
-    addIcons({ logOut });
+  constructor(private authService: AuthService, private router: Router) {
+    addIcons({ logOut, create, chevronForwardSharp });
   }
 
   ngOnInit() {
@@ -59,5 +61,6 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   logout() {
     this.authService.signout();
+    this.router.navigate(['/home']);
   }
 }

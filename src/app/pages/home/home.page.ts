@@ -8,9 +8,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonMenu,
-  IonMenuButton,
-  IonSearchbar,
   IonTitle,
   IonToolbar,
   IonLabel,
@@ -19,13 +16,12 @@ import {
   IonCardContent,
   IonCard,
   IonRefresher,
-  IonRefresherContent
+  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { ApiResponse } from 'src/app/core/models/api-response';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { search } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -49,12 +45,9 @@ import { addIcons } from 'ionicons';
     IonIcon,
     IonButtons,
     IonButton,
-    IonMenuButton,
-    IonMenu,
     IonRefresher,
     IonRefresherContent,
     ChangaOverviewCardComponent,
-    MenuComponent,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
@@ -90,7 +83,5 @@ export class HomePage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.loadChangas();
     event.target.complete();
-
   }
-
 }

@@ -5,6 +5,33 @@
     </ion-buttons>
     <ion-title>Changas Solicitadas</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment
+      [scrollable]="true"
+      class="ion-padding"
+      value="all"
+      (ionChange)="segmentChanged($event)"
+    >
+      <ion-segment-button value="all">
+        <ion-label>Todas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="accepted-requester">
+        <ion-label>Aceptadas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="awaiting-provider">
+        <ion-label>Esperando proveedor</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="awaiting-requester">
+        <ion-label>Esperando solicitante</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="rejected-requester">
+        <ion-label>Rechazadas por solicitante</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="rejected-provider">
+        <ion-label>Rechazadas por proveedor</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -17,11 +44,16 @@
     </ion-toolbar>
   </ion-header>
 
+  @if (loaded) {
+
   <!-- refresher -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <!-- filtering buttons template -->
+
+  @if(hiringsDetails.length > 0) {
   <ion-card>
     <ion-card-content>
       <ion-list>
@@ -57,12 +89,17 @@
             ></app-transaction-status>
           </ion-grid>
         </ion-item>
-        } @empty {
-        <ion-item>
-          <ion-label>No tienes changas contratadas</ion-label>
-        </ion-item>
         }
       </ion-list>
     </ion-card-content>
   </ion-card>
+  } @else {
+  <div class="spinner-container">
+    <p>No hay solicitudes para mostrar</p>
+  </div>
+  } } @else {
+  <div class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  }
 </ion-content>

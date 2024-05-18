@@ -7,6 +7,7 @@ import { Customer } from '../../models/customer/customer.model';
 
 import { environment } from 'src/environments/environment';
 import { UpdateCustomerRequest } from '../../models/customer/update-customer-request';
+import { TransactionStatus } from '../../models/transactions/transaction-status';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,12 @@ export class CustomersService {
   getHirings(): Observable<ApiResponse<HiringDetails[]>> {
     return this.http.get<ApiResponse<HiringDetails[]>>(
       `${this.baseUrl}/hirings`
+    );
+  }
+
+  getHiringsWithStatus(status: TransactionStatus): Observable<ApiResponse<HiringDetails[]>> {
+    return this.http.get<ApiResponse<HiringDetails[]>>(
+      `${this.baseUrl}/hirings/filter?status=${status}`
     );
   }
 

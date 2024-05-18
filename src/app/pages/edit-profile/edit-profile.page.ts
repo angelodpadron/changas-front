@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -21,9 +21,7 @@ import { CustomersService } from 'src/app/core/services/customers/customers.serv
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { UpdateCustomerRequest } from 'src/app/core/models/customer/update-customer-request';
 
 @Injectable({
@@ -31,8 +29,8 @@ import { UpdateCustomerRequest } from 'src/app/core/models/customer/update-custo
 })
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  templateUrl: './edit-profile.page.html',
+  styleUrls: ['./edit-profile.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -51,8 +49,8 @@ import { UpdateCustomerRequest } from 'src/app/core/models/customer/update-custo
     IonBackButton,
   ],
 })
-export class ProfilePage implements OnInit {
-  userAuthenticated: Customer | null = null;
+export class EditProfilePage implements OnInit {
+  userAuthenticated!: Customer;
   form!: FormGroup;
 
   photoUrlDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
@@ -84,7 +82,9 @@ export class ProfilePage implements OnInit {
   getUserAuthenticated() {
     this.authService.getUserAuthenticated().subscribe({
       next: (user) => {
-        this.userAuthenticated = user;
+        if (user) {
+          this.userAuthenticated = user;
+        }
       },
       error: (error) => {
         console.error(error);

@@ -62,18 +62,24 @@ export const routes: Routes = [
   },
   {
     path: 'search-results',
-    loadComponent: () => import('./pages/search-results/search-results.page').then( m => m.SearchResultsPage)
+    loadComponent: () =>
+      import('./pages/search-results/search-results.page').then(
+        (m) => m.SearchResultsPage
+      ),
   },
   {
     path: 'request-details/:id',
     canActivate: [loginRequiredGuard],
-    loadComponent: () => import('./pages/request-details/request-details.page').then( m => m.RequestDetailsPage)
+    loadComponent: () =>
+      import('./pages/request-details/request-details.page').then(
+        (m) => m.RequestDetailsPage
+      ),
   },
   {
-    path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    path: 'edit-profile',
+    loadComponent: () =>
+      import('./pages/edit-profile/edit-profile.page').then(
+        (m) => m.EditProfilePage
+      ),
   },
-
-
-
 ];

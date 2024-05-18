@@ -1,24 +1,43 @@
 import { Routes } from '@angular/router';
 import { loginRequiredGuard } from './core/guards/login-required.guard';
 import { isNotAuthenticatedGuard } from './core/guards/is-not-authenticated.guard';
+import { TabsComponent } from './shared/components/tabs/tabs.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    loadComponent: () =>
-      import('./pages/home/home.page').then((m) => m.HomePage),
-  },
-  {
-    path: 'changa-details/:id',
-    loadComponent: () =>
-      import('./pages/changa-details/changa-details.page').then(
-        (m) => m.ChangaDetailsPage
-      ),
+    component: TabsComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/home/home.page').then((m) => m.HomePage),
+      },
+      {
+        path: 'hirings',
+        canActivate: [loginRequiredGuard],
+        loadComponent: () =>
+          import('./pages/hirings/hirings.page').then((m) => m.HiringsPage),
+      },
+      {
+        path: 'search-results',
+        loadComponent: () =>
+          import('./pages/search-results/search-results.page').then(
+            (m) => m.SearchResultsPage
+          ),
+      },
+      {
+        path: 'profile',
+        canActivate: [loginRequiredGuard],
+        loadComponent: () =>
+          import('./pages/profile/profile.page').then((m) => m.ProfilePage),
+      },
+    ],
   },
   {
     path: 'login',
@@ -33,25 +52,26 @@ export const routes: Routes = [
       import('./pages/signup/signup.page').then((m) => m.SignupPage),
   },
   {
-    path: 'hiring-success',
-    canActivate: [loginRequiredGuard],
-    loadComponent: () =>
-      import('./pages/hiring-success/hiring-success.page').then(
-        (m) => m.HiringSuccessPage
-      ),
-  },
-  {
-    path: 'hirings',
-    canActivate: [loginRequiredGuard],
-    loadComponent: () =>
-      import('./pages/hirings/hirings.page').then((m) => m.HiringsPage),
-  },
-  {
     path: 'create-changa',
     canActivate: [loginRequiredGuard],
     loadComponent: () =>
       import('./pages/create-changa/create-changa.page').then(
         (m) => m.CreateChangaPage
+      ),
+  },
+  {
+    path: 'changa-details/:id',
+    loadComponent: () =>
+      import('./pages/changa-details/changa-details.page').then(
+        (m) => m.ChangaDetailsPage
+      ),
+  },
+  {
+    path: 'edit-changa/:id',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () =>
+      import('./pages/edit-changa/edit-changa.page').then(
+        (m) => m.EditChangaPage
       ),
   },
   {
@@ -61,10 +81,11 @@ export const routes: Routes = [
       import('./pages/checkout/checkout.page').then((m) => m.CheckoutPage),
   },
   {
-    path: 'search-results',
+    path: 'hiring-success',
+    canActivate: [loginRequiredGuard],
     loadComponent: () =>
-      import('./pages/search-results/search-results.page').then(
-        (m) => m.SearchResultsPage
+      import('./pages/hiring-success/hiring-success.page').then(
+        (m) => m.HiringSuccessPage
       ),
   },
   {

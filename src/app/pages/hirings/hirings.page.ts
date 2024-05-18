@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -21,6 +21,8 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  IonRefresher,
+  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { CustomersService } from 'src/app/core/services/customers/customers.service';
 import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
@@ -35,6 +37,7 @@ import { TransactionStatusComponent } from 'src/app/shared/components/transactio
   standalone: true,
   imports: [
     RouterModule,
+    TransactionStatusComponent,
     IonContent,
     IonHeader,
     IonTitle,
@@ -56,19 +59,41 @@ import { TransactionStatusComponent } from 'src/app/shared/components/transactio
     IonGrid,
     IonBackButton,
     IonButtons,
-    TransactionStatusComponent,
+    IonRefresher,
+    IonRefresherContent,
   ],
 })
-export class HiringsPage implements OnInit {
+export class HiringsPage implements OnDestroy{
   hiringsDetails: HiringDetails[] = [];
+  subscription: any;
 
   constructor(private customersService: CustomersService) {}
 
-  ngOnInit() {
-    this.customersService.getHirings().subscribe({
+  ionViewWillEnter() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.initializeHirings();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  doRefresh(event: any) {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.initializeHirings();
+    event.target.complete();
+  }
+
+  private initializeHirings() {
+    this.subscription = this.customersService.getHirings().subscribe({
       next: (response: ApiResponse<HiringDetails[]>) => {
         if (response.success) {
-          console.log('Hiring details:', response.data);
           this.hiringsDetails = response.data;
         } else {
           console.error(response.error?.message);

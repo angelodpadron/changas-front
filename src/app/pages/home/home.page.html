@@ -1,11 +1,6 @@
-<app-menu></app-menu>
-
 <div class="ion-page" id="main-content">
   <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
       <ion-title>Changas</ion-title>
       <ion-buttons slot="end">
         <ion-button [routerLink]="['/search-results']">
@@ -21,6 +16,10 @@
         <ion-title size="large">Changas</ion-title>
       </ion-toolbar>
     </ion-header>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
     @for (changa of changas; track changa.id) {
     <app-changa-overview-card [changa]="changa" />

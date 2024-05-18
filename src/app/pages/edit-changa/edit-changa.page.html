@@ -1,27 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" ></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Crear una changa</ion-title>
+    <ion-title>Editar changa</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Crear una changa</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+  @if (loaded) {
   <ion-card>
     <img
-      [src]="form.get('photo_url')?.value ||
-    'https://ionicframework.com/docs/img/demos/card-media.png'"
+      [src]="editForm.get('photo_url')?.value || changaOverview.photo_url"
       alt="Changa Image"
     />
     <ion-card-content>
-      <form [formGroup]="form" (ngSubmit)="createChanga()">
+      <form [formGroup]="editForm" (ngSubmit)="editChanga()">
         <ion-list>
           <ion-item>
             <ion-input
@@ -58,7 +52,6 @@
               [counter]="true"
               maxlength="200"
               helpText="Escribe una descripcion de la changa. Maximo 200 caracteres."
-              errorText="Descripcion invalida. Asegurate de usar al menos 10 caracteres."
             ></ion-textarea>
           </ion-item>
           <ion-item>
@@ -66,21 +59,26 @@
               formControlName="topics"
               type="text"
               label="Temas de la changa"
+              placeholder="Jardineria, Corte de pasto, etc."
               labelPlacement="floating"
-              helpText="Escribe los temas de la changa separados por coma."
+              [counter]="true"
+              maxlength="50"
+              helpText="Escribe los temas de la changa. Maximo 50 caracteres."
+              errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
             ></ion-input>
           </ion-item>
         </ion-list>
-        <br />
         <ion-button
           type="submit"
           expand="block"
           shape="round"
           color="warning"
-          [disabled]="!form.valid"
-          >Publicar</ion-button
+          [disabled]="!editForm.valid"
         >
+          Guardar
+        </ion-button>
       </form>
     </ion-card-content>
   </ion-card>
+  }
 </ion-content>

@@ -8,9 +8,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonMenu,
-  IonMenuButton,
-  IonSearchbar,
   IonTitle,
   IonToolbar,
   IonLabel,
@@ -18,12 +15,13 @@ import {
   IonList,
   IonCardContent,
   IonCard,
+  IonRefresher,
+  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { ApiResponse } from 'src/app/core/models/api-response';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { search } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -47,22 +45,24 @@ import { addIcons } from 'ionicons';
     IonIcon,
     IonButtons,
     IonButton,
-    IonMenuButton,
-    IonMenu,
-    IonSearchbar,
+    IonRefresher,
+    IonRefresherContent,
     ChangaOverviewCardComponent,
-    MenuComponent,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
   private subscription!: Subscription;
   changas: ChangaOverview[] = [];
 
-  constructor(private changasSerivce: ChangasService, private router: Router) {
+  constructor(private changasSerivce: ChangasService) {
     addIcons({ search });
   }
 
   ngOnInit() {
+    this.loadChangas();
+  }
+
+  private loadChangas() {
     this.subscription = this.changasSerivce.getAllChangas().subscribe({
       next: (response: ApiResponse<ChangaOverview[]>) => {
         if (response.success) {
@@ -77,5 +77,11 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  doRefresh(event: any) {
+    this.subscription.unsubscribe();
+    this.loadChangas();
+    event.target.complete();
   }
 }

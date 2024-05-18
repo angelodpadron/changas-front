@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -16,13 +16,14 @@ import {
   IonTitle,
   IonToolbar,
   IonSpinner,
+  IonAlert,
 } from '@ionic/angular/standalone';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { switchMap, of, catchError } from 'rxjs';
+import { switchMap, of, catchError, Subscription } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 
 @Component({
@@ -48,23 +49,51 @@ import { CustomerOverviewComponent } from 'src/app/shared/components/customer-ov
     IonImg,
     IonIcon,
     IonSpinner,
+    IonAlert,
     CustomerOverviewComponent,
   ],
 })
-export class ChangaDetailsPage implements OnInit {
-  @Input('id')
-  changaId: string = '';
+export class ChangaDetailsPage implements OnDestroy {
+  @Input('id') changaId!: string;
   changaOverview!: ChangaOverview;
-  blocked = false;
+  isProvider = false;
   loaded = false;
+
+  subscription!: Subscription;
+
+  alertButtons = [
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+    },
+    {
+      text: 'Borrar',
+      handler: () => {
+        this.deleteChanga(this.changaId);
+      },
+    },
+  ];
 
   constructor(
     private changaService: ChangasService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
-  async ngOnInit() {
-    this.changaService
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  ionViewWillEnter() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.loaded = false;
+    this.loadChangaDetails();
+  }
+
+  private loadChangaDetails() {
+    this.subscription = this.changaService
       .getChangaById(this.changaId)
       .pipe(
         switchMap((response: ApiResponse<ChangaOverview>) => {
@@ -74,7 +103,7 @@ export class ChangaDetailsPage implements OnInit {
             return this.authService.getUserAuthenticated().pipe(
               switchMap((user) => {
                 if (user?.id === this.changaOverview.provider_summary.id) {
-                  this.blocked = true;
+                  this.isProvider = true;
                 }
                 return of({}); // Completes the observable chain successfully
               })
@@ -97,5 +126,20 @@ export class ChangaDetailsPage implements OnInit {
           console.error('Error in the full observable chain:', error);
         },
       });
+  }
+
+  deleteChanga(changaId: string) {
+    this.changaService.deleteChanga(changaId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.changaOverview = response.data;
+          return;
+        }
+        console.error('Error deleting changa:', response.error?.message);
+      },
+      error: (error) => {
+        console.error('Error deleting changa:', error);
+      },
+    });
   }
 }

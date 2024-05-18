@@ -14,10 +14,30 @@ export class TransactionsService {
 
   constructor(private http: HttpClient) {}
 
+  sendConditionsToRequester(
+    hiringTransactionId: string,
+    responseMessage: string,
+    responsePrice: number
+  ): Observable<ApiResponse<HiringDetails>> {
+    const payload = {
+      transaction_id: hiringTransactionId,
+      response: 'ACCEPT',
+      provider_proposal: {
+        message: responseMessage,
+        price: responsePrice,
+      },
+    };
+
+    return this.http.post<ApiResponse<HiringDetails>>(
+      `${this.baseUrl}/respond-request`,
+      payload
+    );
+  }
+
   acceptHiringRequest(
     hiringTransactionId: string
   ): Observable<ApiResponse<HiringDetails>> {
-    let payload = {
+    const payload = {
       transaction_id: hiringTransactionId,
       response: 'ACCEPT',
     };
@@ -31,7 +51,7 @@ export class TransactionsService {
   declineHiringRequest(
     hiringTransactionId: string
   ): Observable<ApiResponse<HiringDetails>> {
-    let payload = {
+    const payload = {
       transaction_id: hiringTransactionId,
       response: 'DECLINE',
     };

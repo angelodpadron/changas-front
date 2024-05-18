@@ -7,4 +7,5 @@ export interface ChangaOverview {
   photo_url: string;
   topics: string[];
   provider_summary: Customer;
+  available: boolean;
 }

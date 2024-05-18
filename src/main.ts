@@ -40,7 +40,7 @@ export function jwtProviderConfig() {
         new RegExp(`${fullApiUrl}/changas/\\d+$`),
         new RegExp(`${fullApiUrl}/changas/findBy.*`),
         new RegExp(`${fullApiUrl}/auth/.*`),
-        new RegExp(`${fullApiUrl}/customers/\\d+$`),
+        // new RegExp(`${fullApiUrl}/customers/\\d+$`),
       ],
     },
   });

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Changas Solicitadas</ion-title>
   </ion-toolbar>
@@ -17,35 +17,46 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card>
     <ion-card-content>
       <ion-list>
         @for (hiringDetail of hiringsDetails; track hiringDetail.hiring_id) {
-        <ion-item [routerLink]="['/request-details', hiringDetail.hiring_id]">
-          <ion-thumbnail slot="start">
-            <img
-              [alt]="hiringDetail.changa_title"
-              [src]="hiringDetail.changa_photo_url"
-            />
-          </ion-thumbnail>
+        <ion-item
+          button
+          [routerLink]="['/request-details', hiringDetail.hiring_id]"
+          class="ion-no-padding ripple-parent rounded-rectangle"
+        >
           <ion-grid>
             <ion-row>
-              <ion-col>
-                <ion-label>{{ hiringDetail.changa_title }}</ion-label>
-              </ion-col>
+              <ion-thumbnail>
+                <img
+                  [alt]="hiringDetail.changa_title"
+                  [src]="hiringDetail.changa_photo_url"
+                />
+              </ion-thumbnail>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-label>{{ hiringDetail.changa_title }}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <p>{{ hiringDetail.creation_date | date }}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-row>
-            <ion-row>
-              <ion-col>
-                <p>{{ hiringDetail.creation_date | date }}</p>
-              </ion-col>
-            </ion-row>
+            <app-transaction-status
+              [status]="hiringDetail.status"
+            ></app-transaction-status>
           </ion-grid>
         </ion-item>
-        <div class="ion-padding">
-          <app-transaction-status
-            [status]="hiringDetail.status"
-          ></app-transaction-status>
-        </div>
         } @empty {
         <ion-item>
           <ion-label>No tienes changas contratadas</ion-label>

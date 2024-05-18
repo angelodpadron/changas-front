@@ -23,12 +23,16 @@ import {
   IonToolbar,
   IonRefresher,
   IonRefresherContent,
+  IonSegment,
+  IonSegmentButton,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { CustomersService } from 'src/app/core/services/customers/customers.service';
 import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { RouterModule } from '@angular/router';
 import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';
+import { TransactionStatus } from 'src/app/core/models/transactions/transaction-status';
 
 @Component({
   selector: 'app-hirings',
@@ -61,11 +65,15 @@ import { TransactionStatusComponent } from 'src/app/shared/components/transactio
     IonButtons,
     IonRefresher,
     IonRefresherContent,
+    IonSegment,
+    IonSegmentButton,
+    IonSpinner,
   ],
 })
-export class HiringsPage implements OnDestroy{
+export class HiringsPage implements OnDestroy {
   hiringsDetails: HiringDetails[] = [];
   subscription: any;
+  loaded = false;
 
   constructor(private customersService: CustomersService) {}
 
@@ -73,6 +81,7 @@ export class HiringsPage implements OnDestroy{
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.loaded = false;
     this.initializeHirings();
   }
 
@@ -90,11 +99,63 @@ export class HiringsPage implements OnDestroy{
     event.target.complete();
   }
 
+  segmentChanged(event: CustomEvent) {
+    this.loaded = false;
+    switch (event.detail.value) {
+      case 'all':
+        this.initializeHirings();
+        break;
+      case 'awaiting-provider':
+        this.initializeHiringsWithStatus(
+          TransactionStatus.AWAITING_PROVIDER_CONFIRMATION
+        );
+        break;
+      case 'awaiting-requester':
+        this.initializeHiringsWithStatus(
+          TransactionStatus.AWAITING_REQUESTER_CONFIRMATION
+        );
+        break;
+      case 'rejected-provider':
+        this.initializeHiringsWithStatus(
+          TransactionStatus.DECLINED_BY_PROVIDER
+        );
+        break;
+      case 'rejected-requester':
+        this.initializeHiringsWithStatus(
+          TransactionStatus.DECLINED_BY_REQUESTER
+        );
+        break;
+      case 'accepted-requester':
+        this.initializeHiringsWithStatus(
+          TransactionStatus.ACCEPTED_BY_REQUESTER
+        );
+        break;
+    }
+  }
+
+  private initializeHiringsWithStatus(status: TransactionStatus) {
+    this.subscription = this.customersService
+      .getHiringsWithStatus(status)
+      .subscribe({
+        next: (response: ApiResponse<HiringDetails[]>) => {
+          if (response.success) {
+            this.hiringsDetails = response.data;
+            this.loaded = true;
+          } else {
+            console.error(response.error?.message);
+          }
+        },
+        error: (error) =>
+          console.error('Error retrieving hiring details:', error),
+      });
+  }
+
   private initializeHirings() {
     this.subscription = this.customersService.getHirings().subscribe({
       next: (response: ApiResponse<HiringDetails[]>) => {
         if (response.success) {
           this.hiringsDetails = response.data;
+          this.loaded = true;
         } else {
           console.error(response.error?.message);
         }

@@ -22,7 +22,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { UpdateCustomerRequest } from 'src/app/core/models/customer/update-customer-request';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +65,7 @@ export class EditProfilePage implements OnInit {
     this.getUserAuthenticated();
 
     this.form = this.formBuilder.group({
+      id: this.userAuthenticated.id,
       name: [
         this.userAuthenticated?.name,
         [
@@ -75,7 +75,8 @@ export class EditProfilePage implements OnInit {
           Validators.pattern(/^[a-zA-Z0-9]*$/),
         ],
       ],
-      photo_url: [null],
+      email: this.userAuthenticated.email,
+      photo_url: this.userAuthenticated.photo_url,
     });
   }
 
@@ -98,15 +99,12 @@ export class EditProfilePage implements OnInit {
       return;
     }
 
-    const updateCustomerRequest: UpdateCustomerRequest = {
-      name: this.form.get('name')?.value,
-      photo_url: this.form.get('photo_url')?.value,
-    };
-
-    this.customerService.updateCustomer(updateCustomerRequest).subscribe({
+    const updateCustomer = this.form.value;
+    this.customerService.updateCustomer(updateCustomer).subscribe({
       next: (response: ApiResponse<Customer>) => {
         if (response.success) {
-          this.router.navigate(['/home']);
+          this.authService.updateUserAuthenticated(updateCustomer);
+          this.router.navigate(['/profile']);
           return;
         }
 

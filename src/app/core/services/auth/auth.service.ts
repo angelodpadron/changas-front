@@ -11,6 +11,7 @@ import { Customer } from '../../models/customer/customer.model';
 import { ApiResponse } from '../../models/api-response';
 
 import { environment } from 'src/environments/environment';
+import { UpdateCustomerRequest } from '../../models/customer/update-customer-request';
 
 @Injectable({
   providedIn: 'root',
@@ -101,4 +102,8 @@ export class AuthService {
     return this.userAuthenticationSubject.asObservable();
   }
   
+  updateUserAuthenticated(updateCustomer: Customer){
+    const user = {...this.userAuthenticationSubject.getValue(), ...updateCustomer};
+    this.userAuthenticationSubject.next(user);
+  }
 }

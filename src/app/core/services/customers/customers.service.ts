@@ -6,6 +6,7 @@ import { ApiResponse } from '../../models/api-response';
 import { Customer } from '../../models/customer/customer.model';
 
 import { environment } from 'src/environments/environment';
+import { UpdateCustomerRequest } from '../../models/customer/update-customer-request';
 
 @Injectable({
   providedIn: 'root',
@@ -33,11 +34,12 @@ export class CustomersService {
     );
   }
 
-  updateCustomer(customer: Customer): Observable<any>{
-    var header = new HttpHeaders({
-      "Accept" : "application/json",
-    "Content-Type" : "application/json"});
-    return this.http.put(`${this.baseUrl}/profile`, customer, {headers:header}
+  updateCustomer(
+    updateRequest: UpdateCustomerRequest
+  ): Observable<ApiResponse<Customer>> {
+    return this.http.put<ApiResponse<Customer>>(
+      `${this.baseUrl}/profile`,
+      updateRequest
     );
   }
 }

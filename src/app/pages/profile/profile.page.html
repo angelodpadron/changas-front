@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mi perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+@if (userAuthenticated) {
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="updateChanges()">
+        <ion-list>
+          <ion-input
+            formControlName = "name"
+            type = "text"
+            label = "Nombre:"
+            [placeholder]="userAuthenticated.name"
+            labelPlacement="floating"
+            [counter] = "true"
+            maxlength="20"
+            errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
+          ></ion-input>
+          <ion-input
+              formControlName="photo_url"
+              type="url"
+              label="URL para imagen de perfil "
+              placeholder="http://images.com/image.jpg"
+              labelPlacement="floating"
+            ></ion-input>
+          <ion-button
+            type="submit"
+            expand="block"
+            shape="round"
+            color="warning"
+            >Guardar</ion-button
+          >
+        </ion-list>
+      </form>    
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+}
+
+
+

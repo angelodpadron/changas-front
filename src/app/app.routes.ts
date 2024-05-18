@@ -69,6 +69,11 @@ export const routes: Routes = [
     canActivate: [loginRequiredGuard],
     loadComponent: () => import('./pages/request-details/request-details.page').then( m => m.RequestDetailsPage)
   },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+  },
+
 
 
 ];

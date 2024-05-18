@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HiringDetails } from '../../models/transactions/hiring-details';
@@ -30,6 +30,14 @@ export class CustomersService {
   getCustomerDetails(hiringTransactionId: string) {
     return this.http.get<ApiResponse<Customer>>(
       `${this.baseUrl}/${hiringTransactionId}`
+    );
+  }
+
+  updateCustomer(customer: Customer): Observable<any>{
+    var header = new HttpHeaders({
+      "Accept" : "application/json",
+    "Content-Type" : "application/json"});
+    return this.http.put(`${this.baseUrl}/profile`, customer, {headers:header}
     );
   }
 }

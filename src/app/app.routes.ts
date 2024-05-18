@@ -96,4 +96,11 @@ export const routes: Routes = [
         (m) => m.RequestDetailsPage
       ),
   },
+  {
+    path: 'edit-profile',
+    loadComponent: () =>
+      import('./pages/edit-profile/edit-profile.page').then(
+        (m) => m.EditProfilePage
+      ),
+  },
 ];

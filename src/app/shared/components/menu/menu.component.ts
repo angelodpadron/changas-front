@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Customer } from 'src/app/core/models/customer/customer.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import {
@@ -47,19 +47,23 @@ export class MenuComponent implements OnInit, OnDestroy {
   userAuthenticated: Customer | null = null;
   private userAuthenticatedSubscription: Subscription = new Subscription();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+  ) {
+   
+  }
 
   ngOnInit() {
-    this.userAuthenticatedSubscription = this.authService
-      .getUserAuthenticated()
-      .subscribe({
-        next: (user) => {
-          this.userAuthenticated = user;
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
+      this.userAuthenticatedSubscription = this.authService
+        .getUserAuthenticated()
+        .subscribe({
+          next: (user) => {
+            this.userAuthenticated = user;
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+    
   }
 
   ngOnDestroy() {
@@ -69,4 +73,5 @@ export class MenuComponent implements OnInit, OnDestroy {
   signout() {
     this.authService.signout();
   }
+
 }

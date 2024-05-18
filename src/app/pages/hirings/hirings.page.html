@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" ></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Changas Solicitadas</ion-title>
   </ion-toolbar>
@@ -21,12 +21,13 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <ion-card>
     <ion-card-content>
       <ion-list>
         @for (hiringDetail of hiringsDetails; track hiringDetail.hiring_id) {
         <ion-item
+          button
           [routerLink]="['/request-details', hiringDetail.hiring_id]"
           class="ion-no-padding ripple-parent rounded-rectangle"
         >
@@ -55,7 +56,6 @@
               [status]="hiringDetail.status"
             ></app-transaction-status>
           </ion-grid>
-
         </ion-item>
         } @empty {
         <ion-item>

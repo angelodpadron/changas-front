@@ -16,8 +16,9 @@ import {
   IonTitle,
   IonToolbar,
   IonSpinner,
+  IonAlert,
 } from '@ionic/angular/standalone';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
@@ -48,6 +49,7 @@ import { CustomerOverviewComponent } from 'src/app/shared/components/customer-ov
     IonImg,
     IonIcon,
     IonSpinner,
+    IonAlert,
     CustomerOverviewComponent,
   ],
 })
@@ -59,9 +61,22 @@ export class ChangaDetailsPage implements OnDestroy {
 
   subscription!: Subscription;
 
+  alertButtons = [
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+    },
+    {
+      text: 'Borrar',
+      handler: () => {
+        this.deleteChanga(this.changaId);
+      },
+    },
+  ];
+
   constructor(
     private changaService: ChangasService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnDestroy() {
@@ -127,5 +142,4 @@ export class ChangaDetailsPage implements OnDestroy {
       },
     });
   }
-
 }

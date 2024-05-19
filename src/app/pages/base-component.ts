@@ -14,6 +14,7 @@ export class BaseComponent {
     const toast = await this.toastController.create({
       message,
       duration,
+      position: 'top',
       color,
     });
     toast.present();

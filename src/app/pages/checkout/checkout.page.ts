@@ -25,6 +25,7 @@ import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { HireChangaRequest } from 'src/app/core/models/transactions/hire-changa-request';
 import { Router, RouterModule } from '@angular/router';
+import { BaseComponent } from '../base-component';
 
 @Component({
   selector: 'app-checkout',
@@ -54,7 +55,7 @@ import { Router, RouterModule } from '@angular/router';
     RouterModule,
   ],
 })
-export class CheckoutPage {
+export class CheckoutPage extends BaseComponent {
   public changaOverview: WritableSignal<ChangaOverview | null> = signal(null);
 
   public hireForm = this.formBuilder.group({
@@ -75,7 +76,9 @@ export class CheckoutPage {
     private changaService: ChangasService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   hireChanga() {
     if (this.hireForm.invalid) {
@@ -98,6 +101,7 @@ export class CheckoutPage {
         this.router.navigate(['/hiring-success']);
       },
       error: (error) => {
+        this.presentErrorToastFromResponse(error);
         console.error(error);
       },
     });

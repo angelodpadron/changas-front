@@ -28,6 +28,7 @@ import {
 import { SignupRequest } from 'src/app/core/models/customer/auth-request-response';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { BaseComponent } from '../base-component';
 
 @Component({
   selector: 'app-signup',
@@ -57,7 +58,7 @@ import { Router, RouterModule } from '@angular/router';
     IonInput,
   ],
 })
-export class SignupPage implements OnInit {
+export class SignupPage extends BaseComponent implements OnInit {
   form!: FormGroup;
 
   signupRequest!: SignupRequest;
@@ -66,7 +67,9 @@ export class SignupPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -95,10 +98,12 @@ export class SignupPage implements OnInit {
 
     this.authService.signup(this.signupRequest).subscribe({
       next: () => {
-        console.log('Signup success. Redirecting to login page.');
+        this.presentToast('Inicio de sesión exitoso', 5000, 'success');
         this.router.navigate(['/login']);
       },
-      error: (err) => console.error('Error signing up', err),
+      error: (error) => {
+        this.presentErrorToastFromResponse(error, 5000);
+      },
     });
   }
 }

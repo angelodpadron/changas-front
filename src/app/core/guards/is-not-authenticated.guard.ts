@@ -7,7 +7,6 @@ export const isNotAuthenticatedGuard: CanActivateFn = (_route, _state) => {
   const router = inject(Router);
 
   if (authService.isAuthenticated()) {
-    console.error('User already authenticated');
     router.navigate(['/home']);
     return false;
   }

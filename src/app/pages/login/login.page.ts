@@ -28,6 +28,7 @@ import {
 } from 'src/app/core/models/customer/auth-request-response';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
+import { BaseComponent } from '../base-component';
 
 @Component({
   selector: 'app-login',
@@ -53,7 +54,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
     IonCard,
   ],
 })
-export class LoginPage implements OnInit {
+export class LoginPage extends BaseComponent implements OnInit {
   form!: FormGroup;
   loginRequest!: LoginRequest;
 
@@ -61,7 +62,9 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -79,14 +82,14 @@ export class LoginPage implements OnInit {
     this.loginRequest = this.form.value;
 
     this.authService.login(this.loginRequest).subscribe({
-      next: (response: ApiResponse<LoginResponse>) => {
-        if (!response.success) {
-          console.error('Error attemping login', response.error?.message);
-          return;
-        }
+      next: () => {
+        this.presentToast('Sesion iniciada', 5000, 'success');        
         this.router.navigate(['/home']);
       },
-      error: (err) => console.error('Error attemping login', err),
+      error: (error) => {
+        this.presentErrorToastFromResponse(error);
+        console.error('Error attemping login', error);
+      },
     });
   }
 }

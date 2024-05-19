@@ -1,5 +1,5 @@
 @if(loaded){
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" id="header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/" ></ion-back-button>
@@ -65,7 +65,17 @@
     trigger="present-delete-alert"
     header="Confirmar acción"
     message="¿Estás seguro que deseas eliminar esta changa?"
-    [buttons]="alertButtons"
+    [buttons]="[
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        cssClass: 'secondary',
+      },
+      {
+        text: 'Eliminar',
+        handler: deleteButtonHandler,
+      },
+    ]"
   ></ion-alert>
     } @else {
     <ion-button

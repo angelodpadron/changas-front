@@ -9,7 +9,6 @@ import {
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Customer } from '../../models/customer/customer.model';
 import { ApiResponse } from '../../models/api-response';
-
 import { environment } from 'src/environments/environment';
 import { UpdateCustomerRequest } from '../../models/customer/update-customer-request';
 
@@ -42,7 +41,7 @@ export class AuthService {
 
     this.signout();
   }
-  
+
   private getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
@@ -69,12 +68,12 @@ export class AuthService {
       photo_url: decodedJwt['photo'],
     };
   }
-  
+
   isAuthenticated(): boolean {
     const token = this.getToken();
     const tokenIsValid = token ? this.tokenIsValid(token) : false;
     const userIsAuthenticated = this.userAuthenticationSubject.getValue();
-    
+
     return tokenIsValid && userIsAuthenticated !== null;
   }
 
@@ -106,4 +105,5 @@ export class AuthService {
     const user = {...this.userAuthenticationSubject.getValue(), ...updateCustomer};
     this.userAuthenticationSubject.next(user);
   }
+  
 }

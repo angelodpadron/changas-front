@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -25,6 +25,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { switchMap, of, catchError, Subscription } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
+import { BaseComponent } from '../base-component';
 
 @Component({
   selector: 'app-changa-details',
@@ -53,7 +54,7 @@ import { CustomerOverviewComponent } from 'src/app/shared/components/customer-ov
     CustomerOverviewComponent,
   ],
 })
-export class ChangaDetailsPage implements OnDestroy {
+export class ChangaDetailsPage extends BaseComponent implements OnDestroy {
   @Input('id') changaId!: string;
   changaOverview!: ChangaOverview;
   isProvider = false;
@@ -61,23 +62,12 @@ export class ChangaDetailsPage implements OnDestroy {
 
   subscription!: Subscription;
 
-  alertButtons = [
-    {
-      text: 'Cancelar',
-      role: 'cancel',
-    },
-    {
-      text: 'Borrar',
-      handler: () => {
-        this.deleteChanga(this.changaId);
-      },
-    },
-  ];
-
   constructor(
     private changaService: ChangasService,
     private authService: AuthService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -97,25 +87,20 @@ export class ChangaDetailsPage implements OnDestroy {
       .getChangaById(this.changaId)
       .pipe(
         switchMap((response: ApiResponse<ChangaOverview>) => {
-          if (response.success) {
-            this.changaOverview = response.data;
-            // Return another observable here
-            return this.authService.getUserAuthenticated().pipe(
-              switchMap((user) => {
-                if (user?.id === this.changaOverview.provider_summary.id) {
-                  this.isProvider = true;
-                }
-                return of({}); // Completes the observable chain successfully
-              })
-            );
-          } else {
-            console.error(response.error?.message);
-            return of({}); // Return an empty observable to complete the chain
-          }
+          this.changaOverview = response.data;
+          return this.authService.getUserAuthenticated().pipe(
+            switchMap((user) => {
+              if (user?.id === this.changaOverview.provider_summary.id) {
+                this.isProvider = true;
+              }
+              return of({});
+            })
+          );
         }),
         catchError((error) => {
+          this.presentErrorToastFromResponse(error, 5000);
           console.error('Error retrieving changa details:', error);
-          return of({}); // Handle errors and complete the chain
+          return of({});
         })
       )
       .subscribe({
@@ -128,17 +113,17 @@ export class ChangaDetailsPage implements OnDestroy {
       });
   }
 
-  deleteChanga(changaId: string) {
-    this.changaService.deleteChanga(changaId).subscribe({
+  // wrapper to not lose the context of the class
+  deleteButtonHandler = () => this.deleteChanga();
+
+  deleteChanga() {
+    this.changaService.deleteChanga(this.changaId).subscribe({
       next: (response) => {
-        if (response.success) {
-          this.changaOverview = response.data;
-          return;
-        }
-        console.error('Error deleting changa:', response.error?.message);
+        this.changaOverview = response.data;
       },
-      error: (error) => {
-        console.error('Error deleting changa:', error);
+      error: (response) => {
+        this.presentErrorToastFromResponse(response, 5000);
+        console.error('Error deleting changa:', response);
       },
     });
   }

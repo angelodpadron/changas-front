@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" id="header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
@@ -7,21 +7,21 @@
   </ion-toolbar>
 </ion-header>
 
-@if (userAuthenticated) {
+@if (currentCustomer) {
 <ion-content [fullscreen]="true">
   <ion-card>
     <img
       alt="Imagen de perfil"
-      [src]="form.get('photo_url')?.value || userAuthenticated.photo_url"
+      [src]="editForm.get('photo_url')?.value || currentCustomer.photo_url"
     />
     <ion-card-content>
-      <form [formGroup]="form" (ngSubmit)="updateChanges()">
+      <form [formGroup]="editForm" (ngSubmit)="updateChanges()">
         <ion-list>
           <ion-input
             formControlName="name"
             type="text"
             label="Nombre"
-            [placeholder]="userAuthenticated.name"
+            [placeholder]="currentCustomer.name"
             labelPlacement="floating"
             [counter]="true"
             maxlength="20"

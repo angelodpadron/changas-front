@@ -96,7 +96,7 @@ export class RequestDetailsPage implements OnInit {
   }
 
   private loadTransactionData() {
-    this.customersService
+    this.transactionsService
       .getHiringDetails(this.hiringTransactionId)
       .pipe(
         switchMap((hiringDetails) => {

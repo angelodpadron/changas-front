@@ -26,6 +26,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { HireChangaRequest } from 'src/app/core/models/transactions/hire-changa-request';
 import { Router, RouterModule } from '@angular/router';
 import { BaseComponent } from '../base-component';
+import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 
 @Component({
   selector: 'app-checkout',
@@ -74,6 +75,7 @@ export class CheckoutPage extends BaseComponent {
 
   constructor(
     private changaService: ChangasService,
+    private transactionService: TransactionsService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -89,14 +91,14 @@ export class CheckoutPage extends BaseComponent {
     const hireRequest: HireChangaRequest = {
       changa_id: this.changaOverview()!.id,
       work_area_details: {
-        "description": this.hireForm.value.work_details!,
-        "photo_url": this.hireForm.value.work_area_photo_url!
-      } 
+        description: this.hireForm.value.work_details!,
+        photo_url: this.hireForm.value.work_area_photo_url!,
+      },
     };
 
     this.hireForm.disable();
 
-    this.changaService.hireChanga(hireRequest).subscribe({
+    this.transactionService.hireChanga(hireRequest).subscribe({
       next: () => {
         this.router.navigate(['/hiring-success']);
       },

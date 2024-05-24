@@ -33,6 +33,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { RouterModule } from '@angular/router';
 import { TransactionStatusComponent } from 'src/app/shared/components/transaction-status/transaction-status.component';
 import { TransactionStatus } from 'src/app/core/models/transactions/transaction-status';
+import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 
 @Component({
   selector: 'app-hirings',
@@ -75,7 +76,9 @@ export class HiringsPage implements OnDestroy {
   subscription: any;
   loaded = false;
 
-  constructor(private customersService: CustomersService) {}
+  constructor(
+    private transactionService: TransactionsService
+  ) {}
 
   ionViewWillEnter() {
     if (this.subscription) {
@@ -134,7 +137,7 @@ export class HiringsPage implements OnDestroy {
   }
 
   private initializeHiringsWithStatus(status: TransactionStatus) {
-    this.subscription = this.customersService
+    this.subscription = this.transactionService
       .getHiringsWithStatus(status)
       .subscribe({
         next: (response: ApiResponse<HiringDetails[]>) => {
@@ -151,7 +154,7 @@ export class HiringsPage implements OnDestroy {
   }
 
   private initializeHirings() {
-    this.subscription = this.customersService.getHirings().subscribe({
+    this.subscription = this.transactionService.getHirings().subscribe({
       next: (response: ApiResponse<HiringDetails[]>) => {
         if (response.success) {
           this.hiringsDetails = response.data;

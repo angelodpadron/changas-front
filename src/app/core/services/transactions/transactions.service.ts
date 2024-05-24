@@ -5,6 +5,8 @@ import { ApiResponse } from '../../models/api-response';
 import { HiringDetails } from '../../models/transactions/hiring-details';
 
 import { environment } from 'src/environments/environment';
+import { TransactionStatus } from '../../models/transactions/transaction-status';
+import { HireChangaRequest } from '../../models/transactions/hire-changa-request';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,30 @@ export class TransactionsService {
   private baseUrl = environment.fullApiUrl + '/transactions';
 
   constructor(private http: HttpClient) {}
+
+  hireChanga(hireChangaRequest: HireChangaRequest) {
+    return this.http.post(`${this.baseUrl}/request`, hireChangaRequest, {
+      responseType: 'text',
+    });
+  }
+
+  getHirings(): Observable<ApiResponse<HiringDetails[]>> {
+    return this.http.get<ApiResponse<HiringDetails[]>>(`${this.baseUrl}`);
+  }
+
+  getHiringDetails(hiringId: string): Observable<ApiResponse<HiringDetails>> {
+    return this.http.get<ApiResponse<HiringDetails>>(
+      `${this.baseUrl}/${hiringId}`
+    );
+  }
+
+  getHiringsWithStatus(
+    status: TransactionStatus
+  ): Observable<ApiResponse<HiringDetails[]>> {
+    return this.http.get<ApiResponse<HiringDetails[]>>(
+      `${this.baseUrl}/filter?status=${status}`
+    );
+  }
 
   sendConditionsToRequester(
     hiringTransactionId: string,

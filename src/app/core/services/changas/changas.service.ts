@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ChangasService {
-  
   private baseUrl = environment.fullApiUrl + '/changas';
 
   constructor(private http: HttpClient) {}
@@ -30,7 +29,7 @@ export class ChangasService {
   ): Observable<ApiResponse<ChangaOverview[]>> {
     const requestParams = { title };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
-      `${this.baseUrl}/findBy`,
+      `${this.baseUrl}/search`,
       { params: requestParams }
     );
   }
@@ -40,7 +39,7 @@ export class ChangasService {
   ): Observable<ApiResponse<ChangaOverview[]>> {
     const requestParams = { topics };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
-      `${this.baseUrl}/findBy`,
+      `${this.baseUrl}/search`,
       { params: requestParams }
     );
   }
@@ -51,7 +50,7 @@ export class ChangasService {
   ): Observable<ApiResponse<ChangaOverview[]>> {
     const requestParams = { title, topics };
     return this.http.get<ApiResponse<ChangaOverview[]>>(
-      `${this.baseUrl}/findBy`,
+      `${this.baseUrl}/search`,
       { params: requestParams }
     );
   }
@@ -79,11 +78,5 @@ export class ChangasService {
     return this.http.delete<ApiResponse<ChangaOverview>>(
       `${this.baseUrl}/${changaId}/delete`
     );
-  }
-
-  hireChanga(hireChangaRequest: HireChangaRequest) {
-    return this.http.post(`${this.baseUrl}/hire`, hireChangaRequest, {
-      responseType: 'text',
-    });
   }
 }

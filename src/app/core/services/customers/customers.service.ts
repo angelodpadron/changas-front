@@ -6,6 +6,7 @@ import { Customer } from '../../models/customer/customer.model';
 
 import { environment } from 'src/environments/environment';
 import { UpdateCustomerRequest } from '../../models/customer/update-customer-request';
+import { ChangaOverview } from '../../models/changa/changa-overview';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,12 @@ export class CustomersService {
   getCustomerDetails(hiringTransactionId: string) {
     return this.http.get<ApiResponse<Customer>>(
       `${this.baseUrl}/${hiringTransactionId}`
+    );
+  }
+
+  getPostFromCustomer(id: number): Observable<ApiResponse<ChangaOverview[]>> {
+    return this.http.get<ApiResponse<ChangaOverview[]>>(
+      `${this.baseUrl}/${id}/posts`
     );
   }
 

@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../models/api-response';
 import { CreateChangaRequest } from '../../models/changa/create-changa-request';
-import { HireChangaRequest } from '../../models/transactions/hire-changa-request';
 
 import { environment } from 'src/environments/environment';
 

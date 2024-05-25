@@ -17,6 +17,7 @@ import {
   IonSearchbar,
   IonChip,
   IonIcon,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 
 import { closeCircle } from 'ionicons/icons';
@@ -54,13 +55,14 @@ import { ApiResponse } from 'src/app/core/models/api-response';
     IonSearchbar,
     IonChip,
     IonIcon,
+    IonSpinner,
   ],
 })
 export class SearchResultsPage implements OnInit {
   searchTerm: string = '';
   topics: string[] = [];
-
   changas: ChangaOverview[] = [];
+  loaded = false;
 
   constructor(
     private changasService: ChangasService,
@@ -75,13 +77,17 @@ export class SearchResultsPage implements OnInit {
       .pipe(
         switchMap((params) => {
           this.searchTerm = params['searchTerm'];
-          this.topics = typeof params['topics'] === 'string' ? [params['topics']] : params['topics'] || [];
+          this.topics =
+            typeof params['topics'] === 'string'
+              ? [params['topics']]
+              : params['topics'] || [];
           return this.handleSearch(this.searchTerm, this.topics);
         })
       )
       .subscribe({
         next: (changas: ChangaOverview[]) => {
           this.changas = changas;
+          this.loaded = true;
         },
         error: (error) => {
           console.error(error);
@@ -102,13 +108,6 @@ export class SearchResultsPage implements OnInit {
   }
 
   handleSearch(searchTerm: string, topics: any): Observable<ChangaOverview[]> {
-    if (!this.canSearch()) {
-      return new Observable<ChangaOverview[]>((subscriber) => {
-        subscriber.next([]);
-        subscriber.complete();
-      });
-    }
-
     // Search by title and topics
     if (searchTerm && topics.length) {
       return this.changasService
@@ -145,6 +144,7 @@ export class SearchResultsPage implements OnInit {
   handleSearchInput(event: any) {
     this.searchTerm = event.target.value;
     if (this.canSearch()) {
+      this.loaded = false;
       this.router.navigate(['/search-results'], {
         queryParams: { searchTerm: this.searchTerm, topics: this.topics },
       });

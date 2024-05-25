@@ -102,19 +102,21 @@ export class EditProfilePage extends BaseComponent implements OnInit {
       return;
     }
 
-    const updateCustomerRequest: UpdateCustomerRequest = { ...this.editForm.value };
+    const updateCustomerRequest: UpdateCustomerRequest = {
+      ...this.editForm.value,
+    };
 
     this.customerService.updateCustomer(updateCustomerRequest).subscribe({
       next: (response: ApiResponse<Customer>) => {
-        this.authService.updateUserAuthenticated(response.data);
-        this.router.navigate(['/profile']);
         this.presentToastWithAnchor(
           'Datos de perfil actualizados',
           'top',
           'header',
-          2000,
+          1000,
           'success'
         );
+        this.authService.updateUserAuthenticated(response.data);
+        this.router.navigate(['/profile']);
       },
       error: (error) => {
         console.error('Error updating profile', error);

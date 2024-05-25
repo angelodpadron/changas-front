@@ -98,7 +98,13 @@ export class SignupPage extends BaseComponent implements OnInit {
 
     this.authService.signup(this.signupRequest).subscribe({
       next: () => {
-        this.presentToast('Usuario creado', 2000, 'success');
+        this.presentToastWithAnchor(
+          'Usuario creado exitosamente',
+          'top',
+          'header',
+          1000,
+          'success'
+        );
         this.router.navigate(['/login']);
       },
       error: (error) => {

@@ -17,6 +17,7 @@ import {
   IonCard,
   IonRefresher,
   IonRefresherContent,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -48,11 +49,13 @@ import { addIcons } from 'ionicons';
     IonRefresher,
     IonRefresherContent,
     ChangaOverviewCardComponent,
+    IonSpinner,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
   private subscription!: Subscription;
   changas: ChangaOverview[] = [];
+  loaded = false;
 
   constructor(private changasSerivce: ChangasService) {
     addIcons({ search });
@@ -67,6 +70,7 @@ export class HomePage implements OnInit, OnDestroy {
       next: (response: ApiResponse<ChangaOverview[]>) => {
         if (response.success) {
           this.changas = response.data;
+          this.loaded = true;
         } else {
           console.error(response.error?.message);
         }
@@ -81,6 +85,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   doRefresh(event: any) {
     this.subscription.unsubscribe();
+    this.loaded = false;
     this.loadChangas();
     event.target.complete();
   }

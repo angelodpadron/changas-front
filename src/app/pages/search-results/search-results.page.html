@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" ></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-searchbar
       placeholder="Buscar en Changas"
@@ -23,15 +23,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  @if(canSearch()) { @for(changa of changas; track changa.id) {
+  @if(loaded) { @for(changa of changas; track changa.id) {
   <app-changa-overview-card [changa]="changa"></app-changa-overview-card>
-  } @empty {
+  } @empty { @if (canSearch()) {
   <div class="no-results">
     <h5>No hay publicaciones que coincidan con tu búsqueda :(</h5>
   </div>
-  } } @else {
+  } @else {
   <div class="no-results">
-    <h5>Ingresa un término de búsqueda para comenzar</h5>
+    <h5>Ingresa un termino de busqueda para empezar</h5>
+  </div>
+  } } } @else {
+  <div class="center-container">
+    <ion-spinner></ion-spinner>
   </div>
   }
 </ion-content>

@@ -83,7 +83,13 @@ export class LoginPage extends BaseComponent implements OnInit {
 
     this.authService.login(this.loginRequest).subscribe({
       next: () => {
-        this.presentToast('Sesion iniciada', 5000, 'success');        
+        this.presentToastWithAnchor(
+          'Sesion iniciada',
+          'top',
+          'header',
+          1000,
+          'success'
+        );
         this.router.navigate(['/home']);
       },
       error: (error) => {

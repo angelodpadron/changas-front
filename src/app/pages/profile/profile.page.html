@@ -1,17 +1,26 @@
+<ion-popover trigger="popover" dismiss-on-select>
+  <ng-template>
+    <ion-item button [routerLink]="['/edit-profile']">
+      <ion-icon slot="start" name="create"></ion-icon>
+      <ion-label>Editar perfil</ion-label>
+    </ion-item>
+    <ion-item button (click)="logout()">
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-label>Cerrar sesion</ion-label>
+    </ion-item>
+  </ng-template>
+</ion-popover>
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="popover">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Perfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
+  <ion-toolbar>
     <ion-item>
       <app-customer-overview
         [customerName]="customer.name"
@@ -19,16 +28,32 @@
         [customerPhotoUrl]="customer.photo_url"
       ></app-customer-overview>
     </ion-item>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment value="all">
+      <ion-segment-button value="all">
+        <ion-label>Posts</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        <ion-label>Resumen</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="ratings">
+        <ion-label>Reseñas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
 
-    <ion-item button [routerLink]="['/edit-profile']">
-      <ion-icon slot="start" name="create"></ion-icon>
-      <ion-label>Editar perfil</ion-label>
-      <ion-icon slot="end" name="chevron-forward-sharp"></ion-icon>
-    </ion-item>
-    <ion-item button (click)="logout()">
-      <ion-icon slot="start" name="log-out"></ion-icon>
-      <ion-label>Cerrar sesion</ion-label>
-      <ion-icon slot="end" name="chevron-forward-sharp"></ion-icon>
-    </ion-item>
-  </ion-list>
+<ion-content [fullscreen]="true">
+  @if (loaded){ @for (post of posts; track post.id) {
+  <app-changa-overview-card [changa]="post" />
+  } @empty {
+  <div class="center-container">
+    <ion-label>No hay posts para mostrar</ion-label>
+  </div>
+  } } @else {
+  <div class="center-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  }
 </ion-content>

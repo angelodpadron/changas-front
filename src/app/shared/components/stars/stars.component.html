@@ -1,0 +1,11 @@
+<ion-row>
+  @for (star of stars; track $index) {
+  <ion-col>
+    <ion-icon
+      [name]="star ? 'star' : 'star-outline'"
+      color="warning"
+      (click)="onStarClick($index + 1)"
+    ></ion-icon>
+  </ion-col>
+  }
+</ion-row>

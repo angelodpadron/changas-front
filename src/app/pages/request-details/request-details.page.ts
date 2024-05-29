@@ -23,6 +23,7 @@ import {
   IonThumbnail,
   IonGrid,
   IonRow,
+  IonCol,
   IonModal,
   IonRippleEffect,
 } from '@ionic/angular/standalone';
@@ -36,6 +37,7 @@ import { switchMap } from 'rxjs';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ReviewComponent } from 'src/app/shared/components/review/review.component';
 
 @Component({
   selector: 'app-request-details',
@@ -68,10 +70,12 @@ import { RouterModule } from '@angular/router';
     IonThumbnail,
     IonGrid,
     IonRow,
+    IonCol,
     IonModal,
     IonRippleEffect,
     CustomerOverviewComponent,
     TransactionStatusComponent,
+    ReviewComponent,
   ],
 })
 export class RequestDetailsPage implements OnInit {
@@ -83,14 +87,17 @@ export class RequestDetailsPage implements OnInit {
   responsePrice: number = 0;
   isProvider: boolean = false;
 
+  rating: number = 0;
+  comment: string = '';
+  photo_url: string = '';
+
   loaded: boolean = false;
 
   constructor(
     private customersService: CustomersService,
     private authService: AuthService,
-    private transactionsService: TransactionsService
-  ) {}
-  
+    private transactionsService: TransactionsService  ) {}
+
   ngOnInit() {
     this.loadTransactionData();
   }
@@ -104,6 +111,7 @@ export class RequestDetailsPage implements OnInit {
             throw new Error('Error fetching hiring details');
           }
           this.hiringDetails = hiringDetails.data;
+          console.log(this.hiringDetails);
           return this.authService.getUserAuthenticated();
         }),
         switchMap((user) => {
@@ -205,4 +213,9 @@ export class RequestDetailsPage implements OnInit {
         },
       });
   }
+
+  canShowReview() {
+    return this.hiringDetails.status === 'ACCEPTED_BY_REQUESTER';
+  }
+  
 }

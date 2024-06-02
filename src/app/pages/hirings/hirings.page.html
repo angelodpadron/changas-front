@@ -57,10 +57,10 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        @for (hiringDetail of hiringsDetails; track hiringDetail.hiring_id) {
+        @for (hiringDetail of hiringsDetails; track hiringDetail.id) {
         <ion-item
           button
-          [routerLink]="['/request-details', hiringDetail.hiring_id]"
+          [routerLink]="['/request-details', hiringDetail.id]"
           class="ion-no-padding ripple-parent rounded-rectangle"
         >
           <ion-grid>
@@ -80,6 +80,11 @@
                 <ion-row>
                   <ion-col>
                     <p>{{ hiringDetail.creation_date | date }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <small>#{{ hiringDetail.id }}</small>
                   </ion-col>
                 </ion-row>
               </ion-grid>

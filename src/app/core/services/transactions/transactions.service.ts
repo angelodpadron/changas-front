@@ -16,10 +16,13 @@ export class TransactionsService {
 
   constructor(private http: HttpClient) {}
 
-  hireChanga(hireChangaRequest: HireChangaRequest) {
-    return this.http.post(`${this.baseUrl}/request`, hireChangaRequest, {
-      responseType: 'text',
-    });
+  hireChanga(
+    hireChangaRequest: HireChangaRequest
+  ): Observable<ApiResponse<HiringDetails>> {
+    return this.http.post<ApiResponse<HiringDetails>>(
+      `${this.baseUrl}/request`,
+      hireChangaRequest
+    );
   }
 
   getHirings(): Observable<ApiResponse<HiringDetails[]>> {

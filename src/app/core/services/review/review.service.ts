@@ -5,6 +5,7 @@ import { CreateReviewRequest } from '../../models/review/create-review-request';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../models/api-response';
 import { Review } from '../../models/review/review';
+import { AverageRating } from '../../models/review/average-rating';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,12 @@ export class ReviewService {
   ): Observable<ApiResponse<Review>> {
     return this.http.get<ApiResponse<Review>>(
       `${this.baseUrl}/customer/${customerId}?changaId=${changaId}`
+    );
+  }
+
+  getAverageRating(changaId: string): Observable<ApiResponse<AverageRating>> {
+    return this.http.get<ApiResponse<AverageRating>>(
+      `${this.baseUrl}/changa/${changaId}`
     );
   }
 }

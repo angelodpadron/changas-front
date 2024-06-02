@@ -11,6 +11,7 @@ import { AverageRating } from '../../models/review/average-rating';
   providedIn: 'root',
 })
 export class ReviewService {
+  
   private baseUrl = environment.fullApiUrl + '/reviews';
 
   constructor(private http: HttpClient) {}
@@ -35,7 +36,11 @@ export class ReviewService {
 
   getAverageRating(changaId: string): Observable<ApiResponse<AverageRating>> {
     return this.http.get<ApiResponse<AverageRating>>(
-      `${this.baseUrl}/changa/${changaId}`
+      `${this.baseUrl}/overview/changa/${changaId}`
     );
+  }
+
+  getReviewsFor(changaId: string): Observable<ApiResponse<Review[]>> {
+    return this.http.get<ApiResponse<Review[]>>(`${this.baseUrl}/changa/${changaId}`);
   }
 }

@@ -1,0 +1,32 @@
+<ion-list lines="none">
+  @for (review of reviews; track review.id) {
+  <ion-item>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        <ion-col size="auto" class="ion-no-padding">
+          <ion-row>
+            <ion-col class="ion-no-padding">
+              <ion-avatar class="small-avatar">
+                <img
+                  src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                />
+              </ion-avatar>
+            </ion-col>
+            <ion-col>
+              <ion-note>{{ review.reviewer.name }}</ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="auto" class="ion-no-padding">
+          <app-stars [rating]="review.rating" [readonly]="true"></app-stars>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <div class="ion-padding-vertical">
+          <ion-note>{{ review.comment }}</ion-note>
+        </div>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  }
+</ion-list>

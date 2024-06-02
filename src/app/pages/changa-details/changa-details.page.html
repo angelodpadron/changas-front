@@ -87,10 +87,13 @@
   <div class="ion-padding">
     <h5>Descripcion del servicio</h5>
     <p>{{ changaOverview.description }}</p>
-  </div>
+  </div>  
   <div class="ion-padding">
     <h5>Opiniones del servicio</h5>
-    <app-average-rating [changaId]="changaId"></app-average-rating>
+    <app-average-rating [changaId]="changaOverview.id"></app-average-rating>
+  </div>
+  <div class="ion-padding">
+    <app-review-list [changaId]="changaOverview.id"></app-review-list>
   </div>
 </ion-content>
 } @else {

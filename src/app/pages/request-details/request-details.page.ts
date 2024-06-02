@@ -111,7 +111,6 @@ export class RequestDetailsPage implements OnInit {
             throw new Error('Error fetching hiring details');
           }
           this.hiringDetails = hiringDetails.data;
-          console.log(this.hiringDetails);
           return this.authService.getUserAuthenticated();
         }),
         switchMap((user) => {

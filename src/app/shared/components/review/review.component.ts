@@ -130,7 +130,6 @@ export class ReviewComponent implements OnInit, OnDestroy {
     this.reviewService.createReview(reviewData).subscribe({
       next: (response) => {
         this.fetchReviewInfo();
-        console.log('Review created successfully', response);
         this.showCreateModal = false;
       },
       error: (error) => {

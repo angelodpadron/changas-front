@@ -21,11 +21,11 @@ import { IonIcon, IonCol, IonRow } from '@ionic/angular/standalone';
 })
 export class StarsComponent implements OnInit {
   @Input() rating: number = 0;
-  stars: boolean[] = [];
-
   @Input() readonly: boolean = false;
-
+  @Input() large: boolean = false;
   @Output() ratingChange: EventEmitter<number> = new EventEmitter<number>();
+  
+  stars: boolean[] = [];  
 
   constructor() {
     addIcons({ star, starOutline });

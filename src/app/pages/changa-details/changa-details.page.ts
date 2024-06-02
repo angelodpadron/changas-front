@@ -26,6 +26,8 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { switchMap, of, catchError, Subscription } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 import { BaseComponent } from '../base-component';
+import { AverageRatingComponent } from 'src/app/shared/components/average-rating/average-rating.component';
+import { ReviewListComponent } from 'src/app/shared/components/review-list/review-list.component';
 
 @Component({
   selector: 'app-changa-details',
@@ -52,6 +54,8 @@ import { BaseComponent } from '../base-component';
     IonSpinner,
     IonAlert,
     CustomerOverviewComponent,
+    AverageRatingComponent,
+    ReviewListComponent,
   ],
 })
 export class ChangaDetailsPage extends BaseComponent implements OnDestroy {

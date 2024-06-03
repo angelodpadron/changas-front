@@ -1,0 +1,50 @@
+ <ion-list>
+  <ion-item-group>
+    <h3 class="ion-text-center">Hace tu consulta</h3>
+    <ion-item-divider>  
+      
+    </ion-item-divider>
+      <form [formGroup]="form" (ngSubmit)="sendQuery()">
+          
+        <div id="container">
+          <ion-item>
+            <ion-input 
+              formControlName="message"
+              placeholder="Por favor escriba su consulta"
+              label="Escriba su consulta"
+              labelPlacement="floating">
+          </ion-input>
+          </ion-item>
+        <ion-button 
+          type="submit"
+          color = "secondary"
+          shape="round"
+          expand="block"
+        >
+          Enviar
+        </ion-button>
+        </div>
+      </form>
+    </ion-item-group>
+</ion-list>
+
+<ion-item-group>
+  <h3 class="ion-text-center">Preguntas hechas por usuarios:</h3>
+  <ion-item-divider>  
+    
+  </ion-item-divider>
+      
+      <ion-list>
+          <ion-item *ngFor="let query of queries">
+            
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-subtitle>{{query.date}}</ion-card-subtitle>
+                  <ion-card-title>{{query.customer_name}}:</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>{{query.message}}</ion-card-content>
+              </ion-card>
+            
+          </ion-item>
+      </ion-list>
+</ion-item-group>   

@@ -103,4 +103,9 @@ export const routes: Routes = [
         (m) => m.EditProfilePage
       ),
   },
+  {
+    path: 'queries',
+    loadComponent: () => import('./pages/question/question.page').then( m => m.QuestionPage)
+  },
+
 ];

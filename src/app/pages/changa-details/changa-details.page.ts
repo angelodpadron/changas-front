@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, NgModule, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -17,6 +17,7 @@ import {
   IonToolbar,
   IonSpinner,
   IonAlert,
+  
 } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
@@ -26,6 +27,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { switchMap, of, catchError, Subscription } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 import { BaseComponent } from '../base-component';
+import { ComponentModule } from 'src/app/shared/components/component/component.module';
 
 @Component({
   selector: 'app-changa-details',
@@ -52,8 +54,11 @@ import { BaseComponent } from '../base-component';
     IonSpinner,
     IonAlert,
     CustomerOverviewComponent,
+    ComponentModule,
+
   ],
 })
+
 export class ChangaDetailsPage extends BaseComponent implements OnDestroy {
   @Input('id') changaId!: string;
   changaOverview!: ChangaOverview;

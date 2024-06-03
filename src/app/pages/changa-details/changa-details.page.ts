@@ -27,7 +27,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { switchMap, of, catchError, Subscription } from 'rxjs';
 import { CustomerOverviewComponent } from 'src/app/shared/components/customer-overview/customer-overview.component';
 import { BaseComponent } from '../base-component';
-import { ComponentModule } from 'src/app/shared/components/component/component.module';
+import { QuestionComponent } from 'src/app/shared/components/question/question.component';
 
 @Component({
   selector: 'app-changa-details',
@@ -54,7 +54,7 @@ import { ComponentModule } from 'src/app/shared/components/component/component.m
     IonSpinner,
     IonAlert,
     CustomerOverviewComponent,
-    ComponentModule,
+    QuestionComponent,
 
   ],
 })

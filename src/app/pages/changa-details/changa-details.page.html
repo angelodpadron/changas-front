@@ -66,13 +66,6 @@
     >
       Solicitar
     </ion-button>
-    
-    
-      
-        <app-question [changaId] = "changaOverview.id">
-        
-        </app-question>
-      
 
     } } @else {
     <ion-button shape="round" expand="block" disabled>
@@ -94,7 +87,10 @@
   <div class="ion-padding">
     <h5>Descripcion del servicio</h5>
     <p>{{ changaOverview.description }}</p>
-  </div>  
+  </div>
+  <div class="ion-padding">
+    <app-question [changaId]="changaOverview.id"></app-question>
+  </div>
   <div class="ion-padding">
     <h5>Opiniones del servicio</h5>
     <app-average-rating [changaId]="changaOverview.id"></app-average-rating>

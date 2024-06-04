@@ -2,7 +2,7 @@
 <ion-header [translucent]="true" id="header">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" ></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ changaOverview.title }}</ion-title>
   </ion-toolbar>
@@ -17,33 +17,13 @@
 
   <ion-img [src]="changaOverview.photo_url" class="image-container"></ion-img>
   <div class="ion-padding">
-    <h3>Acerca de esta Changa</h3>
-    <p>{{ changaOverview.description }}</p>
-
-    <hr />
-
-    <p>Más sobre {{changaOverview.provider_summary.name}}</p>
-    <!-- Provider Information -->
     <app-customer-overview
       [customerName]="changaOverview.provider_summary.name"
       [customerEmail]="changaOverview.provider_summary.email"
       [customerPhotoUrl]="changaOverview.provider_summary.photo_url"
     ></app-customer-overview>
-
-    <hr />
-
-    @for (topic of changaOverview.topics; track changaOverview.id) {
-    <ion-chip
-      color="warning"
-      [routerLink]="['/search-results']"
-      [queryParams]="{topics:[topic]}"
-    >
-      {{ topic }}
-    </ion-chip>
-    }
-
-    <hr />
-
+  </div>
+  <div class="ion-padding">
     @if(changaOverview.available) { @if(isProvider) {
     <ion-button
       shape="round"
@@ -62,10 +42,10 @@
       Eliminar
     </ion-button>
     <ion-alert
-    trigger="present-delete-alert"
-    header="Confirmar acción"
-    message="¿Estás seguro que deseas eliminar esta changa?"
-    [buttons]="[
+      trigger="present-delete-alert"
+      header="Confirmar acción"
+      message="¿Estás seguro que deseas eliminar esta changa?"
+      [buttons]="[
       {
         text: 'Cancelar',
         role: 'cancel',
@@ -76,7 +56,7 @@
         handler: deleteButtonHandler,
       },
     ]"
-  ></ion-alert>
+    ></ion-alert>
     } @else {
     <ion-button
       shape="round"
@@ -99,6 +79,28 @@
       No disponible
     </ion-button>
     }
+  </div>
+  <div class="ion-padding">
+    @for (topic of changaOverview.topics; track changaOverview.id) {
+    <ion-chip
+      color="warning"
+      [routerLink]="['/search-results']"
+      [queryParams]="{topics:[topic]}"
+    >
+      {{ topic }}
+    </ion-chip>
+    }
+  </div>
+  <div class="ion-padding">
+    <h5>Descripcion del servicio</h5>
+    <p>{{ changaOverview.description }}</p>
+  </div>  
+  <div class="ion-padding">
+    <h5>Opiniones del servicio</h5>
+    <app-average-rating [changaId]="changaOverview.id"></app-average-rating>
+  </div>
+  <div class="ion-padding">
+    <app-review-list [changaId]="changaOverview.id"></app-review-list>
   </div>
 </ion-content>
 } @else {

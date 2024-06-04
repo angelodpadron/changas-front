@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title
-      >{{ loaded ? 'Solicitud #' + hiringDetails.hiring_id : 'Obteniendo
+      >{{ loaded ? 'Solicitud #' + hiringDetails.id : 'Obteniendo
       informacion...' }}</ion-title
     >
   </ion-toolbar>
@@ -63,7 +63,7 @@
         <ion-item class="ion-no-padding">
           <ion-label>
             <h2>ID de solicitud</h2>
-            <p>{{ hiringDetails.hiring_id }}</p>
+            <p>{{ hiringDetails.id }}</p>
           </ion-label>
         </ion-item>
         <ion-item class="ion-no-padding">
@@ -206,16 +206,12 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-  }
-
-  <!-- responses -->
-
-  @if (isProviderResponding()) {
-    <div class="ion-padding">
-      <ion-button id="open-reply-requester-modal" expand="full" shape="round">
-        Responder a solicitud
-      </ion-button>
-    </div>
+  } @if (isProviderResponding()) {
+  <div class="ion-padding">
+    <ion-button id="open-reply-requester-modal" expand="full" shape="round">
+      Responder a solicitud
+    </ion-button>
+  </div>
 
   <ion-modal
     #replyToRequesterModal
@@ -286,6 +282,12 @@
       >Rechazar condiciones</ion-button
     >
   </div>
+  } @if (canShowReview()) {
+  <app-review
+    [changaId]="hiringDetails.changa_id"
+    [reviewerId]="hiringDetails.customer_id"
+    [readonly]="isProvider"
+  ></app-review>
   } } @else {
   <div class="center-container">
     <ion-spinner></ion-spinner>

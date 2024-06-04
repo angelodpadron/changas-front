@@ -115,7 +115,6 @@ export class CreateChangaPage implements OnInit {
 
     this.changasService.createChanga(this.createChangaRequest).subscribe({
       next: (response: ApiResponse<ChangaOverview>) => {
-        console.log('Changa created', response);
         this.form.disable();
         this.router.navigate(['/changa-details/' + response.data.id]);
       },

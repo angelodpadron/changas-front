@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Notificaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if (inquiries.length) {
+  <ion-list>
+    @for (inquiry of inquiries; track inquiry.id) {
+    <ion-item
+      button
+      [routerLink]="['/answer-inquiry', inquiry.id]"
+      detail="true"
+    >
+      <ion-label>
+        <strong>Tienes una consulta en una publicacion</strong><br />
+        <small>{{inquiry.changa.title}}</small><br />
+        <h3>{{ inquiry.question }}</h3>
+        <small>{{ inquiry.created_at | date : 'dd/MM/yyyy' }}</small>
+      </ion-label>
+    </ion-item>
+    }
+  </ion-list>
+  } @else {
+  <div class="center-container">
+    <h5>No tienes notificaciones :)</h5>
+  </div>
+  }
+</ion-content>

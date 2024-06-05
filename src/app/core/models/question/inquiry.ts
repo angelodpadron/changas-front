@@ -1,3 +1,4 @@
+import { ChangaOverview } from '../changa/changa-overview';
 import { Customer } from '../customer/customer.model';
 
 export interface Inquiry {
@@ -6,5 +7,6 @@ export interface Inquiry {
   answer: string;
   created_at: string;
   changa_id: number;
+  changa: ChangaOverview;
   customer: Customer;
 }

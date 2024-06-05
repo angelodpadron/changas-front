@@ -10,11 +10,12 @@ import {
 
 import { addIcons } from 'ionicons';
 import {
-  homeSharp,
-  personSharp,
-  searchSharp,
-  peopleSharp,
-  addCircleSharp,
+  homeOutline,
+  personCircleOutline,
+  searchOutline,
+  peopleOutline,
+  addOutline,
+  mailOutline,
 } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { Customer } from 'src/app/core/models/customer/customer.model';
@@ -33,11 +34,12 @@ export class TabsComponent implements OnInit, OnDestroy {
 
   constructor(private authSerivce: AuthService) {
     addIcons({
-      homeSharp,
-      searchSharp,
-      personSharp,
-      peopleSharp,
-      addCircleSharp,
+      homeOutline,
+      searchOutline,
+      personCircleOutline,
+      peopleOutline,
+      addOutline,
+      mailOutline,
     });
   }
 

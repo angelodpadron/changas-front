@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InquiryService } from 'src/app/core/services/questions/question.service';
 import { BaseComponent } from 'src/app/pages/base-component';
 import { ApiResponse } from 'src/app/core/models/api-response';
@@ -16,12 +16,13 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonTextarea,
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss'],
+  selector: 'app-inquiry-list',
+  templateUrl: './inquiry-list.component.html',
+  styleUrls: ['./inquiry-list.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -31,10 +32,12 @@ import {
     IonList,
     IonItem,
     IonLabel,
+    IonTextarea,
   ],
 })
-export class QuestionComponent extends BaseComponent implements OnInit {
+export class InquiryListComponent extends BaseComponent implements OnInit {
   @Input() changaId!: string;
+  @Input() readonly: boolean = false;
 
   form!: FormGroup;
   inquiry!: Inquiry;
@@ -87,7 +90,7 @@ export class QuestionComponent extends BaseComponent implements OnInit {
 
   private initializeForm() {
     this.form = this.formBuilder.group({
-      message: '',
+      message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
     });
   }
 
@@ -104,7 +107,8 @@ export class QuestionComponent extends BaseComponent implements OnInit {
 
     this.questionService.postQuestion(createQuestionRequest).subscribe({
       next: (response: ApiResponse<Inquiry>) => {
-        console.log('Pregunta creada', response);
+        this.form.reset();
+        this.loadQueries();
       },
       error: (error) => {
         this.presentErrorToastFromResponse(error);

@@ -29,7 +29,7 @@ import { CustomerOverviewComponent } from 'src/app/shared/components/customer-ov
 import { BaseComponent } from '../base-component';
 import { AverageRatingComponent } from 'src/app/shared/components/average-rating/average-rating.component';
 import { ReviewListComponent } from 'src/app/shared/components/review-list/review-list.component';
-import { QuestionComponent } from 'src/app/shared/components/question/question.component';
+import { InquiryListComponent } from 'src/app/shared/components/inquiry-list/inquiry-list.component';
 
 @Component({
   selector: 'app-changa-details',
@@ -58,7 +58,7 @@ import { QuestionComponent } from 'src/app/shared/components/question/question.c
     CustomerOverviewComponent,
     AverageRatingComponent,
     ReviewListComponent,
-    QuestionComponent,
+    InquiryListComponent,
 
   ],
 })

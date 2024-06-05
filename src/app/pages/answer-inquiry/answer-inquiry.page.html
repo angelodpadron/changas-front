@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Responder consulta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if (inquiry) {
+  <ion-list>
+    <ion-item
+      button
+      detail="true"
+      [routerLink]="['/changa-details', inquiry.changa_id]"
+    >
+      <ion-thumbnail slot="start">
+        <img [src]="inquiry.changa.photo_url" />
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{ inquiry.changa.title }}</h3>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <small>{{ inquiry.customer.name }}</small>
+        <h2>{{ inquiry.question }}</h2>
+        <p>{{ inquiry.created_at | date: 'dd/MM/yyyy' }}</p>
+      </ion-label>
+    </ion-item>
+    @if (inquiry.answer) {
+    <ion-item>
+      <ion-label>
+        <h3>{{ inquiry.answer }}</h3>
+      </ion-label>
+    </ion-item>
+    } @else {
+    <div class="ion-padding">
+      <form [formGroup]="form" (ngSubmit)="submitAnswer()">
+        <ion-textarea
+          formControlName="answer"
+          placeholder="Respuesta"
+          label="Escriba su respuesta"
+          labelPlacement="floating"
+          [autoGrow]="true"
+          [counter]="true"
+          maxlength="500"
+        ></ion-textarea>
+        <ion-button
+          type="submit"
+          color="secondary"
+          shape="round"
+          expand="full"
+          [disabled]="!form.valid"
+          >Enviar respuesta</ion-button
+        >
+      </form>
+    </div>
+
+    }
+  </ion-list>
+  }
+</ion-content>

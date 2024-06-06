@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { InquiryService } from 'src/app/core/services/questions/question.service';
 import { BaseComponent } from 'src/app/pages/base-component';
 import { ApiResponse } from 'src/app/core/models/api-response';
@@ -79,7 +84,6 @@ export class InquiryListComponent extends BaseComponent implements OnInit {
         next: (response: ApiResponse<Inquiry[]>) => {
           if (response.success) {
             this.inquiries = response.data;
-            console.log(response.data);
           } else {
             console.error(response.error?.message);
           }
@@ -90,7 +94,14 @@ export class InquiryListComponent extends BaseComponent implements OnInit {
 
   private initializeForm() {
     this.form = this.formBuilder.group({
-      message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+      message: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(500),
+        ],
+      ],
     });
   }
 

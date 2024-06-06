@@ -25,12 +25,39 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+/* Theme variables */
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./assets/fonts/Nunito-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: bold;
+  src: url("./assets/fonts/Nunito-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: italic;
+  font-weight: normal;
+  src: url("./assets/fonts/Nunito-Italic.ttf") format("truetype");
+}
+
+* {
+  font-family: "Nunito";
+}
+
 /* Common styles */
 
 .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}

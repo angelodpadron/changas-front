@@ -81,7 +81,6 @@ export class AnswerInquiryPage implements OnInit {
       })
       .subscribe((response) => {
         this.inquiry = response.data;
-        console.log(response);
       });
   }
 }

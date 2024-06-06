@@ -18,6 +18,7 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonSpinner,
+  IonAvatar,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -50,6 +51,7 @@ import { addIcons } from 'ionicons';
     IonRefresherContent,
     ChangaOverviewCardComponent,
     IonSpinner,
+    IonAvatar,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {

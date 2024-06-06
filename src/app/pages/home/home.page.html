@@ -1,38 +1,39 @@
-<div class="ion-page" id="main-content">
-  <ion-header [translucent]="true" id="header">
-    <ion-toolbar>
-      <ion-title>Changas</ion-title>
-      <ion-buttons slot="end">
-        <ion-button [routerLink]="['/search-results']">
-          <ion-icon slot="icon-only" name="search"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header [translucent]="true" class="ion-no-border" class="ion-no-border">
+  <ion-toolbar>
+    <ion-avatar slot="start">
+      <img src="assets/icon/favicon.png" />
+    </ion-avatar>
+    <ion-title><strong>Changas</strong></ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/search-results']">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content [fullscreen]="true">
-    @if (loaded) {
+<ion-content [fullscreen]="true">
+  @if (loaded) {
 
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-    @for (changa of changas; track changa.id) {
-    <app-changa-overview-card [changa]="changa" />
-    } @empty {
-    <ion-card>
-      <ion-card-content>
-        <ion-list>
-          <ion-item>
-            <ion-label>No hay changas disponibles</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-    } } @else {
-    <div class="center-container">
-      <ion-spinner></ion-spinner>
-    </div>
-    }
-  </ion-content>
-</div>
+  @for (changa of changas; track changa.id) {
+  <app-changa-overview-card [changa]="changa" />
+  } @empty {
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>No hay changas disponibles</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  } } @else {
+  <div class="center-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  }
+</ion-content>

@@ -19,16 +19,24 @@ export const routes: Routes = [
           import('./pages/home/home.page').then((m) => m.HomePage),
       },
       {
+        path: 'search-results',
+        loadComponent: () =>
+          import('./pages/search-results/search-results.page').then(
+            (m) => m.SearchResultsPage
+          ),
+      },
+      {
         path: 'hirings',
         canActivate: [loginRequiredGuard],
         loadComponent: () =>
           import('./pages/hirings/hirings.page').then((m) => m.HiringsPage),
       },
       {
-        path: 'search-results',
+        path: 'notifications',
+        canActivate: [loginRequiredGuard],
         loadComponent: () =>
-          import('./pages/search-results/search-results.page').then(
-            (m) => m.SearchResultsPage
+          import('./pages/notifications/notifications.page').then(
+            (m) => m.NotificationsPage
           ),
       },
       {
@@ -103,4 +111,10 @@ export const routes: Routes = [
         (m) => m.EditProfilePage
       ),
   },
+  {
+    path: 'answer-inquiry/:id',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () => import('./pages/answer-inquiry/answer-inquiry.page').then( m => m.AnswerInquiryPage)
+  },
+
 ];

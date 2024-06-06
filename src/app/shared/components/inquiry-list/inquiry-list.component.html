@@ -1,0 +1,50 @@
+@if (!readonly) {
+
+<h5>Hace tu consulta</h5>
+
+<form [formGroup]="form" (ngSubmit)="sendQuery()">
+  <div>
+    <ion-textarea
+      formControlName="message"
+      placeholder="Consulta"
+      label="Escriba su consulta"
+      labelPlacement="floating"
+      [autoGrow]="true"
+      [counter]="true"
+      maxlength="500"
+    >
+    </ion-textarea>
+    <ion-button
+      type="submit"
+      color="secondary"
+      shape="round"
+      expand="block"
+      [disabled]="!form.valid"
+    >
+      Enviar
+    </ion-button>
+  </div>
+</form>
+}
+
+<h5>Preguntas hechas por usuarios</h5>
+
+<ion-list>
+  @for (inquiry of inquiries; track inquiry.id) {
+  <ion-item>
+    <ion-label>
+      <p>{{ inquiry.created_at | date : "dd/MM/yyyy" }}</p>
+      <p>{{ inquiry.customer.name }} pregunto: {{ inquiry.question }}</p>
+      @if(inquiry.answer) {
+      <p>respuesta: {{ inquiry.answer }}</p>
+      }
+    </ion-label>
+  </ion-item>
+  } @empty {
+  <ion-item>
+    <ion-label>
+      <p>No hay preguntas hechas por usuarios</p>
+    </ion-label>
+  </ion-item>
+  }
+</ion-list>

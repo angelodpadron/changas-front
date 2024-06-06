@@ -1,5 +1,5 @@
 @if(loaded){
-<ion-header [translucent]="true" id="header">
+<ion-header [translucent]="true" class="ion-no-border" id="header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
@@ -87,7 +87,10 @@
   <div class="ion-padding">
     <h5>Descripcion del servicio</h5>
     <p>{{ changaOverview.description }}</p>
-  </div>  
+  </div>
+  <div class="ion-padding">
+    <app-inquiry-list [changaId]="changaOverview.id" [readonly]="isProvider"></app-inquiry-list>
+  </div>
   <div class="ion-padding">
     <h5>Opiniones del servicio</h5>
     <app-average-rating [changaId]="changaOverview.id"></app-average-rating>

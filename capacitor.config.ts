@@ -1,11 +1,16 @@
 import { CapacitorConfig } from '@capacitor/cli';
+import { environment } from 'src/environments/environment';
 
 const config: CapacitorConfig = {
   appId: 'ionic.changas',
   appName: 'changas',
-  webDir: 'www',
+  webDir: 'www/browser',
   server: {
-    androidScheme: 'https'
+    androidScheme: "http",
+    cleartext: true,
+    allowNavigation: [
+      environment.fullApiUrl + "/*"
+    ]
   }
 };
 

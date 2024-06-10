@@ -1,19 +1,7 @@
 <ion-card [routerLink]="['/changa-details', changa.id]">
   <img alt="imagen de la changa" [src]="changa.photo_url" />
   <ion-card-header>
-    <ion-item class="ion-no-padding">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img
-          alt="Profile photo"
-          [src]="
-            changa.provider_summary.photo_url ||
-            'https://ionicframework.com/docs/img/demos/avatar.svg'
-          "
-        />
-      </ion-avatar>
-      <ion-label>Por {{ changa.provider_summary.name }}</ion-label>
-    </ion-item>
-    <ion-card-title>{{ changa.title }}</ion-card-title>
+    <ion-card-title><strong>{{ changa.title }}</strong></ion-card-title>
   </ion-card-header>
 
   <ion-card-content>

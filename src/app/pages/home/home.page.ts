@@ -26,6 +26,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { RouterModule } from '@angular/router';
 import { search } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { BaseComponent } from '../base-component';
 
 @Component({
   selector: 'app-home',
@@ -54,12 +55,13 @@ import { addIcons } from 'ionicons';
     IonAvatar,
   ],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage extends BaseComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   changas: ChangaOverview[] = [];
   loaded = false;
 
   constructor(private changasSerivce: ChangasService) {
+    super();
     addIcons({ search });
   }
 
@@ -77,7 +79,10 @@ export class HomePage implements OnInit, OnDestroy {
           console.error(response.error?.message);
         }
       },
-      error: (e) => console.error('Error requesting data: ', e),
+      error: (e) => {
+        this.presentErrorToast('Error requesting data');
+        console.error('Error requesting data: ', JSON.stringify(e, null, 2));
+      },
     });
   }
 

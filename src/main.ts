@@ -28,8 +28,8 @@ export function tokenGetter() {
 }
 
 export function jwtProviderConfig() {
-  const baseApiUrl = 'localhost:8080';
-  const fullApiUrl = `http://${baseApiUrl}/api/v1`;
+  const baseApiUrl = environment.baseApiUrl;
+  const fullApiUrl = environment.fullApiUrl;
 
   return JwtModule.forRoot({
     config: {
@@ -40,7 +40,6 @@ export function jwtProviderConfig() {
         new RegExp(`${fullApiUrl}/changas/\\d+$`),
         new RegExp(`${fullApiUrl}/changas/findBy.*`),
         new RegExp(`${fullApiUrl}/auth/.*`),
-        // new RegExp(`${fullApiUrl}/customers/\\d+$`),
       ],
     },
   });

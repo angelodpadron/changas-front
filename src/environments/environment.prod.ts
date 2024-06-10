@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: '',
-  fullApiUrl: '',
-  tokenKey: '',
+  baseApiUrl: 'localhost:8080',
+  fullApiUrl: 'http://localhost:8080/api/v1',
+  tokenKey: 'accessToken',
 };

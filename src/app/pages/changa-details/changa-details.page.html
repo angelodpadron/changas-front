@@ -89,6 +89,10 @@
     <p>{{ changaOverview.description }}</p>
   </div>
   <div class="ion-padding">
+    <h5>Ubicación</h5>
+    <app-map></app-map>
+  </div>
+  <div class="ion-padding">
     <app-inquiry-list [changaId]="changaOverview.id" [readonly]="isProvider"></app-inquiry-list>
   </div>
   <div class="ion-padding">

@@ -90,7 +90,8 @@
   </div>
   <div class="ion-padding">
     <h5>Ubicación</h5>
-    <app-map></app-map>
+    <p>{{ changaOverview.service_area.name }}</p>
+    <app-map [latitude]="changaOverview.service_area.coordinates.coordinates[1]" [longitude]="changaOverview.service_area.coordinates.coordinates[0]"></app-map>
   </div>
   <div class="ion-padding">
     <app-inquiry-list [changaId]="changaOverview.id" [readonly]="isProvider"></app-inquiry-list>

@@ -1,3 +1,4 @@
+import { ServiceArea } from "../area/service-area";
 import { Customer } from "../customer/customer.model";
 
 export interface ChangaOverview {
@@ -7,5 +8,6 @@ export interface ChangaOverview {
   photo_url: string;
   topics: string[];
   provider_summary: Customer;
+  service_area: ServiceArea;
   available: boolean;
 }

@@ -1,0 +1,20 @@
+<div class="ion-padding-vertical">
+  <ion-input
+    [(ngModel)]="location"
+    (ionChange)="fetchLocations()"
+    label="Direccion area de trabajo"
+    labelPlacement="floating"
+    placeholder="Av. Siempre Viva 123"
+    type="text"
+    fill="outline"    
+  ></ion-input>
+  <ion-list>
+    @for(match of matches; track $index){
+      <ion-item button (click)="selectItem($index)">
+        <ion-label><p>{{ match.name }}</p></ion-label>
+      </ion-item>
+    }
+  </ion-list>
+  <br />
+  <app-map [latitude]="latitude" [longitude]="longitude"></app-map>
+</div>

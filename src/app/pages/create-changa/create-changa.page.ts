@@ -17,8 +17,6 @@ import {
   IonCol,
   IonRow,
   IonLabel,
-  IonItem,
-  IonList,
   IonCardContent,
   IonCardTitle,
   IonCardHeader,
@@ -32,6 +30,7 @@ import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { Router, RouterModule } from '@angular/router';
+import { AddLocationComponent } from 'src/app/shared/components/add-location/add-location.component';
 
 @Component({
   selector: 'app-create-changa',
@@ -50,10 +49,8 @@ import { Router, RouterModule } from '@angular/router';
     IonCol,
     IonRow,
     IonLabel,
-    IonItem,
     IonBackButton,
     IonButtons,
-    IonList,
     IonCardContent,
     IonCardTitle,
     IonCardHeader,
@@ -61,6 +58,7 @@ import { Router, RouterModule } from '@angular/router';
     IonInput,
     IonText,
     IonTextarea,
+    AddLocationComponent,
   ],
 })
 export class CreateChangaPage implements OnInit {
@@ -96,8 +94,13 @@ export class CreateChangaPage implements OnInit {
         null,
         [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
       ],
+      service_area: [null, [Validators.required]],
       topics: [null, [Validators.pattern('^$|^[\\w\\s]+(,[\\w\\s]+)*$')]],
     });
+  }
+
+  handleLocationAdded(event: any) {
+    this.form.controls['service_area'].setValue(event);
   }
 
   createChanga() {
@@ -108,6 +111,10 @@ export class CreateChangaPage implements OnInit {
 
     this.createChangaRequest = {
       ...this.form.value,
+      service_area: {
+        name: this.form.value.service_area.name,
+        coordinates: this.form.value.service_area.coordinates,
+      },
       topics: this.form.value.topics
         .split(',')
         .map((topic: string) => topic.trim()),

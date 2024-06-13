@@ -8,6 +8,7 @@ export const environment = {
   fullApiUrl: 'http://localhost:8080/api/v1',
   tokenKey: 'accessToken',
   geoapifyApiKey: '66669d8edbc445abbc4e1afd99c4b201',
+  geoapifyUrl: 'https://api.geoapify.com/v1/geocode/autocomplete',
 };
 
 /*

@@ -6,6 +6,7 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonSearchbar,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -24,10 +25,12 @@ import { environment } from 'src/environments/environment';
     IonList,
     IonItem,
     IonLabel,
+    IonSearchbar,
   ],
 })
 export class AddLocationComponent {
   private readonly apiKey = environment.geoapifyApiKey;
+  private readonly baseUrl = environment.geoapifyUrl;
 
   @Output() onLocationAdded = new EventEmitter<any>();
 
@@ -39,10 +42,12 @@ export class AddLocationComponent {
   constructor() {}
 
   private toQueryUrl(query: string) {
-    return `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${this.apiKey}`;
+    return `${this.baseUrl}?text=${query}&apiKey=${this.apiKey}&filter=countrycode:ar&limit=5&lang=es`;
   }
 
   fetchLocations() {
+    if (!this.location.length) return;
+
     const url = this.toQueryUrl(this.location);
     this.matches = [];
     fetch(url)

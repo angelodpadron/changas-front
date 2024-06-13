@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MapComponent } from '../map/map.component';
 
 import {
@@ -10,7 +10,8 @@ import {
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { environment } from 'src/environments/environment';
+import { Location } from 'src/app/core/models/area/location';
+import { LocationService } from 'src/app/core/services/location/location.service';
 
 @Component({
   selector: 'app-add-location',
@@ -29,38 +30,26 @@ import { environment } from 'src/environments/environment';
   ],
 })
 export class AddLocationComponent {
-  private readonly apiKey = environment.geoapifyApiKey;
-  private readonly baseUrl = environment.geoapifyUrl;
-
-  @Output() onLocationAdded = new EventEmitter<any>();
+  @Output() onLocationAdded = new EventEmitter<Location>();
+  @Input() latitude: number | null = null;
+  @Input() longitude: number | null = null;
 
   location = '';
-  matches: { name: string; coordinates: [number, number] }[] = [];
-  latitude = -34.7955703;
-  longitude = -58.2912458;
+  matches: Location[] = [];
 
-  constructor() {}
+  constructor(private locationService: LocationService) {}
 
-  private toQueryUrl(query: string) {
-    return `${this.baseUrl}?text=${query}&apiKey=${this.apiKey}&filter=countrycode:ar&limit=5&lang=es`;
-  }
-
-  fetchLocations() {
+  getMatches() {
     if (!this.location.length) return;
 
-    const url = this.toQueryUrl(this.location);
-    this.matches = [];
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        data['features'].map((feature: any) => {
-          this.matches.push({
-            name: feature.properties.formatted,
-            coordinates: feature.geometry.coordinates,
-          });
-        });
-      })
-      .catch((error) => console.error('Error on autocompletion:', error));
+    this.locationService.matches(this.location).subscribe({
+      next: (locations: Location[]) => {
+        this.matches = locations;
+      },
+      error: (error) => {
+        console.error('Error on autocompletion:', error);
+      },
+    });
   }
 
   selectItem(item: number) {
@@ -69,11 +58,9 @@ export class AddLocationComponent {
     this.location = this.matches[item].name;
     this.matches = [];
 
-    const area = {
+    this.onLocationAdded.emit({
       name: this.location,
       coordinates: [this.longitude, this.latitude],
-    };
-
-    this.onLocationAdded.emit(area);
+    });
   }
 }

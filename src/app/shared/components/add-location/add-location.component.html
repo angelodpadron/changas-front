@@ -1,7 +1,7 @@
 <div class="ion-padding-vertical">
   <ion-input
     [(ngModel)]="location"
-    (ionInput)="fetchLocations()"
+    (ionInput)="getMatches()"
     [debounce]="1000"
     label="Direccion area de trabajo"
     labelPlacement="floating"
@@ -19,7 +19,9 @@
     </ion-item>
     }
   </ion-list>
-  <div class="ion-padding-vertical">
-    <app-map [latitude]="latitude" [longitude]="longitude"></app-map>
-  </div>
+  @if (latitude && longitude) {
+    <div class="ion-padding-vertical">
+      <app-map [latitude]="latitude" [longitude]="longitude"></app-map>
+    </div>
+  }
 </div>

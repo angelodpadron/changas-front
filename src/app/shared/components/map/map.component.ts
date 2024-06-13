@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -16,13 +15,18 @@ import * as L from 'leaflet';
   standalone: true,
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input('latitude') latitude: number = -34.7955703;
-  @Input('longitude') longitude: number = -58.2912458;
+  private readonly MAP_ID = 'map';
+  private readonly MARKER_ICON_URL = 'assets/icon/marker.png';
+  private readonly URL_TEMPLATE = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
+  private readonly ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
+  @Input('latitude') latitude!: number;
+  @Input('longitude') longitude!: number;
 
   map!: L.Map;
 
   marketIcon = L.icon({
-    iconUrl: 'assets/icon/marker.png', // the icon is of size 48x48
+    iconUrl: this.MARKER_ICON_URL,
     iconSize: [48, 48],
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
@@ -38,11 +42,9 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log(
-      'Map initialized with coordinates: ',
-      this.latitude,
-      this.longitude
-    );
+    if (!this.latitude || !this.longitude) {
+      throw new Error('Latitude and longitude are required to display the map');
+    }
 
     const coordinates: [number, number] = [this.latitude, this.longitude];
 
@@ -55,16 +57,15 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private initializeMap(coordinates: [number, number]) {
-    this.map = L.map('map', {
+    this.map = L.map(this.MAP_ID, {
       center: coordinates,
       zoom: 13,
       renderer: L.canvas(),
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer(this.URL_TEMPLATE, {
       maxZoom: 19,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: this.ATTRIBUTION,
     }).addTo(this.map);
 
     L.marker(coordinates, {

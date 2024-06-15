@@ -96,10 +96,6 @@ export class CreateChangaPage {
     private router: Router
   ) {}
 
-  handleLocationAdded(location: Location) {
-    this.form.controls['service_area'].setValue(location);
-  }
-
   createChanga() {
     const createChangaRequest: CreateChangaRequest = {
       ...this.form.value,

@@ -1,6 +1,6 @@
 <div class="ion-padding-vertical">
   <ion-input
-    [(ngModel)]="location"
+    [(ngModel)]="location.name"
     (ionInput)="getMatches()"
     [debounce]="1000"
     label="Direccion area de trabajo"
@@ -9,6 +9,7 @@
     type="text"
     enterkeyhint="search"
     fill="outline"
+    [disabled]="disabled"
   ></ion-input>
   <ion-list lines="full">
     @for(match of matches; track $index){
@@ -19,9 +20,9 @@
     </ion-item>
     }
   </ion-list>
-  @if (latitude && longitude) {
+  @if (location.coordinates[0] && location.coordinates[1]) {
     <div class="ion-padding-vertical">
-      <app-map [latitude]="latitude" [longitude]="longitude"></app-map>
+      <app-map [longitude]="location.coordinates[0]" [latitude]="location.coordinates[1]"></app-map>
     </div>
   }
 </div>

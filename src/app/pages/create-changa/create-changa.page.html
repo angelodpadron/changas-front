@@ -58,7 +58,7 @@
           helpText="Escribe una descripcion de la changa. Maximo 200 caracteres."
           errorText="Descripcion invalida. Asegurate de usar al menos 10 caracteres."
         ></ion-textarea>
-        <app-add-location (onLocationAdded)="handleLocationAdded($event)"></app-add-location>
+        <app-add-location formControlName="service_area" ></app-add-location>
         <ion-input
           formControlName="topics"
           type="text"

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MapComponent } from '../map/map.component';
 
 import {
@@ -9,7 +9,11 @@ import {
   IonSearchbar,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { Location } from 'src/app/core/models/area/location';
 import { LocationService } from 'src/app/core/services/location/location.service';
 
@@ -28,21 +32,33 @@ import { LocationService } from 'src/app/core/services/location/location.service
     IonLabel,
     IonSearchbar,
   ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: AddLocationComponent,
+    },
+  ],
 })
-export class AddLocationComponent {
-  @Output() onLocationAdded = new EventEmitter<Location>();
-  @Input() latitude: number | null = null;
-  @Input() longitude: number | null = null;
+export class AddLocationComponent implements ControlValueAccessor {
+  onChange: OnChangeFn<Location> = () => {};
+  onTouch: OnTouchedFn = () => {};
 
-  location = '';
+  location: Location = {
+    name: '',
+    coordinates: [0, 0],
+  };
+
   matches: Location[] = [];
+
+  disabled = false;
 
   constructor(private locationService: LocationService) {}
 
   getMatches() {
-    if (!this.location.length) return;
+    if (!this.location.name) return;
 
-    this.locationService.matches(this.location).subscribe({
+    this.locationService.matches(this.location.name).subscribe({
       next: (locations: Location[]) => {
         this.matches = locations;
       },
@@ -53,14 +69,35 @@ export class AddLocationComponent {
   }
 
   selectItem(item: number) {
-    this.longitude = this.matches[item].coordinates[0];
-    this.latitude = this.matches[item].coordinates[1];
-    this.location = this.matches[item].name;
+    this.location = this.matches[item];
     this.matches = [];
+    this.onChange(this.location);
+  }
 
-    this.onLocationAdded.emit({
-      name: this.location,
-      coordinates: [this.longitude, this.latitude],
-    });
+  // control value accessor
+
+  writeValue(location: Location): void {
+    if (!location) return;
+    this.location = location;
+  }
+
+  registerOnChange(fn: OnChangeFn<Location>): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: OnTouchedFn): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  @HostListener('focusout')
+  onFocusOut() {
+    this.onTouch();
   }
 }
+
+type OnChangeFn<T> = (value: T) => void;
+type OnTouchedFn = () => void;

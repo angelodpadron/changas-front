@@ -2,6 +2,6 @@ export interface ServiceArea {
   name: string;
   coordinates: {
     type: string;
-    coordinates: number[];
+    coordinates: [number, number];
   };
 }

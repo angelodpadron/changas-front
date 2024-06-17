@@ -19,15 +19,14 @@ import {
   IonCardContent,
   IonButton,
   IonTextarea,
-  IonItem,
   IonInput,
-  IonList,
 } from '@ionic/angular/standalone';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { CreateChangaRequest } from 'src/app/core/models/changa/create-changa-request';
 import { Router } from '@angular/router';
+import { AddLocationComponent } from 'src/app/shared/components/add-location/add-location.component';
 
 @Component({
   selector: 'app-edit-changa',
@@ -49,9 +48,8 @@ import { Router } from '@angular/router';
     IonCardContent,
     IonButton,
     IonTextarea,
-    IonItem,
     IonInput,
-    IonList,
+    AddLocationComponent,
   ],
 })
 export class EditChangaPage implements OnInit {
@@ -113,6 +111,7 @@ export class EditChangaPage implements OnInit {
         this.changaOverview.photo_url,
         [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
       ],
+      service_area: [this.changaOverview.service_area, [Validators.required]],
       topics: [
         this.changaOverview.topics,
         [Validators.pattern('^$|^[\\w\\s]+(,[\\w\\s]+)*$')],

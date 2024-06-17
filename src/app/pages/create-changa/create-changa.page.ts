@@ -17,8 +17,6 @@ import {
   IonCol,
   IonRow,
   IonLabel,
-  IonItem,
-  IonList,
   IonCardContent,
   IonCardTitle,
   IonCardHeader,
@@ -32,6 +30,9 @@ import { ChangasService } from 'src/app/core/services/changas/changas.service';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { Router, RouterModule } from '@angular/router';
+import { AddLocationComponent } from 'src/app/shared/components/add-location/add-location.component';
+import { Location } from 'src/app/core/models/area/location';
+import { ServiceArea } from 'src/app/core/models/area/service-area';
 
 @Component({
   selector: 'app-create-changa',
@@ -50,10 +51,8 @@ import { Router, RouterModule } from '@angular/router';
     IonCol,
     IonRow,
     IonLabel,
-    IonItem,
     IonBackButton,
     IonButtons,
-    IonList,
     IonCardContent,
     IonCardTitle,
     IonCardHeader,
@@ -61,11 +60,35 @@ import { Router, RouterModule } from '@angular/router';
     IonInput,
     IonText,
     IonTextarea,
+    AddLocationComponent,
   ],
 })
-export class CreateChangaPage implements OnInit {
-  form!: FormGroup;
-  createChangaRequest!: CreateChangaRequest;
+export class CreateChangaPage {
+  form: FormGroup = this.formBuilder.group({
+    title: [
+      null,
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+        Validators.pattern(/^[a-zA-Z0-9\s]*$/),
+      ],
+    ],
+    description: [
+      null,
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(200),
+      ],
+    ],
+    photo_url: [
+      null,
+      [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
+    ],
+    service_area: [null, [Validators.required]],
+    topics: [null, [Validators.pattern('^$|^[\\w\\s]+(,[\\w\\s]+)*$')]],
+  });
 
   constructor(
     private changasService: ChangasService,
@@ -73,52 +96,21 @@ export class CreateChangaPage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.form = this.formBuilder.group({
-      title: [
-        null,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-          Validators.pattern(/^[a-zA-Z0-9\s]*$/),
-        ],
-      ],
-      description: [
-        null,
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(200),
-        ],
-      ],
-      photo_url: [
-        null,
-        [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
-      ],
-      topics: [null, [Validators.pattern('^$|^[\\w\\s]+(,[\\w\\s]+)*$')]],
-    });
-  }
-
   createChanga() {
-    if (this.form.invalid) {
-      console.error('Invalid form');
-      return;
-    }
-
-    this.createChangaRequest = {
+    const createChangaRequest: CreateChangaRequest = {
       ...this.form.value,
       topics: this.form.value.topics
         .split(',')
         .map((topic: string) => topic.trim()),
     };
 
-    this.changasService.createChanga(this.createChangaRequest).subscribe({
+    this.changasService.createChanga(createChangaRequest).subscribe({
       next: (response: ApiResponse<ChangaOverview>) => {
         this.form.disable();
         this.router.navigate(['/changa-details/' + response.data.id]);
       },
       error: (error) => {
+        this.form.enable();
         console.error('Error creating changa', error);
       },
     });

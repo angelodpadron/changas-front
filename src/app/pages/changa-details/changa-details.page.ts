@@ -30,6 +30,7 @@ import { BaseComponent } from '../base-component';
 import { AverageRatingComponent } from 'src/app/shared/components/average-rating/average-rating.component';
 import { ReviewListComponent } from 'src/app/shared/components/review-list/review-list.component';
 import { InquiryListComponent } from 'src/app/shared/components/inquiry-list/inquiry-list.component';
+import { MapComponent } from 'src/app/shared/components/map/map.component';
 
 @Component({
   selector: 'app-changa-details',
@@ -59,7 +60,7 @@ import { InquiryListComponent } from 'src/app/shared/components/inquiry-list/inq
     AverageRatingComponent,
     ReviewListComponent,
     InquiryListComponent,
-
+    MapComponent,
   ],
 })
 

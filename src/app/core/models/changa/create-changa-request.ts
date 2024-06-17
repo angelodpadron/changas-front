@@ -3,4 +3,5 @@ export interface CreateChangaRequest {
   description: string;
   photo_url: string;
   topics: string[];
+  service_area: Location;
 }

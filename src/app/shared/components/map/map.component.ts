@@ -2,8 +2,10 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 
 import * as L from 'leaflet';
@@ -14,19 +16,20 @@ import * as L from 'leaflet';
   styleUrls: ['./map.component.scss'],
   standalone: true,
 })
-export class MapComponent implements OnInit, OnChanges {
-  private readonly MAP_ID = 'map';
-  private readonly MARKER_ICON_URL = 'assets/icon/marker.png';
-  private readonly URL_TEMPLATE = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
-  private readonly ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+export class MapComponent implements OnInit, OnDestroy, OnChanges {
+  private readonly TILE =
+    'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
+  private readonly ATTRIBUTION =
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
   @Input('latitude') latitude!: number;
   @Input('longitude') longitude!: number;
+  @ViewChild('map', { static: true }) mapContainer: any;
 
-  map!: L.Map;
+  map: L.Map | null = null;
 
   marketIcon = L.icon({
-    iconUrl: this.MARKER_ICON_URL,
+    iconUrl: 'assets/icon/marker.png',
     iconSize: [48, 48],
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
@@ -34,36 +37,34 @@ export class MapComponent implements OnInit, OnChanges {
 
   constructor() {}
 
+  ngOnInit() {
+    this.initializeMap();
+  }
+
+  ngOnDestroy(): void {
+    this.removeMap();
+  }
+
   ngOnChanges(_changes: SimpleChanges): void {
     if (this.map) {
-      const coordinates: [number, number] = [this.latitude, this.longitude];
-      this.updateMap(coordinates);
+      this.updateMap();
     }
   }
 
-  ngOnInit() {
+  private initializeMap() {
     if (!this.latitude || !this.longitude) {
       throw new Error('Latitude and longitude are required to display the map');
     }
 
     const coordinates: [number, number] = [this.latitude, this.longitude];
 
-    this.initializeMap(coordinates);
-
-    // trick to fix the map size
-    setTimeout(() => {
-      this.map.invalidateSize();
-    }, 1000);
-  }
-
-  private initializeMap(coordinates: [number, number]) {
-    this.map = L.map(this.MAP_ID, {
+    this.map = L.map(this.mapContainer.nativeElement, {
       center: coordinates,
       zoom: 13,
       renderer: L.canvas(),
     });
 
-    L.tileLayer(this.URL_TEMPLATE, {
+    L.tileLayer(this.TILE, {
       maxZoom: 19,
       attribution: this.ATTRIBUTION,
     }).addTo(this.map);
@@ -71,19 +72,33 @@ export class MapComponent implements OnInit, OnChanges {
     L.marker(coordinates, {
       icon: this.marketIcon,
     }).addTo(this.map);
+
+    setTimeout(() => {
+      this.map!.invalidateSize();
+    }, 1000);
   }
 
-  private updateMap(coordinates: [number, number]) {
-    this.map.setView(coordinates, 13);
+  private updateMap() {
+    const coordinates: [number, number] = [this.latitude, this.longitude];
 
-    this.map.eachLayer((layer) => {
-      if (layer instanceof L.Marker) {
-        this.map.removeLayer(layer);
-      }
-    });
+    if (this.map) {
+      this.map.setView(coordinates, 13);
 
-    L.marker(coordinates, {
-      icon: this.marketIcon,
-    }).addTo(this.map);
+      this.map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          this.map!.removeLayer(layer);
+        }
+      });
+
+      L.marker(coordinates, {
+        icon: this.marketIcon,
+      }).addTo(this.map);
+    }
+  }
+
+  private removeMap() {
+    if (this.map) {
+      this.map.remove();
+    }
   }
 }

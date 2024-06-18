@@ -102,7 +102,13 @@ export class CheckoutPage extends BaseComponent {
 
     this.transactionService.hireChanga(hireRequest).subscribe({
       next: () => {
-        this.router.navigate(['/hiring-success']);
+        this.router.navigate(['/success'], {
+          state: {
+            message: '¡Changa solicitada!',
+            buttonText: 'Ver solicitudes',
+            route: 'hirings',
+          },
+        });
       },
       error: (error) => {
         this.presentErrorToastFromResponse(error);

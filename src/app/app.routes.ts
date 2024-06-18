@@ -89,11 +89,11 @@ export const routes: Routes = [
       import('./pages/checkout/checkout.page').then((m) => m.CheckoutPage),
   },
   {
-    path: 'hiring-success',
+    path: 'success',
     canActivate: [loginRequiredGuard],
     loadComponent: () =>
-      import('./pages/hiring-success/hiring-success.page').then(
-        (m) => m.HiringSuccessPage
+      import('./pages/success/success.page').then(
+        (m) => m.SuccessPage
       ),
   },
   {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -31,8 +31,6 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { Router, RouterModule } from '@angular/router';
 import { AddLocationComponent } from 'src/app/shared/components/add-location/add-location.component';
-import { Location } from 'src/app/core/models/area/location';
-import { ServiceArea } from 'src/app/core/models/area/service-area';
 
 @Component({
   selector: 'app-create-changa',
@@ -107,7 +105,14 @@ export class CreateChangaPage {
     this.changasService.createChanga(createChangaRequest).subscribe({
       next: (response: ApiResponse<ChangaOverview>) => {
         this.form.disable();
-        this.router.navigate(['/changa-details/' + response.data.id]);
+        let route = 'changa-details/' + response.data.id;
+        this.router.navigate(['/success'], {
+          state: {
+            message: '¡Changa publicada!',
+            buttonText: 'Ver publicacion',
+            route,
+          },
+        });
       },
       error: (error) => {
         this.form.enable();

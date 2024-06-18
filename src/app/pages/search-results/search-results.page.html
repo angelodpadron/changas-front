@@ -12,12 +12,14 @@
   </ion-toolbar>
   @if (topics.length) {
   <ion-toolbar>
-    @for(topic of topics; track $index) {
-    <ion-chip>
-      <ion-label>{{ topic }}</ion-label>
-      <ion-icon name="close-circle" (click)="removeTopic(topic)"></ion-icon>
-    </ion-chip>
-    }
+    <div class="ion-padding-start ion-padding-end">
+      @for(topic of topics; track $index) {
+      <ion-chip>
+        <ion-label>{{ topic }}</ion-label>
+        <ion-icon name="close-circle" (click)="removeTopic(topic)"></ion-icon>
+      </ion-chip>
+      }
+    </div>
   </ion-toolbar>
   }
 </ion-header>

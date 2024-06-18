@@ -15,11 +15,12 @@
   </ion-header>
 
   <ion-card>
-    <img
-      [src]="form.get('photo_url')?.value ||
-    'https://ionicframework.com/docs/img/demos/card-media.png'"
-      alt="Changa Image"
-    />
+    @if(form.get('photo_url')?.value) {
+    <img [src]="form.get('photo_url')?.value" alt="Changa Image" />
+    } @else {
+    <img src="assets/images/placeholder.png" alt="Changa Image" />
+    }
+    
     <ion-card-content>
       <form [formGroup]="form" (ngSubmit)="createChanga()">
         <ion-input
@@ -34,6 +35,7 @@
           helpText="Escribe un titulo para la changa. Maximo 50 caracteres."
           errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
         ></ion-input>
+        <br />
         <ion-input
           formControlName="photo_url"
           type="url"
@@ -44,7 +46,7 @@
           helpText="URL de la imagen de la changa. Puede ser una URL de una imagen en internet."
           errorText="URL invalida. Asegurate de que sea una URL valida."
         ></ion-input>
-
+        <br />
         <ion-textarea
           formControlName="description"
           label="Descripcion de la changa"
@@ -58,7 +60,7 @@
           helpText="Escribe una descripcion de la changa. Maximo 200 caracteres."
           errorText="Descripcion invalida. Asegurate de usar al menos 10 caracteres."
         ></ion-textarea>
-        <app-add-location formControlName="service_area" ></app-add-location>
+        <app-add-location formControlName="service_area"></app-add-location>
         <ion-input
           formControlName="topics"
           type="text"

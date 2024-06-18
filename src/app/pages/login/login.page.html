@@ -11,26 +11,28 @@
   <ion-card>
     <ion-card-content>
       <form [formGroup]="form" (ngSubmit)="login()">
-        <ion-list>
-          <ion-item>
-            <ion-input
-              formControlName="email"
-              type="email"
-              placeholder="pepita@email.com"
-              label="Email"
-              labelPlacement="floating"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              formControlName="password"
-              type="password"
-              placeholder="******"
-              label="Contraseña"
-              labelPlacement="floating"
-            ></ion-input>
-          </ion-item>
-        </ion-list>
+        <ion-input
+          formControlName="email"
+          type="email"
+          placeholder="pepita@email.com"
+          fill="outline"
+          label="Email"
+          labelPlacement="floating"
+          helpText="Utiliza tu email para iniciar sesion."
+          errorText="Este campo es obligatorio."
+        ></ion-input>
+        <br />
+        <ion-input
+          formControlName="password"
+          type="password"
+          placeholder="******"
+          fill="outline"
+          label="Contraseña"
+          labelPlacement="floating"
+          helpText="Utiliza tu contraseña para iniciar sesion."
+          errorText="Este campo es obligatorio."
+        ></ion-input>
+        <br />
         <ion-button
           type="submit"
           expand="block"

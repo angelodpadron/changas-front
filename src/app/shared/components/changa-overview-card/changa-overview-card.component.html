@@ -1,4 +1,4 @@
-<ion-card [routerLink]="['/changa-details', changa.id]">
+<ion-card [routerLink]="['/changa-details', changa.id]" [button]="true">
   <img alt="imagen de la changa" [src]="changa.photo_url" />
   <ion-card-header>
     <ion-card-title><strong>{{ changa.title }}</strong></ion-card-title>
@@ -9,9 +9,7 @@
       {{ changa.description | slice : 0 : 100
       }}{{ changa.description.length > 100 ? "..." : "" }}
     </div>
-  </ion-card-content>
-  <ion-card-content>
-    <div class="badge-container">
+    <div class="topics-container ion-padding-top">
       @for (topic of changa.topics; track changa.id){
       <ion-chip color="warning" [outline]="true" [routerLink]="['/search-results']" [queryParams]="{topics: [topic]}" (click)="$event.stopPropagation()">
         {{ topic }}

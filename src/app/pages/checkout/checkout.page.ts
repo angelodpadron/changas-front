@@ -19,6 +19,7 @@ import {
   IonButtons,
   IonBackButton,
   IonThumbnail,
+  IonLabel,
 } from '@ionic/angular/standalone';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { ChangasService } from 'src/app/core/services/changas/changas.service';
@@ -54,6 +55,7 @@ import { TransactionsService } from 'src/app/core/services/transactions/transact
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
+    IonLabel,
   ],
 })
 export class CheckoutPage extends BaseComponent {

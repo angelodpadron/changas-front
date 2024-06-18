@@ -1,8 +1,11 @@
-.badge-container ion-badge {
-    margin-right: 8px; /* Adjust the value as needed */
+.topics-container ion-chip {
+    margin-right: 8px; 
 }
 
-/* Optional: Remove the margin from the last badge */
-.badge-container ion-badge:last-child {
+.topics-container ion-chip:first-child {
+    margin-left: 0;
+}
+
+.topics-container ion-chip:last-child {
     margin-right: 0;
 }

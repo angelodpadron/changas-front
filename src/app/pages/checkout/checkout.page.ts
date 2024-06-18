@@ -28,6 +28,7 @@ import { HireChangaRequest } from 'src/app/core/models/transactions/hire-changa-
 import { Router, RouterModule } from '@angular/router';
 import { BaseComponent } from '../base-component';
 import { TransactionsService } from 'src/app/core/services/transactions/transactions.service';
+import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 
 @Component({
   selector: 'app-checkout',
@@ -101,12 +102,13 @@ export class CheckoutPage extends BaseComponent {
     this.hireForm.disable();
 
     this.transactionService.hireChanga(hireRequest).subscribe({
-      next: () => {
+      next: (response: ApiResponse<HiringDetails>) => {
+        let route = "request-details/" + response.data.id;
         this.router.navigate(['/success'], {
           state: {
             message: '¡Changa solicitada!',
-            buttonText: 'Ver solicitudes',
-            route: 'hirings',
+            buttonText: 'Ver solicitud',
+            route
           },
         });
       },

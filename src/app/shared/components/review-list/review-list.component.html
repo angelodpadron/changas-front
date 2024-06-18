@@ -23,6 +23,11 @@
         <div class="ion-padding-vertical">
           <ion-note>{{ review.comment }}</ion-note>
         </div>
+        @if (review.photo_url) {
+        <div class="ion-padding-vertical">
+          <img [src]="review.photo_url" />
+        </div>
+        }
       </ion-row>
     </ion-grid>
   </ion-item>

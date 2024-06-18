@@ -2,18 +2,17 @@
 <ion-card (click)="handleOpenModal()">
   @if(review) {
   <ion-card-content>
-    <ion-item class="ion-no-padding">
-      <ion-label>
-        <ion-card-title>Reseña</ion-card-title>
-      </ion-label>
-      <app-stars [rating]="rating" [readonly]="true"></app-stars>
-    </ion-item>
+    <ion-card-title>Reseña</ion-card-title>
+    <app-stars [rating]="rating" [readonly]="true" [large]="true"></app-stars>
   </ion-card-content>
   } @else { @if(!readonly) {
   <ion-card-content>
+    <ion-card-title>¿Que te parecio el servicio?</ion-card-title>
+    <hr />
     <app-stars
       [rating]="rating"
       (ratingChange)="handleRatingChange($event)"
+      [large]="true"
     ></app-stars>
   </ion-card-content>
   } }
@@ -25,8 +24,6 @@
   </div>
 </ion-card-content>
 }
-
-<!-- create modal -->
 
 <ion-modal
   [isOpen]="showCreateModal"
@@ -47,43 +44,37 @@
       <ion-card>
         <ion-card-content>
           <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
-            <ion-list>
-              <ion-item>
-                <ion-label>
-                  <app-stars
-                    [rating]="rating"
-                    (ratingChange)="handleRatingChange($event)"
-                  ></app-stars>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-textarea
-                  formControlName="comment"
-                  label="Comentario"
-                  labelPlacement="floating"
-                  placeholder="¡Muy buen servicio!"
-                  [autoGrow]="true"
-                  [counter]="true"
-                  maxlength="200"
-                  helpText="Escribe un comentario sobre el trabajo realizado. Maximo 200 caracteres."
-                  errorText="Asegurate de usar al menos 10 caracteres."
-                ></ion-textarea>
-              </ion-item>
-              <ion-item>
-                <img [src]="reviewForm.get('photo_url')!.value" />
-              </ion-item>
-              <ion-item>
-                <ion-input
-                  formControlName="photo_url"
-                  type="url"
-                  label="URL que contenga la imagen de la reseña"
-                  placeholder="https://www.example.com/image.jpg"
-                  labelPlacement="floating"
-                  helpText="URL de la imagen de la reseña. Puede ser una URL de una imagen en internet."
-                  errorText="URL invalida. Asegurate de que sea una URL valida."
-                ></ion-input>
-              </ion-item>
-            </ion-list>
+            <div class="ion-padding">
+              <app-stars
+                [rating]="rating"
+                [large]="true"
+                (ratingChange)="handleRatingChange($event)"
+              ></app-stars>
+            </div>
+            <ion-textarea
+              formControlName="comment"
+              label="Comentario"
+              labelPlacement="floating"
+              placeholder="¡Muy buen servicio!"
+              fill="outline"
+              [autoGrow]="true"
+              [counter]="true"
+              maxlength="200"
+              rows="5"
+              helpText="Escribe un comentario sobre el trabajo realizado. Maximo 200 caracteres."
+              errorText="Asegurate de usar al menos 10 caracteres."
+            ></ion-textarea>
+            <img [src]="reviewForm.get('photo_url')!.value" />
+            <ion-input
+              formControlName="photo_url"
+              type="url"
+              label="URL que contenga la imagen de la reseña"
+              placeholder="https://www.example.com/image.jpg"
+              fill="outline"
+              labelPlacement="floating"
+              helpText="URL de la imagen de la reseña. Puede ser una URL de una imagen en internet."
+              errorText="URL invalida. Asegurate de que sea una URL valida."
+            ></ion-input>
             <ion-button
               shape="round"
               expand="block"
@@ -97,8 +88,6 @@
     </ion-content>
   </ng-template>
 </ion-modal>
-
-<!-- info modal -->
 
 <ion-modal
   [isOpen]="showInfoModal"
@@ -134,7 +123,7 @@
         <ion-item>
           <ion-label>
             <h2>Fecha de creación</h2>
-            <p>{{ review!.created_at | date: 'dd/MM/yyyy' }}</p>
+            <p>{{ review!.created_at | date : "dd/MM/yyyy" }}</p>
           </ion-label>
         </ion-item>
       </ion-list>

@@ -13,9 +13,9 @@ import {
   homeOutline,
   personCircleOutline,
   searchOutline,
-  peopleOutline,
   addOutline,
-  mailOutline,
+  briefcaseOutline,
+  notificationsOutline,
 } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { Customer } from 'src/app/core/models/customer/customer.model';
@@ -37,9 +37,9 @@ export class TabsComponent implements OnInit, OnDestroy {
       homeOutline,
       searchOutline,
       personCircleOutline,
-      peopleOutline,
       addOutline,
-      mailOutline,
+      briefcaseOutline,
+      notificationsOutline,
     });
   }
 

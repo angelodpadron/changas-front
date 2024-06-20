@@ -15,6 +15,8 @@ import { CreateQuestionRequest } from 'src/app/core/models/question/create-quest
 import { Inquiry } from 'src/app/core/models/question/inquiry';
 import { CommonModule } from '@angular/common';
 
+import { returnDownForwardOutline } from 'ionicons/icons';
+
 import {
   IonInput,
   IonButton,
@@ -22,7 +24,10 @@ import {
   IonItem,
   IonLabel,
   IonTextarea,
+  IonIcon,
 } from '@ionic/angular/standalone';
+import { ElapsedPipe } from 'src/app/core/pipes/elapsed.pipe';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-inquiry-list',
@@ -32,12 +37,14 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    ElapsedPipe,
     IonInput,
     IonButton,
     IonList,
     IonItem,
     IonLabel,
     IonTextarea,
+    IonIcon,
   ],
 })
 export class InquiryListComponent extends BaseComponent implements OnInit {
@@ -56,6 +63,7 @@ export class InquiryListComponent extends BaseComponent implements OnInit {
     private authService: AuthService
   ) {
     super();
+    addIcons({ returnDownForwardOutline });
   }
 
   ngOnInit() {

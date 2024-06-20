@@ -1,4 +1,4 @@
-<ion-header translucent>
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
@@ -15,7 +15,7 @@
 
   <ion-card
     [routerLink]="['/changa-details', hiringDetails.changa_id]"
-    class="ion-activatable ripple-parent rounded-rectangle"
+    [button]="true"
   >
     <ion-card-header>
       <ion-card-title>Detalles de changa</ion-card-title>
@@ -23,7 +23,7 @@
 
     <ion-card-content>
       <ion-list>
-        <ion-item class="ion-no-padding">
+        <ion-item class="ion-no-padding" [detail]="true" lines="none">
           <ion-thumbnail slot="start">
             <img [src]="hiringDetails.changa_photo_url" />
           </ion-thumbnail>
@@ -43,7 +43,7 @@
         <ion-item class="ion-no-padding">
           <ion-grid class="ion-no-padding">
             <ion-row>
-              <h2>{{ isProvider ? 'Interesado' : 'Proveedor' }}</h2>
+              <h2>{{ isProvider ? 'Interesado/a' : 'Proveedor' }}</h2>
             </ion-row>
             <ion-row>
               <app-customer-overview
@@ -79,24 +79,19 @@
     <ion-ripple-effect></ion-ripple-effect>
   </ion-card>
 
-  <ion-card
-    class="ion-activatable ripple-parent rounded-rectangle"
-    id="open-work-details-modal"
-  >
+  <ion-card [button]="true" id="open-work-details-modal">
     <ion-card-header>
       <ion-card-title>Detalles del area a trabajar</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <ion-list>
-        <ion-item class="ion-no-padding">
+        <ion-item class="ion-no-padding" [detail]="true" lines="none">
           <ion-thumbnail slot="start">
             <img [src]="hiringDetails.work_area_details.photo_url" />
           </ion-thumbnail>
-          <ion-label>
-            {{ hiringDetails.work_area_details.description | slice:0:25 }}{{
-            hiringDetails.work_area_details.description.length > 25 ? '...' : ''
-            }}
+          <ion-label class="ion-text-nowrap">
+            {{ hiringDetails.work_area_details.description }}
           </ion-label>
         </ion-item>
       </ion-list>
@@ -134,25 +129,18 @@
   </ion-modal>
 
   @if (hiringDetails.provider_proposal) {
-  <ion-card
-    class="ion-activatable ripple-parent rounded-rectangle"
-    id="open-provider-proposal-modal"
-  >
+  <ion-card [button]="true" id="open-provider-proposal-modal">
     <ion-card-header>
       <ion-card-title>
-        {{ isProvider ? 'Respuesta enviada a interesado' : 'Respuesta del
-        proveedor' }}
+        {{ isProvider ? 'Respuesta enviada' : 'Respuesta del proveedor' }}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
         <ion-item class="ion-no-padding">
-          <ion-label>
-            <p>
-              {{ hiringDetails.provider_proposal.message | slice:0:50 }}{{
-              hiringDetails.provider_proposal.message.length > 25 ? '...' : ''
-              }}
-            </p>
+          <ion-label class="ion-text-nowrap">
+            <h2>Respuesta</h2>
+            <p>{{ hiringDetails.provider_proposal.message }}</p>
           </ion-label>
         </ion-item>
         <ion-item class="ion-no-padding">
@@ -231,25 +219,24 @@
       <ion-content>
         <ion-card>
           <ion-card-content>
-            <ion-list>
-              <ion-item class="ion-no-padding">
-                <ion-textarea
-                  label="Respuesta al interesado"
-                  labelPlacement="floating"
-                  placeholder="Escribe tu respuesta"
-                  [(ngModel)]="responseMessage"
-                  [autoGrow]="true"
-                ></ion-textarea>
-              </ion-item>
-              <ion-item class="ion-no-padding">
-                <ion-input
-                  label="Monto del trabajo"
-                  labelPlacement="floating"
-                  type="number"
-                  [(ngModel)]="responsePrice"
-                ></ion-input>
-              </ion-item>
-            </ion-list>
+            <ion-textarea
+              label="Respuesta al interesado"
+              labelPlacement="floating"
+              fill="outline"
+              placeholder="Escribe tu respuesta"
+              [(ngModel)]="responseMessage"
+              [autoGrow]="true"
+              rows="5"
+            ></ion-textarea>
+            <br />
+            <ion-input
+              label="Monto del trabajo"
+              labelPlacement="floating"
+              fill="outline"
+              type="number"
+              [(ngModel)]="responsePrice"
+            ></ion-input>
+            <br />
             <ion-button
               shape="round"
               expand="block"

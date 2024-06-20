@@ -20,51 +20,39 @@
   <ion-card>
     <ion-card-content>
       <form [formGroup]="form" (ngSubmit)="signup()">
-        <ion-list>
-          <ion-item>
-            <ion-input
-              formControlName="name"
-              type="text"
-              label="Nombre de usuario"
-              placeholder="PepitaGolondrina17"
-              labelPlacement="floating"
-              [counter]="true"
-              maxlength="20"
-              errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              formControlName="photo_url"
-              type="url"
-              label="URL para imagen de perfil "
-              placeholder="http://images.com/image.jpg"
-              labelPlacement="floating"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              formControlName="email"
-              type="email"
-              label="Email"
-              placeholder="pepita@email.com"
-              labelPlacement="floating"
-              helperText="Ingresar un email valido"
-              errorText="Email invalido"
-              email
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              formControlName="password"
-              type="password"
-              label="Contraseña"
-              labelPlacement="floating"
-              helperText="Ingresar una contraseña valida. Utiliza al menos 6 caracteres."
-              errorText="Contraseña invalida. Asegurate de usar al menos 6 caracteres."
-            ></ion-input>
-          </ion-item>
-        </ion-list>
+        <ion-input
+          formControlName="name"
+          type="text"
+          label="Nombre de usuario"
+          placeholder="PepitaGolondrina17"
+          fill="outline"
+          labelPlacement="floating"
+          [counter]="true"
+          maxlength="20"
+          errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
+        ></ion-input>
+        <br />
+        <ion-input
+          formControlName="email"
+          type="email"
+          label="Email"
+          placeholder="pepita@email.com"
+          fill="outline"
+          labelPlacement="floating"
+          helperText="Ingresar un email valido"
+          errorText="Email invalido"
+          email
+        ></ion-input>
+        <br />
+        <ion-input
+          formControlName="password"
+          type="password"
+          label="Contraseña"
+          fill="outline"
+          labelPlacement="floating"
+          helperText="Ingresar una contraseña valida. Utiliza al menos 6 caracteres."
+          errorText="Contraseña invalida. Asegurate de usar al menos 6 caracteres."
+        ></ion-input>
         <br />
         <ion-button
           type="submit"

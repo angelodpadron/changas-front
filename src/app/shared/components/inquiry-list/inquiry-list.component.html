@@ -1,7 +1,5 @@
 @if (!readonly) {
 
-<h5>Hace tu consulta</h5>
-
 <form [formGroup]="form" (ngSubmit)="sendQuery()">
   <div>
     <ion-textarea
@@ -12,32 +10,40 @@
       [autoGrow]="true"
       [counter]="true"
       maxlength="500"
+      rows="4"
+      fill="outline"
+      helpText="Máximo 500 caracteres"
+      errorText="Este campo es requerido si desea enviar una consulta"
     >
     </ion-textarea>
     <ion-button
       type="submit"
-      color="secondary"
       shape="round"
       expand="block"
       [disabled]="!form.valid"
     >
-      Enviar
+      Preguntar
     </ion-button>
   </div>
 </form>
 }
 
-<h5>Preguntas hechas por usuarios</h5>
+<br />
+
+<h5>Preguntas al proveedor</h5>
 
 <ion-list>
   @for (inquiry of inquiries; track inquiry.id) {
-  <ion-item>
+  <ion-item class="ion-no-padding">
     <ion-label>
-      <p>{{ inquiry.created_at | date : "dd/MM/yyyy" }}</p>
-      <p>{{ inquiry.customer.name }} pregunto: {{ inquiry.question }}</p>
+      <p><strong>{{ inquiry.question }}</strong></p>
       @if(inquiry.answer) {
-      <p>respuesta: {{ inquiry.answer }}</p>
+      <p>
+        <ion-icon name="return-down-forward-outline"></ion-icon>
+        {{ inquiry.answer }}
+      </p>
       }
+    <small class="ion-float-right">{{ inquiry.created_at | elapsed }}</small>
     </ion-label>
   </ion-item>
   } @empty {

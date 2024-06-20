@@ -3,76 +3,74 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Solicitar trabajo</ion-title>
+    <ion-title>Solicitar servicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Solicitar trabajo</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   @if(changaOverview()) {
 
-  <ion-card>
-    <img
-      [src]="changaOverview()?.photo_url || 'https://ionicframework.com/docs/img/demos/card-media.png'"
-      alt="Area a trabajar"
-    />
+  <ion-card [button]="true" [routerLink]="['/changa-details', changaOverview()?.id]">
+    <ion-card-header>
+      <ion-card-title>Detalles de changa</ion-card-title>
+    </ion-card-header>
 
     <ion-card-content>
-      <ion-card-header>
-        <ion-card-title>{{ changaOverview()?.title }}</ion-card-title>
-        <ion-card-subtitle
-          >{{ changaOverview()?.description }}</ion-card-subtitle
-        >
-        <ion-card-subtitle
-          >Ofrecido por {{ changaOverview()?.provider_summary?.name
-          }}</ion-card-subtitle
-        >
-      </ion-card-header>
+      <ion-list>
+        <ion-item class="ion-no-padding" [detail]="true" lines="none">
+          <ion-thumbnail slot="start">
+            <img [src]="changaOverview()?.photo_url" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ changaOverview()?.title }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
-      <ion-card-header>
-        <ion-card-title>Detalles del trabajo</ion-card-title>
-      </ion-card-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Trabajo a realizar</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>      
+      <p
+        >Provee informacion del trabajo que necesitas realizar para que el
+        proveedor del servicio pueda enviarte un presupuesto acorde.</p
+      >
+      <hr />
 
       <form [formGroup]="hireForm" (ngSubmit)="hireChanga()">
-        <ion-list>
-          @if(hireForm.get('work_area_photo_url')?.value) {
-          <ion-item>
-            <img [src]="hireForm.get('work_area_photo_url')!.value" />
-          </ion-item>
-          }
+        <ion-textarea
+          formControlName="work_details"
+          type="text"
+          label="Descripcion del area a trabajar"
+          fill="outline"
+          placeholder="La pared a pintar tiene tales dimensiones y esta en tal estado."
+          labelPlacement="floating"
+          [autoGrow]="true"
+          [counter]="true"
+          maxlength="200"
+          rows="5"
+          helpText="Escribe una descripcion del area a trabajar. Maximo 200 caracteres."
+          errorText="Descripcion invalida. Asegurate de usar al menos 10 caracteres."
+        ></ion-textarea>
 
-          <ion-item>
-            <ion-input
-              formControlName="work_area_photo_url"
-              type="url"
-              label="URL de la imagen del area a trabajar"
-              placeholder="https://www.example.com/image.jpg"
-              labelPlacement="floating"
-              helpText="URL de la imagen del area a trabajar. Puede ser una URL de una imagen en internet."
-              errorText="URL invalida. Asegurate de que sea una URL valida."
-            ></ion-input>
-          </ion-item>
+        @if(hireForm.get('work_area_photo_url')?.value) {
+        <img [src]="hireForm.get('work_area_photo_url')!.value" />
+        }
 
-          <ion-item>
-            <ion-textarea
-              formControlName="work_details"
-              type="text"
-              label="Descripcion del area a trabajar"
-              placeholder="La pared a pintar tiene tales dimensiones y esta en tal estado."
-              labelPlacement="floating"
-              [autoGrow]="true"
-              [counter]="true"
-              maxlength="200"
-              helpText="Escribe una descripcion del area a trabajar. Maximo 200 caracteres."
-              errorText="Descripcion invalida. Asegurate de usar al menos 10 caracteres."
-            ></ion-textarea>
-          </ion-item>
-        </ion-list>
+        <ion-input
+          formControlName="work_area_photo_url"
+          type="url"
+          label="URL de la imagen del area a trabajar"
+          fill="outline"
+          placeholder="https://www.example.com/image.jpg"
+          labelPlacement="floating"
+          helpText="URL de la imagen del area a trabajar. Puede ser una URL de una imagen en internet."
+          errorText="URL invalida. Asegurate de que sea una URL valida."
+        ></ion-input>
+
         <br />
         <ion-button
           type="submit"

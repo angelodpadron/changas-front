@@ -35,69 +35,38 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title size="large">Changas Solicitadas</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   @if (loaded) {
 
-  <!-- refresher -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- filtering buttons template -->
-
   @if(hiringsDetails.length > 0) {
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        @for (hiringDetail of hiringsDetails; track hiringDetail.id) {
-        <ion-item
-          button
-          [routerLink]="['/request-details', hiringDetail.id]"
-          class="ion-no-padding ripple-parent rounded-rectangle"
-        >
-          <ion-grid>
-            <ion-row>
-              <ion-thumbnail>
-                <img
-                  [alt]="hiringDetail.changa_title"
-                  [src]="hiringDetail.changa_photo_url"
-                />
-              </ion-thumbnail>
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-label>{{ hiringDetail.changa_title }}</ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <p>{{ hiringDetail.creation_date | date }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <small>#{{ hiringDetail.id }}</small>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-row>
-            <app-transaction-status
-              [status]="hiringDetail.status"
-            ></app-transaction-status>
-          </ion-grid>
-        </ion-item>
-        }
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+    @for (hiringDetail of hiringsDetails; track hiringDetail.id) {
+    <ion-item
+      button
+      [detail]="true"
+      [routerLink]="['/request-details', hiringDetail.id]"
+    >
+      <ion-thumbnail>
+        <img
+          [alt]="hiringDetail.changa_title"
+          [src]="hiringDetail.changa_photo_url"
+        />
+      </ion-thumbnail>
+      <ion-label class="ion-padding-start">
+        <h2>{{ hiringDetail.changa_title }}</h2>
+        <p>{{ hiringDetail.creation_date | date }}</p>
+        <small>#{{ hiringDetail.id }}</small>
+        <br />
+        <app-transaction-status
+          [status]="hiringDetail.status"
+        ></app-transaction-status>
+      </ion-label>
+    </ion-item>
+    }
+  </ion-list>
   } @else {
   <div class="center-container">
     <p>No hay solicitudes para mostrar</p>

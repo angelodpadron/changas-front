@@ -1,23 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import {
   IonBackButton,
   IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
-  IonImg,
   IonItem,
   IonLabel,
   IonList,
-  IonRow,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -27,7 +17,6 @@ import {
   IonSegmentButton,
   IonSpinner,
 } from '@ionic/angular/standalone';
-import { CustomersService } from 'src/app/core/services/customers/customers.service';
 import { HiringDetails } from 'src/app/core/models/transactions/hiring-details';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { RouterModule } from '@angular/router';
@@ -41,27 +30,17 @@ import { TransactionsService } from 'src/app/core/services/transactions/transact
   styleUrls: ['./hirings.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
     TransactionStatusComponent,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
     IonList,
     IonLabel,
     IonItem,
-    IonImg,
-    IonCardContent,
-    IonCardSubtitle,
-    IonCardHeader,
-    IonCardTitle,
     IonThumbnail,
-    IonCard,
-    IonCol,
-    IonRow,
-    IonGrid,
     IonBackButton,
     IonButtons,
     IonRefresher,
@@ -76,9 +55,7 @@ export class HiringsPage implements OnDestroy {
   subscription: any;
   loaded = false;
 
-  constructor(
-    private transactionService: TransactionsService
-  ) {}
+  constructor(private transactionService: TransactionsService) {}
 
   ionViewWillEnter() {
     if (this.subscription) {

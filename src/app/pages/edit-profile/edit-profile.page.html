@@ -10,18 +10,17 @@
 @if (currentCustomer) {
 <ion-content [fullscreen]="true">
   <ion-card>
-    <img
-      alt="Imagen de perfil"
-      [src]="editForm.get('photo_url')?.value || currentCustomer.photo_url"
-    />
+    @if(editForm.get('photo_url')?.value) {
+      <img [src]="editForm.get('photo_url')?.value" />
+    }
     <ion-card-content>
       <form [formGroup]="editForm" (ngSubmit)="updateChanges()">
-        <ion-list>
           <ion-input
             formControlName="name"
             type="text"
             label="Nombre"
             [placeholder]="currentCustomer.name"
+            fill="outline"
             labelPlacement="floating"
             [counter]="true"
             maxlength="20"
@@ -31,10 +30,10 @@
             formControlName="photo_url"
             type="url"
             label="URL para imagen de perfil"
-            placeholder="http://images.com/image.jpg"
+            [placeholder]="currentCustomer.photo_url"
+            fill="outline"
             labelPlacement="floating"
           ></ion-input>
-        </ion-list>
         <hr />
         <ion-button type="submit" expand="block" shape="round" color="warning"
           >Guardar</ion-button

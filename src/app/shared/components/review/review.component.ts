@@ -30,6 +30,8 @@ import {
 } from '@angular/forms';
 import { CreateReviewRequest } from 'src/app/core/models/review/create-review-request';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { ApiResponse } from 'src/app/core/models/api-response';
 
 @Component({
   selector: 'app-review',
@@ -127,13 +129,18 @@ export class ReviewComponent implements OnInit, OnDestroy {
       ...this.reviewForm.value,
     };
 
+    this.reviewForm.disable();
+
     this.reviewService.createReview(reviewData).subscribe({
-      next: (response) => {
-        this.fetchReviewInfo();
+      next: (response: ApiResponse<Review>) => {
+        this.review = response.data;
+        this.rating = this.review?.rating || 0;
         this.showCreateModal = false;
+        this.readonly = true;
       },
       error: (error) => {
         console.error(error);
+        this.reviewForm.enable();
       },
     });
   }
@@ -145,6 +152,13 @@ export class ReviewComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.review = response.data;
           this.rating = this.review?.rating || 0;
+        },
+        error: (error) => {
+          if (error.status === 404) {
+            console.log('Customer has not reviewed yet');
+            return;
+          }
+          console.error('Error fetching review', error);
         },
       });
 

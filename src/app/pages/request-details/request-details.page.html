@@ -79,10 +79,7 @@
     <ion-ripple-effect></ion-ripple-effect>
   </ion-card>
 
-  <ion-card
-    [button]="true"
-    id="open-work-details-modal"
-  >
+  <ion-card [button]="true" id="open-work-details-modal">
     <ion-card-header>
       <ion-card-title>Detalles del area a trabajar</ion-card-title>
     </ion-card-header>
@@ -132,14 +129,10 @@
   </ion-modal>
 
   @if (hiringDetails.provider_proposal) {
-  <ion-card
-    [button]="true"
-    id="open-provider-proposal-modal"
-  >
+  <ion-card [button]="true" id="open-provider-proposal-modal">
     <ion-card-header>
       <ion-card-title>
-        {{ isProvider ? 'Respuesta enviada' : 'Respuesta del
-        proveedor' }}
+        {{ isProvider ? 'Respuesta enviada' : 'Respuesta del proveedor' }}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -147,9 +140,7 @@
         <ion-item class="ion-no-padding">
           <ion-label class="ion-text-nowrap">
             <h2>Respuesta</h2>
-            <p>
-              {{ hiringDetails.provider_proposal.message }}
-            </p>
+            <p>{{ hiringDetails.provider_proposal.message }}</p>
           </ion-label>
         </ion-item>
         <ion-item class="ion-no-padding">
@@ -228,25 +219,24 @@
       <ion-content>
         <ion-card>
           <ion-card-content>
-            <ion-list>
-              <ion-item class="ion-no-padding">
-                <ion-textarea
-                  label="Respuesta al interesado"
-                  labelPlacement="floating"
-                  placeholder="Escribe tu respuesta"
-                  [(ngModel)]="responseMessage"
-                  [autoGrow]="true"
-                ></ion-textarea>
-              </ion-item>
-              <ion-item class="ion-no-padding">
-                <ion-input
-                  label="Monto del trabajo"
-                  labelPlacement="floating"
-                  type="number"
-                  [(ngModel)]="responsePrice"
-                ></ion-input>
-              </ion-item>
-            </ion-list>
+            <ion-textarea
+              label="Respuesta al interesado"
+              labelPlacement="floating"
+              fill="outline"
+              placeholder="Escribe tu respuesta"
+              [(ngModel)]="responseMessage"
+              [autoGrow]="true"
+              rows="5"
+            ></ion-textarea>
+            <br />
+            <ion-input
+              label="Monto del trabajo"
+              labelPlacement="floating"
+              fill="outline"
+              type="number"
+              [(ngModel)]="responsePrice"
+            ></ion-input>
+            <br />
             <ion-button
               shape="round"
               expand="block"

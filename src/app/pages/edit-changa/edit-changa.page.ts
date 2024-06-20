@@ -27,6 +27,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { CreateChangaRequest } from 'src/app/core/models/changa/create-changa-request';
 import { Router } from '@angular/router';
 import { AddLocationComponent } from 'src/app/shared/components/add-location/add-location.component';
+import { AddTopicComponent } from 'src/app/shared/components/add-topic/add-topic.component';
 
 @Component({
   selector: 'app-edit-changa',
@@ -50,6 +51,7 @@ import { AddLocationComponent } from 'src/app/shared/components/add-location/add
     IonTextarea,
     IonInput,
     AddLocationComponent,
+    AddTopicComponent,
   ],
 })
 export class EditChangaPage implements OnInit {
@@ -120,26 +122,14 @@ export class EditChangaPage implements OnInit {
   }
 
   editChanga() {
-    if (!this.editForm.valid) {
-      console.error('Invalid form');
-      return;
-    }
-
     this.editForm.disable();
 
     const editRequest: CreateChangaRequest = {
       ...this.editForm.value,
-      topics: this.editForm.value.topics
-        .split(',')
-        .map((topic: string) => topic.trim()),
     };
 
     this.changaService.editChanga(this.changaId, editRequest).subscribe({
-      next: (response: ApiResponse<ChangaOverview>) => {
-        if (!response.success) {
-          console.error(response.error);
-          return;
-        }
+      next: () => {
         this.router.navigate(['/changa-details', this.changaId]);
       },
       error: (error: any) => {

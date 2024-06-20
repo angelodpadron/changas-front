@@ -61,14 +61,7 @@
           errorText="Descripcion invalida. Asegurate de usar al menos 10 caracteres."
         ></ion-textarea>
         <app-add-location formControlName="service_area"></app-add-location>
-        <ion-input
-          formControlName="topics"
-          type="text"
-          label="Temas de la changa"
-          labelPlacement="floating"
-          fill="outline"
-          helpText="Escribe los temas de la changa separados por coma."
-        ></ion-input>
+        <app-add-topic formControlName="topics"></app-add-topic>
         <br />
         <ion-button
           type="submit"

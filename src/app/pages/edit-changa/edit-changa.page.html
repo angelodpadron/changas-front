@@ -28,7 +28,6 @@
           helpText="Escribe un titulo para la changa. Maximo 50 caracteres."
           errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
         ></ion-input>
-
         <ion-input
           formControlName="photo_url"
           type="url"
@@ -52,18 +51,7 @@
           helpText="Escribe una descripcion de la changa. Maximo 200 caracteres."
         ></ion-textarea>
         <app-add-location formControlName="service_area"></app-add-location>
-        <ion-input
-          formControlName="topics"
-          type="text"
-          label="Temas de la changa"
-          placeholder="Jardineria, Corte de pasto, etc."
-          labelPlacement="floating"
-          fill="outline"
-          [counter]="true"
-          maxlength="50"
-          helpText="Escribe los temas de la changa. Maximo 50 caracteres."
-          errorText="Nombre invalido. No utilices simbolos, y asegurate de usar al menos 3 caracteres."
-        ></ion-input>
+        <app-add-topic formControlName="topics"></app-add-topic>
         <ion-button
           type="submit"
           expand="block"

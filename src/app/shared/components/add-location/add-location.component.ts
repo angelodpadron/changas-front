@@ -14,8 +14,8 @@ import {
   FormsModule,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { Location } from 'src/app/core/models/area/location';
 import { LocationService } from 'src/app/core/services/location/location.service';
+import { ServiceArea } from 'src/app/core/models/area/service-area';
 
 @Component({
   selector: 'app-add-location',
@@ -41,15 +41,18 @@ import { LocationService } from 'src/app/core/services/location/location.service
   ],
 })
 export class AddLocationComponent implements ControlValueAccessor {
-  onChange: OnChangeFn<Location> = () => {};
+  onChange: OnChangeFn<ServiceArea> = () => {};
   onTouch: OnTouchedFn = () => {};
 
-  location: Location = {
+  location: ServiceArea = {
     name: '',
-    coordinates: [0, 0],
+    geometry: {
+      type: '',
+      coordinates: [0, 0],
+    },
   };
 
-  matches: Location[] = [];
+  matches: ServiceArea[] = [];
 
   disabled = false;
 
@@ -59,7 +62,7 @@ export class AddLocationComponent implements ControlValueAccessor {
     if (!this.location.name) return;
 
     this.locationService.matches(this.location.name).subscribe({
-      next: (locations: Location[]) => {
+      next: (locations: ServiceArea[]) => {
         this.matches = locations;
       },
       error: (error) => {
@@ -76,12 +79,12 @@ export class AddLocationComponent implements ControlValueAccessor {
 
   // control value accessor
 
-  writeValue(location: Location): void {
+  writeValue(location: ServiceArea): void {
     if (!location) return;
     this.location = location;
   }
 
-  registerOnChange(fn: OnChangeFn<Location>): void {
+  registerOnChange(fn: OnChangeFn<ServiceArea>): void {
     this.onChange = fn;
   }
 

@@ -134,6 +134,7 @@ export class EditChangaPage implements OnInit {
       },
       error: (error: any) => {
         console.error(error);
+        this.editForm.enable();
       },
     });
   }

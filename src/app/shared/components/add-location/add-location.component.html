@@ -20,9 +20,9 @@
     </ion-item>
     }
   </ion-list>
-  @if (location.coordinates[0] && location.coordinates[1]) {
+  @if (location.geometry.coordinates[0] && location.geometry.coordinates[1]) {
     <div class="ion-padding-vertical">
-      <app-map [longitude]="location.coordinates[0]" [latitude]="location.coordinates[1]"></app-map>
+      <app-map [longitude]="location.geometry.coordinates[0]" [latitude]="location.geometry.coordinates[1]"></app-map>
     </div>
   }
 </div>

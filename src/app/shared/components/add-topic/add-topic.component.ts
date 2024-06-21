@@ -30,14 +30,12 @@ export class AddTopicComponent implements ControlValueAccessor {
 
   addTopic(event: any) {
     event.preventDefault();
-    console.log('Adding topic:', this.newTopic);
     this.topics.push(this.newTopic);
     this.newTopic = '';
     this.onChange(this.topics);
   }
 
   removeTopic(index: number) {
-    console.log('Removing topic:', this.topics[index]);
     this.topics.splice(index, 1);
   }
 

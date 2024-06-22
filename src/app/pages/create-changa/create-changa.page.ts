@@ -31,6 +31,7 @@ import { ApiResponse } from 'src/app/core/models/api-response';
 import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { Router, RouterModule } from '@angular/router';
 import { AddLocationComponent } from 'src/app/shared/components/add-location/add-location.component';
+import { AddTopicComponent } from 'src/app/shared/components/add-topic/add-topic.component';
 
 @Component({
   selector: 'app-create-changa',
@@ -59,6 +60,7 @@ import { AddLocationComponent } from 'src/app/shared/components/add-location/add
     IonText,
     IonTextarea,
     AddLocationComponent,
+    AddTopicComponent,
   ],
 })
 export class CreateChangaPage {
@@ -97,9 +99,6 @@ export class CreateChangaPage {
   createChanga() {
     const createChangaRequest: CreateChangaRequest = {
       ...this.form.value,
-      topics: this.form.value.topics
-        .split(',')
-        .map((topic: string) => topic.trim()),
     };
 
     this.changasService.createChanga(createChangaRequest).subscribe({

@@ -1,0 +1,24 @@
+<ion-input
+  type="text"
+  placeholder="Pulsa enter para agregar"
+  label="Topics"
+  labelPlacement="floating"
+  fill="outline"
+  [(ngModel)]="newTopic"
+  (keydown.enter)="addTopic($event)"
+  [clearInput]="true"
+  [disabled]="disabled"
+></ion-input>
+<div class="ion-pading-vertical">
+  @if (topics.length) {
+  <small>Toca un elemento para removerlo</small>
+  } @else {
+  <small>Sin topics para mostrar</small>
+  }
+  <br />
+  @for (topic of topics; track $index) {
+  <ion-chip (click)="removeTopic($index)" [disabled]="disabled">
+    <ion-label>{{ topic }}</ion-label>
+  </ion-chip>
+  }
+</div>

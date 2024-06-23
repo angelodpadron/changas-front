@@ -1,13 +1,13 @@
-<ion-item class="ion-no-padding" lines="none">
+<ion-item class="ion-no-padding" lines="none" [routerLink]="['/profile', customer?.id]" button detail>
   <ion-avatar slot="start">
-    @if (customerPhotoUrl) {
-    <img [src]="customerPhotoUrl" alt="Imagen de perfil" />
+    @if (customer && customer.photo_url) {
+    <img [src]="customer.photo_url" alt="Imagen de perfil" />
     } @else {
     <img src="assets/icon/favicon.png" alt="Imagen de perfil" />
     }
   </ion-avatar>
   <ion-label>
-    <h3>{{ customerName }}</h3>
-    <p>{{ customerEmail }}</p>
+    <h3>{{ customer?.name }}</h3>
+    <p>{{ customer?.email }}</p>
   </ion-label>
 </ion-item>

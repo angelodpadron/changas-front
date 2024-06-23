@@ -34,7 +34,7 @@ export class ReviewService {
     );
   }
 
-  getAverageRating(changaId: string): Observable<ApiResponse<AverageRating>> {
+  getChangaAverageRating(changaId: string): Observable<ApiResponse<AverageRating>> {
     return this.http.get<ApiResponse<AverageRating>>(
       `${this.baseUrl}/overview/changa/${changaId}`
     );
@@ -42,5 +42,11 @@ export class ReviewService {
 
   getReviewsFor(changaId: string): Observable<ApiResponse<Review[]>> {
     return this.http.get<ApiResponse<Review[]>>(`${this.baseUrl}/changa/${changaId}`);
+  }
+
+  getCustomerAverageRating(customerId: string): Observable<ApiResponse<AverageRating>> {
+    return this.http.get<ApiResponse<AverageRating>>(
+      `${this.baseUrl}/overview/customer/${customerId}`
+    );
   }
 }

@@ -13,20 +13,22 @@
 
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>Perfil</ion-title>
+    @if (isLoggedUser) {
     <ion-buttons slot="end">
       <ion-button id="popover">
         <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
+    }
   </ion-toolbar>
+  @if (loaded) {
   <ion-toolbar>
     <div class="ion-padding-start">
-      <app-customer-overview
-        [customerName]="customer.name"
-        [customerEmail]="customer.email"
-        [customerPhotoUrl]="customer.photo_url"
-      ></app-customer-overview>
+      <app-customer-overview [customer]="customer"></app-customer-overview>
     </div>
   </ion-toolbar>
   <ion-toolbar>
@@ -39,18 +41,15 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  } @else {
+    <div class="center-container">
+      <ion-spinner></ion-spinner>
+    </div>
+  }
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  @if (loaded){ @for (post of posts; track post.id) {
-  <app-changa-overview-card [changa]="post" />
-  } @empty {
-  <div class="center-container">
-    <ion-label>No hay posts para mostrar</ion-label>
-  </div>
-  } } @else {
-  <div class="center-container">
-    <ion-spinner></ion-spinner>
-  </div>
+  @if (loaded) {
+    <app-customer-posts [customerId]="customer.id"></app-customer-posts>
   }
 </ion-content>

@@ -1,19 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonList,
   IonItem,
   IonIcon,
   IonLabel,
-  IonCard,
-  IonCardHeader,
-  IonCardContent,
-  IonCardTitle,
-  IonThumbnail,
   IonSegment,
   IonSegmentButton,
   IonButtons,
@@ -33,11 +26,10 @@ import {
   ellipsisVertical,
 } from 'ionicons/icons';
 import { Router, RouterModule } from '@angular/router';
-import { ChangaOverview } from 'src/app/core/models/changa/changa-overview';
 import { Observable, of, switchMap } from 'rxjs';
 import { CustomersService } from 'src/app/core/services/customers/customers.service';
-import { ChangaOverviewCardComponent } from 'src/app/shared/components/changa-overview-card/changa-overview-card.component';
 import { CustomerPostsComponent } from 'src/app/shared/components/customer-posts/customer-posts.component';
+import { CustomerSummaryComponent } from 'src/app/shared/components/customer-summary/customer-summary.component';
 
 @Component({
   selector: 'app-profile',
@@ -45,24 +37,17 @@ import { CustomerPostsComponent } from 'src/app/shared/components/customer-posts
   styleUrls: ['./profile.page.scss'],
   standalone: true,
   imports: [
-    ChangaOverviewCardComponent,
     CustomerOverviewComponent,
     CustomerPostsComponent,
+    CustomerSummaryComponent,
+    RouterModule,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    RouterModule,
-    IonList,
     IonItem,
     IonIcon,
     IonLabel,
-    IonCard,
-    IonCardHeader,
-    IonCardContent,
-    IonCardTitle,
-    IonThumbnail,
     IonSegment,
     IonSegmentButton,
     IonButtons,
@@ -79,6 +64,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   subscription: any;
   isLoggedUser = false;
   loaded = false;
+  segment: 'posts' | 'summary' = 'posts';
 
   constructor(
     private authService: AuthService,
@@ -139,4 +125,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.authService.signout();
     this.router.navigate(['/home']);
   }
+
+  segmentChanged(event: CustomEvent) {
+    this.segment = event.detail.value as 'posts' | 'summary';
+  }
+
 }

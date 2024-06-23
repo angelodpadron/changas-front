@@ -32,24 +32,26 @@
     </div>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-segment value="all">
-      <ion-segment-button value="all">
+    <ion-segment value="posts" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="posts">
         <ion-label>Posts</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="favorites">
+      <ion-segment-button value="overview">
         <ion-label>Resumen</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   } @else {
-    <div class="center-container">
-      <ion-spinner></ion-spinner>
-    </div>
+  <div class="center-container">
+    <ion-spinner></ion-spinner>
+  </div>
   }
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  @if (loaded) {
-    <app-customer-posts [customerId]="customer.id"></app-customer-posts>
-  }
+  @if (loaded) { @if (segment === 'posts') {
+  <app-customer-posts [customerId]="customer.id"></app-customer-posts>
+  } @else {
+  <app-customer-summary [customerId]="customer.id"></app-customer-summary>
+  } }
 </ion-content>

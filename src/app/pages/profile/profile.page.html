@@ -21,13 +21,13 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-item>
+    <div class="ion-padding-start">
       <app-customer-overview
         [customerName]="customer.name"
         [customerEmail]="customer.email"
         [customerPhotoUrl]="customer.photo_url"
       ></app-customer-overview>
-    </ion-item>
+    </div>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment value="all">
@@ -36,9 +36,6 @@
       </ion-segment-button>
       <ion-segment-button value="favorites">
         <ion-label>Resumen</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="ratings">
-        <ion-label>Reseñas</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

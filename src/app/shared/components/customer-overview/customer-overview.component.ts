@@ -13,7 +13,5 @@ export class CustomerOverviewComponent {
   @Input() customerEmail: string = '';
   @Input() customerPhotoUrl: string = '';
 
-  photoUrlDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
-
   constructor() {}
 }

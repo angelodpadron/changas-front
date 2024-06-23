@@ -1,9 +1,10 @@
-<ion-item class="ion-no-padding">
+<ion-item class="ion-no-padding" lines="none">
   <ion-avatar slot="start">
-    <img
-      [src]="customerPhotoUrl || photoUrlDefault"
-      alt="Imagen de perfil"
-    />
+    @if (customerPhotoUrl) {
+    <img [src]="customerPhotoUrl" alt="Imagen de perfil" />
+    } @else {
+    <img src="assets/icon/favicon.png" alt="Imagen de perfil" />
+    }
   </ion-avatar>
   <ion-label>
     <h3>{{ customerName }}</h3>

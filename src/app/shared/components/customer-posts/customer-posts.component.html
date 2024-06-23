@@ -1,0 +1,7 @@
+@if(loaded) { @for(changa of posts; track changa.id) {
+<app-changa-overview-card [changa]="changa"></app-changa-overview-card>
+} } @else {
+<div class="center-container">
+  <ion-spinner></ion-spinner>
+</div>
+}

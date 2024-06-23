@@ -18,9 +18,7 @@
   <ion-img [src]="changaOverview.photo_url" class="image-container"></ion-img>
   <div class="ion-padding">
     <app-customer-overview
-      [customerName]="changaOverview.provider_summary.name"
-      [customerEmail]="changaOverview.provider_summary.email"
-      [customerPhotoUrl]="changaOverview.provider_summary.photo_url"
+      [customer]="changaOverview.provider_summary"
     ></app-customer-overview>
   </div>
   <div class="ion-padding">
@@ -91,10 +89,16 @@
   <div class="ion-padding">
     <h5>Ubicación</h5>
     <p>{{ changaOverview.service_area.name }}</p>
-    <app-map [latitude]="changaOverview.service_area.geometry.coordinates[1]" [longitude]="changaOverview.service_area.geometry.coordinates[0]"></app-map>
+    <app-map
+      [latitude]="changaOverview.service_area.geometry.coordinates[1]"
+      [longitude]="changaOverview.service_area.geometry.coordinates[0]"
+    ></app-map>
   </div>
   <div class="ion-padding">
-    <app-inquiry-list [changaId]="changaOverview.id" [readonly]="isProvider"></app-inquiry-list>
+    <app-inquiry-list
+      [changaId]="changaOverview.id"
+      [readonly]="isProvider"
+    ></app-inquiry-list>
   </div>
   <div class="ion-padding">
     <h5>Opiniones del servicio</h5>

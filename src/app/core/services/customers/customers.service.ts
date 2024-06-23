@@ -16,9 +16,9 @@ export class CustomersService {
 
   constructor(private http: HttpClient) {}
 
-  getCustomerDetails(hiringTransactionId: string) {
+  getCustomerDetails(customerId: string) {
     return this.http.get<ApiResponse<Customer>>(
-      `${this.baseUrl}/${hiringTransactionId}`
+      `${this.baseUrl}/${customerId}`
     );
   }
 

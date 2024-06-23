@@ -100,10 +100,11 @@ export class CreateChangaPage {
     const createChangaRequest: CreateChangaRequest = {
       ...this.form.value,
     };
-
+    
+    this.form.disable();
+    
     this.changasService.createChanga(createChangaRequest).subscribe({
       next: (response: ApiResponse<ChangaOverview>) => {
-        this.form.disable();
         let route = 'changa-details/' + response.data.id;
         this.router.navigate(['/success'], {
           state: {

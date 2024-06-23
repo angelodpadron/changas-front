@@ -116,5 +116,11 @@ export const routes: Routes = [
     canActivate: [loginRequiredGuard],
     loadComponent: () => import('./pages/answer-inquiry/answer-inquiry.page').then( m => m.AnswerInquiryPage)
   },
+  {
+    path: 'profile/:customerId',
+    canActivate: [loginRequiredGuard],
+    loadComponent: () =>
+      import('./pages/profile/profile.page').then((m) => m.ProfilePage),
+  },
 
 ];

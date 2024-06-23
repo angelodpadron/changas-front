@@ -1,0 +1,11 @@
+@if(loaded) { @for(changa of posts; track changa.id) {
+<app-changa-overview-card [changa]="changa"></app-changa-overview-card>
+} @empty {
+<div class="center-container">
+  <h5>No hay posts para mostrar</h5>
+</div>
+} } @else {
+<div class="center-container">
+  <ion-spinner></ion-spinner>
+</div>
+}

@@ -24,7 +24,7 @@ export class AverageRatingComponent implements OnInit {
       throw new Error('Changa ID is required');
     }
 
-    this.reviewService.getAverageRating(this.changaId).subscribe((response) => {
+    this.reviewService.getChangaAverageRating(this.changaId).subscribe((response) => {
       this.averageRating = response.data;
       this.loaded = true;
     });

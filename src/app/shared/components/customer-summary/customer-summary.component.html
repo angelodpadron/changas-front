@@ -1,0 +1,22 @@
+@if (loaded) { @if (averageRating.amount > 0) {
+<ion-item>
+  <ion-label>
+    <h2>Reputación</h2>
+    <br />
+    <div class="start-container">
+      <app-stars [rating]="averageRating.average" [readonly]="true"></app-stars>
+    </div>
+    <h2>{{ averageRating.average }} estrellas</h2>
+    <p>promediado de {{ averageRating.amount }} calificaciones</p>
+  </ion-label>
+</ion-item>
+} @else {
+<ion-item>
+  <ion-label>
+    <h2>Reputación</h2>
+    <br />
+    <p>El usuario no tiene calificaciones para mostrar.</p>
+  </ion-label>
+</ion-item>
+
+}}

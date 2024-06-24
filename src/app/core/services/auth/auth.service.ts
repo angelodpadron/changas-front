@@ -10,7 +10,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Customer } from '../../models/customer/customer.model';
 import { ApiResponse } from '../../models/api-response';
 import { environment } from 'src/environments/environment';
-import { UpdateCustomerRequest } from '../../models/customer/update-customer-request';
 
 @Injectable({
   providedIn: 'root',

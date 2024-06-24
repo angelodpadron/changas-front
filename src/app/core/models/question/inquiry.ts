@@ -5,7 +5,8 @@ export interface Inquiry {
   id: number;
   question: string;
   answer: string;
-  created_at: string;
+  created_at: Date;
+  last_update: Date;
   changa_id: number;
   changa: ChangaOverview;
   customer: Customer;

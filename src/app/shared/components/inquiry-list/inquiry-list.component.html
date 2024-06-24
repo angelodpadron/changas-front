@@ -43,7 +43,7 @@
         {{ inquiry.answer }}
       </p>
       }
-    <small class="ion-float-right">{{ inquiry.created_at | elapsed }}</small>
+    <small class="ion-float-right">{{ inquiry.last_update | elapsed }}</small>
     </ion-label>
   </ion-item>
   } @empty {

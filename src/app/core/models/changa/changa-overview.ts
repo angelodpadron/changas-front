@@ -10,4 +10,6 @@ export interface ChangaOverview {
   provider_summary: Customer;
   service_area: ServiceArea;
   available: boolean;
+  created_at: Date;
+  last_update: Date;
 }

@@ -15,7 +15,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-img [src]="changaOverview.photo_url" class="image-container"></ion-img>
+  <ion-img [src]="changaOverview.photo_url"></ion-img>
   <div class="ion-padding">
     <app-customer-overview
       [customer]="changaOverview.provider_summary"
@@ -71,7 +71,7 @@
     </ion-button>
     }
   </div>
-  <div class="ion-padding">
+  <div class="ion-padding-top ion-padding-top ion-padding-horizontal">
     @for (topic of changaOverview.topics; track changaOverview.id) {
     <ion-chip
       color="warning"
@@ -81,18 +81,23 @@
       {{ topic }}
     </ion-chip>
     }
-  </div>
-  <div class="ion-padding">
+  </div>  
+  <div class="ion-padding-top ion-padding-top ion-padding-horizontal">
     <h5>Descripcion del servicio</h5>
     <p>{{ changaOverview.description }}</p>
   </div>
-  <div class="ion-padding">
+  <div class="ion-padding-top ion-padding-top ion-padding-horizontal">
     <h5>Ubicación</h5>
     <p>{{ changaOverview.service_area.name }}</p>
     <app-map
       [latitude]="changaOverview.service_area.geometry.coordinates[1]"
       [longitude]="changaOverview.service_area.geometry.coordinates[0]"
     ></app-map>
+  </div>
+  <div class="ion-padding-top ion-padding-horizontal">
+    <small>fecha de publicacion: {{ changaOverview.created_at | date: 'dd/MM/yyyy \'a las\' HH:mm' }}</small>
+    <br />
+    <small>ultima actualizacion: {{ changaOverview.last_update | date: 'dd/MM/yyyy \'a las\' HH:mm' }}</small>
   </div>
   <div class="ion-padding">
     <app-inquiry-list

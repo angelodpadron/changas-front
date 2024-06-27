@@ -83,19 +83,29 @@ export class LoginPage extends BaseComponent implements OnInit {
 
     this.authService.login(this.loginRequest).subscribe({
       next: () => {
-        this.presentToastWithAnchor(
-          'Sesion iniciada',
-          'top',
-          'header',
-          1000,
-          'success'
-        );
-        this.router.navigate(['/home']);
+        this.showLoginToast();
+        this.handleLoginRedirect();
       },
       error: (error) => {
         this.presentErrorToastFromResponse(error);
         console.error('Error attemping login', error);
       },
     });
+  }
+
+  private handleLoginRedirect() {
+    const route = localStorage.getItem('redirectAfterLogin') || '/home';
+    localStorage.removeItem('redirectAfterLogin');
+    this.router.navigate([route]);
+  }
+
+  private showLoginToast() {
+    this.presentToastWithAnchor(
+      'Sesion iniciada',
+      'top',
+      'header',
+      1000,
+      'success'
+    );
   }
 }

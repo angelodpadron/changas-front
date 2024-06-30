@@ -13,6 +13,7 @@ import {
 import { Inquiry } from 'src/app/core/models/question/inquiry';
 import { InquiryService } from 'src/app/core/services/questions/question.service';
 import { RouterModule } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
@@ -33,13 +34,29 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class NotificationsPage implements OnInit {
-  inquiries: Inquiry[] = [];
+  pendingInquiries: Inquiry[] = [];
+  unreadAnswers: Inquiry[] = [];
 
   constructor(private inquiryService: InquiryService) {}
 
   ngOnInit() {
-    this.inquiryService.getPendingToAnswer().subscribe((response) => {
-      this.inquiries = response.data;
+    this.fetchData();
+  }
+
+  private fetchData() {
+    forkJoin({
+      pendingInquiries: this.inquiryService.getPendingToAnswer(),
+      unreadAnswers: this.inquiryService.getUnreadAnswers(),
+    }).subscribe({
+      next: (response) => {
+        this.pendingInquiries = response.pendingInquiries.data;
+        this.unreadAnswers = response.unreadAnswers.data;
+        console.log(response);
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
+    
   }
 }

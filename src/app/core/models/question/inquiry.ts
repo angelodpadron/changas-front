@@ -5,6 +5,7 @@ export interface Inquiry {
   id: number;
   question: string;
   answer: string;
+  read: boolean;
   created_at: Date;
   last_update: Date;
   changa_id: number;

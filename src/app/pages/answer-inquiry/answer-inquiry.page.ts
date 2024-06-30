@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -47,9 +53,16 @@ import { RouterModule } from '@angular/router';
 export class AnswerInquiryPage implements OnInit {
   @Input('id') inquiryId!: string;
   inquiry!: Inquiry;
-  
+
   form: FormGroup = this.formBuilder.group({
-    answer: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+    answer: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(500),
+      ],
+    ],
   });
 
   constructor(
@@ -62,13 +75,33 @@ export class AnswerInquiryPage implements OnInit {
       console.error('No inquiry id provided');
     }
 
-    this.inquiryService.getInquiry(this.inquiryId).subscribe((response) => {
-      this.inquiry = response.data;
+    this.inquiryService.getInquiry(this.inquiryId).subscribe({
+      next: (response) => {
+        this.inquiry = response.data;
+
+        if (!this.inquiry.read && this.inquiry.answer) {
+          this.updateInquiryReadStatus();
+        }
+
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  private updateInquiryReadStatus() {
+    this.inquiryService.markAsRead(this.inquiry.id).subscribe({
+      next: (response) => {
+        this.inquiry = response.data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
   }
 
   submitAnswer() {
-
     if (this.form.invalid) {
       console.error('Invalid form');
       return;

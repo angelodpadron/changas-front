@@ -101,10 +101,10 @@ export class ReviewComponent implements OnInit, OnDestroy {
   handleOpenModal() {
     if (this.review) {
       this.showInfoModal = true;
+      return;
     }
-    if (!this.readonly) {
-      this.showCreateModal = true;
-    }
+    
+    this.showCreateModal = true;
   }
 
   handleRatingChange(rating: number) {

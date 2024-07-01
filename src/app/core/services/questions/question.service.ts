@@ -11,7 +11,6 @@ import { AnswerQuestionRequest } from '../../models/question/answer-question-req
   providedIn: 'root',
 })
 export class InquiryService {
-  
   private baseUrl = environment.fullApiUrl + '/inquiries';
 
   constructor(private http: HttpClient) {}
@@ -19,25 +18,40 @@ export class InquiryService {
   postQuestion(
     request: CreateQuestionRequest
   ): Observable<ApiResponse<Inquiry>> {
-    return this.http.post<ApiResponse<Inquiry>>(
-      `${this.baseUrl}`,
-      request
-    );
-  }  
+    return this.http.post<ApiResponse<Inquiry>>(`${this.baseUrl}`, request);
+  }
 
-  submitAnswer(answerRequest: AnswerQuestionRequest): Observable<ApiResponse<Inquiry>> {
-    return this.http.post<ApiResponse<Inquiry>>(`${this.baseUrl}/answer`, answerRequest);
+  submitAnswer(
+    answerRequest: AnswerQuestionRequest
+  ): Observable<ApiResponse<Inquiry>> {
+    return this.http.post<ApiResponse<Inquiry>>(
+      `${this.baseUrl}/answer`,
+      answerRequest
+    );
   }
 
   getChangaInquiries(changaId: string): Observable<ApiResponse<Inquiry[]>> {
-    return this.http.get<ApiResponse<Inquiry[]>>(`${this.baseUrl}/changa/${changaId}`);
-  }
-
-  getPendingToAnswer(): Observable<ApiResponse<Inquiry[]>> {
-    return this.http.get<ApiResponse<Inquiry[]>>(`${this.baseUrl}/pending`);
+    return this.http.get<ApiResponse<Inquiry[]>>(
+      `${this.baseUrl}/changa/${changaId}`
+    );
   }
 
   getInquiry(inquiryId: string): Observable<ApiResponse<Inquiry>> {
     return this.http.get<ApiResponse<Inquiry>>(`${this.baseUrl}/${inquiryId}`);
+  }
+  
+  getPendingToAnswer(): Observable<ApiResponse<Inquiry[]>> {
+    return this.http.get<ApiResponse<Inquiry[]>>(`${this.baseUrl}/pending`);
+  }
+
+  getUnreadAnswers(): Observable<ApiResponse<Inquiry[]>> {
+    return this.http.get<ApiResponse<Inquiry[]>>(`${this.baseUrl}/unread`);
+  }
+
+  markAsRead(inquiryId: number): Observable<ApiResponse<Inquiry>> {
+    return this.http.post<ApiResponse<Inquiry>>(
+      `${this.baseUrl}/mark/${inquiryId}`,
+      null
+    );
   }
 }

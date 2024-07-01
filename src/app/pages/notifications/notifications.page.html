@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  @if (inquiries.length) {
+  @if (pendingInquiries.length) {
   <ion-list>
-    @for (inquiry of inquiries; track inquiry.id) {
+    @for (inquiry of pendingInquiries; track inquiry.id) {
     <ion-item
       button
       [routerLink]="['/answer-inquiry', inquiry.id]"
@@ -17,14 +17,36 @@
         <strong>Tienes una consulta en una publicacion</strong><br />
         <small>{{inquiry.changa.title}}</small><br />
         <h3>{{ inquiry.question }}</h3>
-        <small>{{ inquiry.created_at | date : 'dd/MM/yyyy' }}</small>
+        <small>{{ inquiry.created_at | date : 'dd/MM/yyyy \'a las\' HH:mm' }}</small>
       </ion-label>
     </ion-item>
     }
   </ion-list>
-  } @else {
-  <div class="center-container">
-    <h5>No tienes notificaciones :)</h5>
-  </div>
+  } 
+
+  @if (unreadAnswers.length) {
+  <ion-list>
+    @for (answer of unreadAnswers; track answer.id) {
+    <ion-item
+      button
+      [routerLink]="['/answer-inquiry', answer.id]"
+      detail="true"
+    >
+      <ion-label>
+        <strong>Respondieron tu consulta</strong><br />
+        <small>{{answer.changa.title}}</small><br />
+        <h3>{{ answer.answer }}</h3>
+        <small>{{ answer.created_at | date : 'dd/MM/yyyy \'a las\' HH:mm' }}</small>
+      </ion-label>
+    </ion-item>
+    }
+  </ion-list>
   }
+
+  @if (!pendingInquiries.length && !unreadAnswers.length) {
+    <div class="center-container">
+      <h5>No tienes notificaciones</h5>
+    </div>
+  }
+
 </ion-content>

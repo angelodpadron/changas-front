@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Responder consulta</ion-title>
+    <ion-title>Consulta</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,13 +26,14 @@
       <ion-label>
         <small>{{ inquiry.customer.name }}</small>
         <h2>{{ inquiry.question }}</h2>
-        <p>{{ inquiry.created_at | date: 'dd/MM/yyyy' }}</p>
+        <small>{{ inquiry.created_at | date: 'dd/MM/yyyy \'a las\' HH:mm' }}</small>
       </ion-label>
     </ion-item>
     @if (inquiry.answer) {
     <ion-item>
       <ion-label>
-        <h3>{{ inquiry.answer }}</h3>
+        <h2>{{ inquiry.answer }}</h2>
+        <small>{{ inquiry.last_update | date: 'dd/MM/yyyy \'a las\' HH:mm' }}</small>
       </ion-label>
     </ion-item>
     } @else {
